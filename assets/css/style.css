@@ -1,0 +1,140 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    font-size: .35cm;
+    font-family:poppins;
+    /* font-family:roboto; */
+    /* font-family: cursive; */
+}
+body{
+    background-color:#f5f5f5;
+}
+.login_page{
+    height: 100vh;
+     background-image: url(../images/login_background.jpg);
+    background-size: 100% 100%;
+    color: white; 
+}
+.login-form{
+    height: 70vh;
+    width: 60vh;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px grey;
+    background-color: rgba(245, 245, 245, 0.737);
+}
+.header{
+    /* background-color: #0B2D72; */
+    /* background-color: #0AC4E0; */
+    background-color: limegreen;
+    height: 7vh;
+}
+.logo img{
+    height: 25px;
+}
+.user_info i{
+    font-size: 1cm;
+}
+.content-body,.left_sidebar{
+    height:93vh ;
+}
+.content-body{
+    /* background-color: #cce3f8 ; */
+    /* background-color: #fef8f2 ; */
+    background-image: url(../images/bot-pattern.svg);
+}
+.left_sidebar{
+    background-color: #ffffff;
+
+    overflow: hidden;
+}
+.masters li a{
+text-decoration: none;
+/* color: #cce3f8; */
+color: black;
+
+}
+.masters li{
+transition: all ease-in-out .5s;
+}
+.masters li a:hover{
+    color: #0B2D72;
+}
+
+.masters {
+    list-style: none;
+    height: 100%;
+}
+#show_sidebar{
+    display: none;
+}
+
+#left_sidebar,.content-body{
+    transition: .5s all ease-in-out;
+    
+}
+.bi-people{
+    font-size: .3cm;
+}
+.bi-person-circle{
+    font-size: .3cm;
+}
+.bi-diagram-3{
+    font-size: .3cm;
+}
+.table_area,.form_area{
+  height: calc(95vh - 178px);
+  overflow-y: auto;
+  padding: 0px;
+}
+.form_area{
+  height: calc(95vh - 98px);
+    padding:00px 20%;
+}
+.bg-skyblue{
+    /* background-color: #0AC4E0; */
+    background-color: limegreen;
+}
+.logout{
+    margin-top: auto;
+    margin-left: -20px;
+    width: 15%;
+}
+
+.logout_form{
+    bottom:20px;
+    width: 15%;
+    position: fixed;
+    transition: .5s all ease-in-out;
+
+}
+#logout{
+    transition: .5s all ease-in-out;
+}
+.search-boxes{
+    width: 10%;
+}
+.search-box input{
+    width: 90%;
+    height: 30px;
+}
+.search-box-last{
+    width:18%;
+}
+.home-con-h{
+    height: 30vh;
+    
+}
+.modal{
+    background:rgba(0, 0, 0, 0.767);
+}
+.sort{
+height: 25px;
+width: 10px;
+padding: 0px;
+background-color: transparent;
+border: 0px;
+}
+.sort i{
+    font-size: .2cm;
+}
