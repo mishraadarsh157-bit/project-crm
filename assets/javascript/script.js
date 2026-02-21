@@ -410,3 +410,46 @@ $.ajax({
 
 
 
+////////////////////////////////////clint master
+
+// load select states into form////
+
+function loadStates(){
+
+  $.ajax({
+    url:baseurl + "controllers/clint_controller.php",
+    type:'POST',
+    data:{
+      states:'states'
+    },
+    success:function(data){
+      $('#loadState').html(data)
+
+    }
+  })
+
+}
+
+function loadedcity(){
+  var name=$('#select_state').val();
+  $('#state_name').val(name)
+}
+
+
+function loadedcity(state){
+  var states=$('#select_state').val()
+console.log(states)
+  $.ajax({
+    url:baseurl + "controllers/clint_controller.php",
+    type:'POST',
+    data:{
+      lodcity:'lodcity',
+      states:states
+    },
+    success:function(data){
+      $('#loadCity').html(data)
+      console.log(data)
+    }
+  })
+}
+

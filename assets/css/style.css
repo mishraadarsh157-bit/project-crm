@@ -82,10 +82,11 @@ transition: all ease-in-out .5s;
 .bi-diagram-3{
     font-size: .3cm;
 }
-.table_area,.form_area{
+.table_area,.form_area,.clint_form{
   height: calc(95vh - 178px);
   overflow-y: auto;
   padding: 0px;
+  
 }
 .form_area{
   height: calc(95vh - 98px);

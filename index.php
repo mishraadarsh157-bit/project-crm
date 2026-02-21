@@ -14,10 +14,10 @@ $router->addRoute('http://localhost/project/pages/user_master.php', function() {
 });
 
 $router->addRoute('http://localhost/project/pages/clint_master.php', function() {
-    require 'http://localhost/project/controllers/clint_usermaster.php';
+    require 'http://localhost/project/controllers/clint_master.php';
 });
 $router->addRoute('http://localhost/project/pages/item_master.php', function() {
-    require 'http://localhost/project/controllers/item_usermaster.php';
+    require 'http://localhost/project/controllers/item_master.php';
 });
 
 $request =parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

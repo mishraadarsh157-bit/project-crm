@@ -1,125 +1,73 @@
 <?php
 
-// include_once "dashboard.php";
-
-    
-
-?>
-<!-- 
- <div class="content-body col-10 bg-white"></div>
-</div> -->
-
-<?php
-
 include_once "dashboard.php";
 
-
+    
 
 ?>
 
-<div class="content-body col-10">
+ <div class="content-body col-10 pt-3">
 
-    <ul class="nav nav-tabs  mb-3 mt-2 " id="nav-tab" role="tablist">
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Clints</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab "  onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Add Clints</button>
+  </li>
+</ul>
 
+<div class="tab-content" id="myTabContent">
 
-        <li class="nav-item " role="presentation">
-            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All Users</button>
-        </li>
-
-
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Add Users</button>
-        </li>
-
-    </ul>
-    <div class="tab-content" id="pills-tabContent">  
-<!-- start boxes-->
-
-    <div class="tab-pane fade bg-white  rounded" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-        <div class="form_area w-100 border">
-<!-- /////////////////////////////////////////////////////////////////////////////
- /////////////////////////////////////////////////////////////////////// -->
-
-            <form id="add_user" class="px-5  m-5 mt-2 border">
-                <h1>ADD USER</h1>
-                User Name <sup class="text-danger">*</sup>:
-                <input type="text" title="NAME" id="user_name" name="user_name" minlength="2" maxlength="15" class="form-control  form-control-sm  border ">
-                <div id="name_valid" class="text-danger mb-3 "></div>
-                User Password :
-                <input type="password" title="PASSWORD" id="user_pass" name="user_pass" class="form-control form-control-sm border ">
-                <div id="pass_valid" class="text-danger mb-3 "></div>
-                User Number :
-                <input type="number" title="NUMBER" id="user_number" min="10" max="10" name="user_number" class="form-control form-control-sm border " required>
-                <div id="number_valid" class="text-danger mb-3 "></div>
-                User E-Mail
-                <input type="email" title="Email" id="user_email" required name="user_email" class="form-control form-control-sm border ">
-                <div id="email_valid" class="text-danger mb-3 "></div>
-
-                <input type="button" value="SAVE" id="save_user" class="save w-100  btn-sm bg-skyblue btn my-3" onclick="insertUser()">
-                <input type="reset" value="RESET" class="reset_insert w-100 mb-2 btn btn-sm bg-danger">
-            </form>
-        </div>
-        </div> 
-<!-- part -->
-        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-            <table class='bg-white w-100 border rounded mb-3 table'><tr>
-                    
-                    <td class='ps-2 pt-0 '>Id</td>
-                    <td class='ps-2 pt-0 '>Name</td>
-                    <td class='ps-2 pt-0 '>Email</td>
-                    <td class='ps-2 pt-0 '>Number</td>
-                    <td class='ps-2 pt-0'>Status</td>
-                    <td class=""></td>
-                </tr>
-                <tr><form >
-                    <td class='search-box ps-2'>
-                        <input class='form-control' id="search_id" placeholder='search ' type='number'></td>
-                    <td class='search-box pb-0 ps-2'><input class='form-control' id='search_name' placeholder='search ' type='text'></td>
-                    <td class='search-box pb-0 ps-2'><input class='form-control' id='search_email' placeholder='search ' type='email'></td>
-                    <td class='search-box pb-0 ps-2'><input class='form-control' id='search_number' placeholder='search ' type='number'></td>
-                    <td class='search-box pb-0 ps-2'><select name='' id="search_status"  class=' form-select'><option value='ACTIVE' >ACTIVE</option>
-                    <option value='INACTIVE'>INACTIVE</option></select></td><td class='search-box-last '>
-                        
-                            <button type="button" onclick="searc()"  class="btn bg-skyblue ms-4"  name="search" value="search"><i class="bi bi-search"></i></button>
-                            <button class="bg-danger btn " type="reset" onclick="userData()"><i class="bi bi-arrow-clockwise"></i></button>
-                </td>
-                </form>
-            </tr></table>
-            <div id="load_users" class="table_area bg-white rounded border">
-
-            </div>
-
-        </div>
+<div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+<table class="table"><tr><td>table</td></tr></table>
     
-    <!-- end boxes -->
-    </div>
-
-
-
-
-
-    <!-- /////////////end -->
-</div>
 </div>
 
-<div class="modal " id="myModal" data-bs-backdrop="false">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+<div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Update form</h4>
-        <button type="button" class="btn-close btn-outline-danger" data-bs-dismiss="modal"></button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-      <form action="" class="update_form">
-      
-      
-</form>
-      </div>
-
+<h1 class="mt-4">add clint</h1>  
+  <div class="row m-0 mt-3 clint_form w-100 bg-white border p-4">
+    <form>
+    <div class="row">
+        <div class="col-6 p-3 pt-5">
+    Name:    
+    <input type="text" class="form-control mb-3"></div>
+        <div class="col-6 p-3 pt-5">
+    Phone:    
+    <input type="Number" class="form-control mb-3"></div>
+<div class="col-12 p-3 pt-5">
+    Address:    
+    <input type="text" class="form-control mb-3"></div>
+    <div class="col-4  p-3 pt-5" >State:
+    <div id="loadState">
+        <!-- //////////////states -->
+    </div>  
     </div>
+    <div class="col-4  p-3 pt-5">City
+ <div id="loadCity">
+    <!-- ////////////////city -->
+ </div>
+    </div>
+    <div class="col-4  p-3 pt-5">Pincode<input type="Number" class="form-control mb-3"></div>
+<div class="col-8 p-3 pt-5"></div>
+<div class="col-4 px-3">
+    <button type='button p-3 pt-5' class="btn btn-outline-success w-25">Submit</button>
+    <button type="reset" class="btn  btn-outline-danger w-25">Reset</button></div>
+
+
+</div>
+
+    
+    </form>
+</div>
+
+
   </div>
 </div>
+
+
+ </div>
+</div>
+
+
