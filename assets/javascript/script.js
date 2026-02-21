@@ -430,26 +430,75 @@ function loadStates(){
 
 }
 
-function loadedcity(){
-  var name=$('#select_state').val();
-  $('#state_name').val(name)
+function loadedState(){
+  var state=$('#select_state').val();
+  loadCity(state)
 }
 
 
-function loadedcity(state){
-  var states=$('#select_state').val()
-console.log(states)
+function loadCity(state){
+console.log(state)
   $.ajax({
     url:baseurl + "controllers/clint_controller.php",
     type:'POST',
     data:{
-      lodcity:'lodcity',
-      states:states
+      city:'city',
+      state:state
     },
     success:function(data){
       $('#loadCity').html(data)
-      console.log(data)
     }
   })
 }
+function city(){
+var cityname=$('#select_city').val();
+console.log(cityname)
 
+
+}
+
+function insertClint() {
+  let clint_name = $("#clint_name").val();
+  validName(clint_name);
+  
+  let clint_number = $("#clint_number").val();
+  // validNumber(String(clint_number));
+
+  let clint_address = $("#clint_address").val();
+  validAddress(clint_address);
+
+  let clint_state=$('#select_state').val();
+
+  let clint_city=$('#select_city').val();
+  
+
+  let clint_pincode = $("#clint_pincode").val();
+  validPincode(clint_pincode);
+
+  let insert_clint = $("#insert_clint").val();
+
+  $.ajax({
+      url: baseurl + 'controllers/clint_controller.php',
+    type: "POST",
+    data: {
+      clint_name: clint_name,
+      clint_phone: clint_number,
+      clint_address: clint_address,
+      clint_state: clint_state,
+      clint_city: clint_city,
+      clint_pincode: clint_pincode,
+      insert_clint: insert_clint,
+    },
+    success: function (data) {
+      if (data.trim() == 1) {
+console.log(data)
+      //   window.location.href='clint_master.php';
+      // $("#add_user").trigger("reset");
+      // $("#add_user div").hide();
+    
+      } else {
+        console.log("error");
+      }
+    },
+  });
+}

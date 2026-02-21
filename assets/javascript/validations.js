@@ -36,7 +36,7 @@ function validNumber(number){                          ///////////////////////nu
   if (number == "") {
     $("#number_valid").show();
     $("#number_valid").text("enter number").css("color", "red");
-}else if(!number.match(phoneno)){
+}else if(number.test(phoneno)==false){
   $("#number_valid").show();
     $("#number_valid").text("enter valid number").css("color", "red");
 
@@ -59,3 +59,29 @@ function validEmail(email){                          //////////////////email
   }
 }
 console.log("working");
+function validAddress(address)
+{
+  if (address == "") {
+    $("#address_valid").show();
+    $("#address_valid").text("enter address").css("color", "red");
+    
+  }
+  else{
+    
+    $("#address_valid").hide();
+    
+  }
+}
+function validPincode(pincode){
+  if (pincode == "") {
+    $("#pincode_valid").show();
+    $("#pincode_valid").text("enter pincode").css("color", "red");
+    
+  }
+  
+  else{
+    
+    $("#pincode_valid").hide();
+    
+  }
+}
