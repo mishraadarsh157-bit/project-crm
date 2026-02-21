@@ -28,7 +28,7 @@ class show
         $result = mysqli_query($this->conn, $seql);
         $output = "";
         if (mysqli_num_rows($result) > 0) {
-            $output = "<table class='table table-bordered'>
+            $output = "<div class='holding-user-table'><table class='table table-bordered'>
             <tr><td colspan='5'>
           
             <input type='text' id='invis' value='$page_no' hidden></td>
@@ -81,7 +81,7 @@ class show
                 </td>
                 </tr>";
             }
-            $output .= "</table>";
+            $output .= "</table></div><hr>";
             $sql = "select * from $table;";
             $result = mysqli_query($this->conn, $sql);
             $total_records = mysqli_num_rows($result);

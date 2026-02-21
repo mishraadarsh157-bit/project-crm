@@ -139,3 +139,8 @@ border: 0px;
 .sort i{
     font-size: .2cm;
 }
+.holding-user-table{
+    height: calc(83vh - 178px);
+    overflow-x: auto;
+    margin-bottom: 5px;
+}
