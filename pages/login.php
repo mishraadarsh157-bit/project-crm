@@ -40,10 +40,7 @@ if (isset($_SESSION['admin'])===true) {
                 <input type="password" name="password" id="password" class="form-control from-control-sm rounded mb-3">
                 <div id="pass_valid"></div>
                 <input type="button" name="submit" id="user_login" value="SUBMIT"  class="btn btn-sm text-white bg-danger w-100 rounded my-3">
-            <?php 
-            $url = basename($_SERVER['PHP_SELF']);
-            echo $url;
-            ?>
+           
 
             </form>
         </div>
