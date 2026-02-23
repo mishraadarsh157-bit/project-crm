@@ -12,78 +12,15 @@ class client_master
     }
 
     public function loadClients($table1,$table2,$table3){
-        $sql="SELECT * FROM $table1 inner join $table2 on $table1.city_id=$table2.id inner join $table3 on $table1.state_id= $table3.id";
+        $sql="SELECT client_id,client_name,phone,client_email,address,name,city,pincode,client_status FROM $table1 inner join $table2 on $table1.city_id=$table2.id inner join $table3 on $table1.state_id= $table3.id";
 
         $result=mysqli_query($this->conn,$sql);
-        // echo "<pre>";
-        // var_dump($result);
-        // echo "</pre>";
         if(mysqli_num_rows($result)>0){
         while($row=mysqli_fetch_array($result)){    
         $dbData[]=$row;
         }}
         $jsondata= json_encode($dbData);
-        
-        echo $jsondata;
-
-        
-        // echo explode(',',$result);
-        // if(mysqli_num_rows($result)>0){
-        //     $output ="";
-        //    $output .= "<div class='holding-user-table'><table class='table  bg-white'>
-        //     <tr><td colspan='8'></td><td><input type='text'></td></tr>  <tr class='bg-skyblue user-table-tr text-white'>
-
-        //                 <th class='ps-5 id'>Id 
-        //                 <button class='sort' id='id_asc' value='asc'><i class='bi bi-arrow-down'></i></button>
-        //                 <button class='sort' id='id_desc' value='id_desc'><i  class='bi bi-arrow-up'></i></button></th>
-                       
-        //                 <th class='name'>Name 
-        //                 <button class='sort' id='name_asc' value='asc'><i class='bi bi-arrow-down'></i></button>
-        //                 <button class='sort' id='name_desc' value='id_desc'><i  class='bi bi-arrow-up'></i></button></th>
-                       
-        //                 <th class'email'>Email </th>
-        //                 <th class='phone'>Phone 
-        //                 <button class='sort' id='phone_asc' value='asc'><i class='bi bi-arrow-down'></i></button>
-        //                 <button class='sort' id='phone_desc' value='id_desc'><i  class='bi bi-arrow-up'></i></button>
-        //                 </th>
-        //                  <th class'address'>Address </th>
-        //                  <th class='state'>State </th>
-        //                  <th class='city'>City </th>
-                       
-                       
-        //                 <th class='text-center status'>Status</th>
-        //                 <th class='text-center action'>Action</th>
-        //             </tr>
-        //     ";
-        //     while($row=mysqli_fetch_array($result)){
-        //         $btnClass = ($row['client_status'] == 'ACTIVE') ? ' btn-outline-success ' : 'btn-outline-danger';
-        //         $output .= "<tr>
-        //         <td class='ps-5 text-muted'>" . $row['client_id'] . "</td>
-        //         <td class=''>" . $row['client_name'] . "</td>
-        //         <td class='text-muted'>" . $row['client_email'] . "</td>
-        //         <td class='text-muted'>" . $row['phone'] . "</td>
-        //         <td class='text-muted'>" . $row['address'] . "</td>
-        //         <td class='text-muted'>" . $row['name'] . "</td>
-        //         <td class='text-muted'>" . $row['city'] . "</td>
-           
-           
-        //         <td class='text-center'><button class='status btn btn-sm $btnClass'>" . $row['client_status'] . "</button></td>
-        //         <td class='text-center'>
-        //         <button class='btn btn-sm btn-outline-success rounded-pill' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='{$row['id']}'  id='update' value='update'>
-        //         <i class='bi bi-pencil-square'>
-        //         </i></button>
-
-        //         <button class='btn btn-sm btn-outline-danger rounded-pill' name='delete' data-did='{$row['id']}'  id='delete' value='delete'>
-        //         <i class='bi bi-trash3'>
-        //         </i></button>
-
-        //         </td>
-        //         </tr>";
-        //     }
-        // $output .= "</table></div><hr>";
-        // echo $output;
-
-        // }
+        echo $jsondata;      
     }
 
     public function insert($c_name,$c_number,$c_email,$c_address,$c_city,$c_state,$c_pincode) {

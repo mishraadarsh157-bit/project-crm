@@ -61,7 +61,7 @@ class show
                     </tr>
             <tr>";
             while ($row = mysqli_fetch_assoc($result)) {
-                $btnClass = ($row['STATUS'] == 'ACTIVE') ? ' btn-outline-success ' : 'btn-outline-danger';
+                $btnClass = ($row['STATUS'] == 'ACTIVE') ? ' status-btn-green ' : 'status-btn-red';
                 $output .= "
                 <td class='p-2 ps-5 text-muted'>" . $row['id'] . "</td>
                 <td class='p-2 pb-0 '>" . $row['name'] . "</td>
@@ -69,11 +69,11 @@ class show
                 <td class='p-2 pb-0 text-muted'>" . $row['phone'] . "</td>
                 <td class='p-2 pb-0 text-center'><button class='status btn btn-sm $btnClass'>" . $row['STATUS'] . "</button></td>
                 <td class='p-2 pb-0 text-center'>
-                <button class='btn btn-sm btn-outline-success rounded-pill' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='{$row['id']}'  id='update' value='update'>
+                <button class='btn btn-sm  rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='{$row['id']}'  id='update' value='update'>
                 <i class='bi bi-pencil-square'>
                 </i></button>
 
-                <button class='btn btn-sm btn-outline-danger rounded-pill' name='delete' data-did='{$row['id']}'  id='delete' value='delete'>
+                <button class='btn btn-sm  rounded-pill status-btn-red' name='delete' data-did='{$row['id']}'  id='delete' value='delete'>
                 <i class='bi bi-trash3'>
                 </i></button>
 

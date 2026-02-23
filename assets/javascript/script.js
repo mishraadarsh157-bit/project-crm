@@ -502,7 +502,7 @@ console.log(data)
     },
   });
 }
-
+/////////////////////first load table using json
 function clientData(){
 console.log('client data')
   $.ajax({
@@ -513,24 +513,47 @@ console.log('client data')
       page_name:'clientPage'
     },
     success: function(data){
-   console.log(typeof(data))
-   data=data.split('},{')
-    let table = '<table border="1" class="bg-white"><tr>';
-    // Create headers from first object's keys
-      table += '<th>id</th>'
-      table += '<th>name</th>'
-      table += '<th>email</th>'
+       data=JSON.parse(data)
+       console.log(data)
+    let table = '<table border="1" class="table bg-white"><tr class="bg-skyblue" style="whitespace:nowrap;">';
+      table += '<th class="id">id</th>'
+      table += '<th class="name">name</th>'
+      table += '<th class="phone">Phone</th>'
+      table += '<th class="email">email</th>'
+      table += '<th class="address">Address</th>'
+      table += '<th class="state">State</th>'
+      table += '<th class="city">City</th>'
+      table += '<th class="pincode">Pincode</th>'
+      table += '<th class="status text-center">Status</th>'
+      table += '<th class="action">Action</th>'
     table += '</tr>';
-    // // Create rows
     data.forEach(function(value) {
-      table += '<tr>';
-        table += `<td>${value.id}</td>`;
+      table += '<tr style="height:40px;whitespace:nowrap;">';
+        table += `<td class='text-muted'>${value[0]}</td>`;
+        table += `<td class='text-success'>${value[1]}</td>`;
+        table += `<td class='text-muted'>${value[2]}</td>`;
+        table += `<td class=''>${value[3]}</td>`;
+        table += `<td class='text-muted'>${value[4]}</td>`;
+        table += `<td class='text-muted'>${value[5]}</td>`;
+        table += `<td class='text-muted'>${value[6]}</td>`;
+        table += `<td class='text-muted'>${value[7]}</td>`;
+        if(value[8]=='ACTIVE'){
+          var btn_stat='status-btn-green';
+        }
+        else{
+          var btn_stat='status-btn-red';
+        }
+        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value[8]}</button></td>`;
+        table += `<td class='text-muted'><button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='{$row['id']}'  id='update' value='update'>
+                <i class='bi bi-pencil-square'>
+                </i></button> <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='{$row['id']}'  id='delete' value='delete'>
+                <i class='bi bi-trash3'>
+                </i></button></td>`;
       table += '</tr>';
     });
     
     table += '</table>';
-    console.log(table)
-    $('#load_clients').html(data); 
+    $('#load_clients').html(table); 
     }
 
   })

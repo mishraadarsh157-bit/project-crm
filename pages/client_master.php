@@ -20,12 +20,10 @@ include_once "dashboard.php";
     <div class="tab-content" id="myTabContent">
 
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-            <table class="table">
-                <tr>
-                    <td>table</td>
-                </tr>
-            </table>
-            <div id="load_clients"></div>
+            
+            <div id="load_clients" class='table_area bg-white rounded border'>
+
+            </div>
 
         </div>
 
