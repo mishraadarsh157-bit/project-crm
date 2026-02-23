@@ -97,13 +97,13 @@ include_once "dashboard.php";
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Update form</h4>
+        <h4 class="modal-title">Update User Data</h4>
         <button type="button" class="btn-close btn-outline-danger" data-bs-dismiss="modal"></button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-      <form action="" class="update_form">
+      <form action="" class="update_user_form">
       
       
 </form>

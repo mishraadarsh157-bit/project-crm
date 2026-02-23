@@ -64,7 +64,7 @@ $("#hide_sidebar").click(function () {
   $("#left_sidebar").css("width", "8%");
   $(".content-body").css("width", "92%");
   $(".masters li #user_master").html('<i class="bi bi-people"></i>');
-  $(".masters li #clint_master").html('<i class="bi bi-person-circle"></i>');
+  $(".masters li #client_master").html('<i class="bi bi-person-circle"></i>');
   $(".masters li #item_master").html('<i class="bi bi-diagram-3"></i>');
   $(".logout form #logout").html('<i class="bi bi-box-arrow-left"></i>');
   $(".logout form").css("width", "5%");
@@ -78,8 +78,8 @@ $("#show_sidebar").click(function () {
   $(".masters li #user_master").html(
     '<i class="bi bi-people"></i>  USER MASTER ',
   );
-  $(".masters li #clint_master").html(
-    '<i class="bi bi-person-circle"></i>   CLINT MASTER  ',
+  $(".masters li #client_master").html(
+    '<i class="bi bi-person-circle"></i>   CLIENT MASTER  ',
   );
   $(".masters li #item_master").html(
     '<i class="bi bi-diagram-3"></i>    ITEM MASTER ',
@@ -124,11 +124,12 @@ function userData(page,limit,asc_id,asc_name,asc_phone) {
 }
 
 
-$('#id_asc').hide();
+
 
 $(document).on("click", "#pagination a", function (e) {
   e.preventDefault();
   var asc_id=$('#id_asc').val();
+  
   var asc_name=$('#name_asc').val();
   var asc_phone=$('#phone_asc').val();
   var limit=$('#limit').val();
@@ -169,10 +170,11 @@ $(document).on("click", "#forward", function (e) {
   userData(page,limit,asc_id,asc_name,asc_phone);
 });
 
-
+$('#id_asc').hide();
 $(document).on("click", "#id_desc", function (e) {
   e.preventDefault();
   var asc_id=$('#id_desc').val()  ? 'desc' : 'asc';
+  
   var asc_name=$('#name_asc').val();
   var asc_phone=$('#phone_asc').val();
   var limit=$('#limit').val();
@@ -306,7 +308,7 @@ $(document).on("click", "#update", function () {
       update:update
     },
     success: function (data) {
-      $(".update_form").html(data);
+      $(".update_user_form").html(data);
     },
   });
 });
@@ -317,7 +319,7 @@ $(document).on("click", "#edit", function (e) {
   let user_name = $("#name").val();
   validName(user_name)
   let user_number = $("#number").val();
-  validNumber(user_number)
+  // validNumber(user_number)
   let user_email = $("#email").val();
   validEmail(user_email)
   let status = $("#status").val();
@@ -410,14 +412,14 @@ $.ajax({
 
 
 
-////////////////////////////////////clint master
+////////////////////////////////////client master
 
 // load select states into form////
 
 function loadStates(){
 
   $.ajax({
-    url:baseurl + "controllers/clint_controller.php",
+    url:baseurl + "controllers/client_controller.php",
     type:'POST',
     data:{
       states:'states'
@@ -439,66 +441,98 @@ function loadedState(){
 function loadCity(state){
 console.log(state)
   $.ajax({
-    url:baseurl + "controllers/clint_controller.php",
+    url:baseurl + "controllers/client_controller.php",
     type:'POST',
     data:{
       city:'city',
       state:state
     },
     success:function(data){
+      
       $('#loadCity').html(data)
     }
   })
 }
-function city(){
-var cityname=$('#select_city').val();
-console.log(cityname)
 
 
-}
-
-function insertClint() {
-  let clint_name = $("#clint_name").val();
-  validName(clint_name);
+function insertClient() {
+  let client_name = $("#client_name").val();
+  validName(client_name);
   
-  let clint_number = $("#clint_number").val();
-  // validNumber(String(clint_number));
+  let client_number = $("#client_number").val();
+  // validNumber(String(client_number));
+  let client_email=$('#client_email').val();
+  validEmail(client_email);
+  let client_address = $("#client_address").val();
+  validAddress(client_address);
 
-  let clint_address = $("#clint_address").val();
-  validAddress(clint_address);
+  let client_state=$('#select_state').val();
 
-  let clint_state=$('#select_state').val();
-
-  let clint_city=$('#select_city').val();
+  let client_city=$('#select_city').val();
   
 
-  let clint_pincode = $("#clint_pincode").val();
-  validPincode(clint_pincode);
+  let client_pincode = $("#client_pincode").val();
+  validPincode(client_pincode);
 
-  let insert_clint = $("#insert_clint").val();
+  let insert_client = $("#insert_client").val();
 
   $.ajax({
-      url: baseurl + 'controllers/clint_controller.php',
+      url: baseurl + 'controllers/client_controller.php',
     type: "POST",
     data: {
-      clint_name: clint_name,
-      clint_phone: clint_number,
-      clint_address: clint_address,
-      clint_state: clint_state,
-      clint_city: clint_city,
-      clint_pincode: clint_pincode,
-      insert_clint: insert_clint,
+      client_name: client_name,
+      client_phone: client_number,
+      client_email:client_email,
+      client_address: client_address,
+      client_city: client_city,
+      client_state: client_state,
+      client_pincode: client_pincode,
+      insert_client: insert_client,
     },
     success: function (data) {
       if (data.trim() == 1) {
 console.log(data)
-      //   window.location.href='clint_master.php';
-      // $("#add_user").trigger("reset");
-      // $("#add_user div").hide();
+        window.location.href='client_master.php';
+      $("#add_client").trigger("reset");
     
       } else {
+        console.log(data)
         console.log("error");
       }
     },
   });
 }
+
+function clientData(){
+console.log('client data')
+  $.ajax({
+    url: baseurl + 'controllers/client_controller.php',
+    type:'POST',
+    datatype:'json',
+    data:{
+      page_name:'clientPage'
+    },
+    success: function(data){
+   console.log(typeof(data))
+   data=data.split('},{')
+    let table = '<table border="1" class="bg-white"><tr>';
+    // Create headers from first object's keys
+      table += '<th>id</th>'
+      table += '<th>name</th>'
+      table += '<th>email</th>'
+    table += '</tr>';
+    // // Create rows
+    data.forEach(function(value) {
+      table += '<tr>';
+        table += `<td>${value.id}</td>`;
+      table += '</tr>';
+    });
+    
+    table += '</table>';
+    console.log(table)
+    $('#load_clients').html(data); 
+    }
+
+  })
+}
+clientData()

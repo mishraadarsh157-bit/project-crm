@@ -13,8 +13,8 @@ $router->addRoute('http://localhost/project/pages/user_master.php', function() {
     require 'http://localhost/project/controllers/user_usermaster.php';
 });
 
-$router->addRoute('http://localhost/project/pages/clint_master.php', function() {
-    require 'http://localhost/project/controllers/clint_master.php';
+$router->addRoute('http://localhost/project/pages/client_master.php', function() {
+    require 'http://localhost/project/controllers/client_master.php';
 });
 $router->addRoute('http://localhost/project/pages/item_master.php', function() {
     require 'http://localhost/project/controllers/item_master.php';

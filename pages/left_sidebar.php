@@ -10,7 +10,7 @@
    
 
 
-    <li class="mb-5"><a href="<?php echo"clint_master.php";?>" id="clint_master"><i class="bi bi-person-circle me-3"></i>   CLINT MASTER  </a></li>
+    <li class="mb-5"><a href="<?php echo"client_master.php";?>" onclick='clientData()' id="client_master"><i class="bi bi-person-circle me-3"></i>   CLIENT MASTER  </a></li>
     <li class="mb-5"><a href="<?php echo"item_master.php";?>" id="item_master"><i class="bi bi-diagram-3 me-3"></i>   ITEM MASTER  </a></li>
     <li class="logout"><form action="" method="post" class="logout_form"><button class="btn btn-outline-danger mt-5 ms-3 w-75 " id="logout" value="logout"><i class="bi bi-box-arrow-left"></i>   LOGOUT  </button></form></li>
 </ul>

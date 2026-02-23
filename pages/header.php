@@ -1,5 +1,5 @@
 
-<div class="header navbar navber-expand container-fluid m-0 row w-100 p-0">
+<div class="header bg-skyblue navbar navber-expand container-fluid m-0 row w-100 p-0">
 
     <div class="logo p-2 col-11">
         <img src="../assets/images/demo.png" id="logo" alt="">

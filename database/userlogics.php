@@ -28,11 +28,10 @@ class show
         $result = mysqli_query($this->conn, $seql);
         $output = "";
         if (mysqli_num_rows($result) > 0) {
-            $output = "<div class='holding-user-table'><table class='table table-bordered'>
-            <tr><td colspan='5'>
+            $output = "<div class='holding-user-table'><table class='table '>
+            <tr><td colspan='6' align='right'>
           
-            <input type='text' id='invis' value='$page_no' hidden></td>
-            <td><select id='limit' onchange='limitData()' class='form-select' value='$limit'>
+            <input type='text' id='invis' value='$page_no' hidden><select id='limit' onchange='limitData()' class='form-select w-25' value='$limit' >
             <option value='$limit'>LIMIT of $limit </option>
             <option value='5'>5</option>
             <option value='10'>10</option>
@@ -43,33 +42,33 @@ class show
              
             <tr class='bg-skyblue user-table-tr text-white'>
 
-                        <th class='ps-5'>Id 
-                        <button class='sort' id='id_asc' value='asc'><i class='bi bi-arrow-down'></i></button>
+                        <th class='ps-5 id'>Id 
+                        <button class='sort' id='id_asc' value='asc' ><i class='bi bi-arrow-down'></i></button>
                         <button class='sort' id='id_desc' value='id_desc'><i  class='bi bi-arrow-up'></i></button></th>
                        
-                        <th>Name 
+                        <th class='name'>Name 
                         <button class='sort' id='name_asc' value='asc'><i class='bi bi-arrow-down'></i></button>
                         <button class='sort' id='name_desc' value='id_desc'><i  class='bi bi-arrow-up'></i></button></th>
                        
-                        <th>Email </th>
+                        <th class='email'>Email </th>
                         <th class=''>Phone 
                         <button class='sort' id='phone_asc' value='asc'><i class='bi bi-arrow-down'></i></button>
-                        <button class='sort' id='phone_desc' value='id_desc'><i  class='bi bi-arrow-up'></i></button>
+                        <button class='sort phone' id='phone_desc' value='id_desc'><i  class='bi bi-arrow-up'></i></button>
                         </th>
                        
-                        <th class='text-center'>Status</th>
-                        <th class='text-center'>Action</th>
+                        <th class='text-center status'>Status</th>
+                        <th class='text-center action'>Action</th>
                     </tr>
             <tr>";
             while ($row = mysqli_fetch_assoc($result)) {
                 $btnClass = ($row['STATUS'] == 'ACTIVE') ? ' btn-outline-success ' : 'btn-outline-danger';
                 $output .= "
-                <td class='ps-5 text-muted'>" . $row['id'] . "</td>
-                <td class=''>" . $row['name'] . "</td>
-                <td class='text-muted'>" . $row['email'] . "</td>
-                <td class='text-muted'>" . $row['phone'] . "</td>
-                <td class='text-center'><button class='status btn btn-sm $btnClass'>" . $row['STATUS'] . "</button></td>
-                <td class='text-center'>
+                <td class='p-2 ps-5 text-muted'>" . $row['id'] . "</td>
+                <td class='p-2 pb-0 '>" . $row['name'] . "</td>
+                <td class='p-2 pb-0 text-muted'>" . $row['email'] . "</td>
+                <td class='p-2 pb-0 text-muted'>" . $row['phone'] . "</td>
+                <td class='p-2 pb-0 text-center'><button class='status btn btn-sm $btnClass'>" . $row['STATUS'] . "</button></td>
+                <td class='p-2 pb-0 text-center'>
                 <button class='btn btn-sm btn-outline-success rounded-pill' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='{$row['id']}'  id='update' value='update'>
                 <i class='bi bi-pencil-square'>
                 </i></button>
@@ -86,15 +85,18 @@ class show
             $result = mysqli_query($this->conn, $sql);
             $total_records = mysqli_num_rows($result);
             $total_pages = ceil($total_records / $limit);
-            $output .= "<div id='pagination' style='position:fixed;  padding:0px 30%' class='text-center mb-5'>";
+            $output .= "<div id='pagination' style='position:fixed;' class=' mb-5'>";
             $url = 'user_master.php';
                 if($page_no>1){
             $output .= "<button class='mx-1 btn btn-sm btn-outline-success'  id='back'><</button>";
                  }
             if ($total_records > $limit) {
                 for ($i = 1; $i <= $total_pages; $i++) {
-
+                    if($i>1){
+                        continue;
+                    }else{
                     $output .= "<a class='mx-1 btn btn-sm btn-outline-success'   href='' id='$i'>{$i}</a>";
+                }
                 }
             }
             if($page_no<$total_pages){
