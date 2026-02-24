@@ -29,23 +29,29 @@ include_once "dashboard.php";
 <!-- /////////////////////////////////////////////////////////////////////////////
  /////////////////////////////////////////////////////////////////////// -->
 
-            <form id="add_user" class="px-5  m-5 mt-2 border">
+            <form id="add_user" class="p-5">
+                <div class="row w-100">
                 <h1>ADD USER</h1>
+                <hr>
+                <div class="col-12">
                 User Name <sup class="text-danger">*</sup>:
-                <input type="text" title="NAME" id="user_name" name="user_name" minlength="2" maxlength="15" class="form-control  form-control-sm  border ">
-                <div id="name_valid" class="text-danger mb-3 "></div>
+                <input type="text" title="NAME" id="user_name" name="user_name" minlength="2" maxlength="15" class="form-control    border ">
+                <div id="name_valid" class="text-danger mb-3 "></div></div>
+                <div class="col-6">
                 User Password :
-                <input type="password" title="PASSWORD" id="user_pass" name="user_pass" class="form-control form-control-sm border ">
-                <div id="pass_valid" class="text-danger mb-3 "></div>
-                User Number :
-                <input type="number" title="NUMBER" id="user_number" min="10" max="10" name="user_number" class="form-control form-control-sm border " required>
-                <div id="number_valid" class="text-danger mb-3 "></div>
+                <input type="password" title="PASSWORD" id="user_pass" name="user_pass" class="form-control  border ">
+                <div id="pass_valid" class="text-danger mb-3 "></div></div>
+                <div class="col-6"> User Number :
+                <input type="number" title="NUMBER" id="user_number"  name="user_number" class="form-control  border " required>
+                <div id="number_valid" class="text-danger mb-3 "></div></div>
+                <div class="col-12">
                 User E-Mail
-                <input type="email" title="Email" id="user_email" required name="user_email" class="form-control form-control-sm border ">
-                <div id="email_valid" class="text-danger mb-3 "></div>
-
-                <input type="button" value="SAVE" id="save_user" class="save w-100  btn-sm bg-skyblue btn my-3" onclick="insertUser()">
-                <input type="reset" value="RESET" class="reset_insert w-100 mb-2 btn btn-sm bg-danger">
+                <input type="email" title="Email" id="user_email" required name="user_email" class="form-control  border ">
+                <div id="email_valid" class="text-danger mb-3 "></div></div><hr>
+                <div class="col-8"></div><div class="col-4">
+                <input type="button" value="SAVE" id="save_user" class="save w-50 status-btn-green  btn-sm bg-skyblue btn my-3" onclick="insertUser()">
+                <input type="reset" value="RESET" class="reset_insert w-25 btn btn-sm status-btn-red"></div>
+                </div>
             </form>
         </div>
         </div> 
@@ -96,14 +102,14 @@ include_once "dashboard.php";
     <div class="modal-content">
 
       <!-- Modal Header -->
-      <div class="modal-header">
+      <div class="modal-header  bg-skyblue">
         <h4 class="modal-title">Update User Data</h4>
         <button type="button" class="btn-close btn-outline-danger" data-bs-dismiss="modal"></button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-      <form action="" class="update_user_form">
+      <form action="" class="update_user_form p-3">
       
       
 </form>

@@ -2,18 +2,20 @@ function validName(name) {            ////////////////////////////////name
   if (name == "") {
     $("#name_valid").show();
     $("#name_valid").text("enter name").css("color", "red");
+    return false;
     
   }
   else if(name.length <2 && name.length >15 ){
 
     $("#name_valid").show();
     $("#name_valid").text("enter valid name").css("color", "red");
+    return false;
     
   }
   else{
     
     $("#name_valid").hide();
-    
+    return true;
   }
 }
 function validPass(password) {                       /////////////////password
@@ -31,17 +33,19 @@ function validPass(password) {                       /////////////////password
 }
 
 function validNumber(number){                          ///////////////////////number
-  var phoneno = /[0-9]{10}$/;
-// var phoneno = /^\d{10}$/;
+  var phoneno = /[0-9]{10,10}$/;
+
   if (number == "") {
     $("#number_valid").show();
     $("#number_valid").text("enter number").css("color", "red");
-}else if(number.test(phoneno)==false){
+    return false;
+}else if(phoneno.test(number)==false){
   $("#number_valid").show();
     $("#number_valid").text("enter valid number").css("color", "red");
-
+  return false;
 }else{
     $("#number_valid").hide();
+    return true;
   }
 
 }

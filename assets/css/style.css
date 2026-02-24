@@ -95,7 +95,6 @@ transition: all ease-in-out .5s;
 } */
 .form_area{
   height: calc(95vh - 98px);
-    padding:00px 20%;
 }
 .bg-skyblue{
     /* background-color: #0AC4E0; */

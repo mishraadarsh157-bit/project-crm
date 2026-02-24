@@ -87,20 +87,29 @@ class show
             $total_pages = ceil($total_records / $limit);
             $output .= "<div id='pagination' style='position:fixed;' class=' mb-5'>";
             $url = 'user_master.php';
-                if($page_no>1){
+            if($page<=1){
+            $output .= "<button class='mx-1 btn btn-sm bg-secondary '  id=''><</button>";
+                
+            }
+            else if($page_no>1){
             $output .= "<button class='mx-1 btn btn-sm btn-outline-success'  id='back'><</button>";
                  }
-            if ($total_records > $limit) {
+            
+            if ($total_records >= $limit) {
                 for ($i = 1; $i <= $total_pages; $i++) {
                     if($i>1){
                         continue;
                     }else{
-                    $output .= "<a class='mx-1 btn btn-sm btn-outline-success'   href='' id='$i'>{$i}</a>";
+                    $output .= "<a class='mx-1 btn btn-sm btn-outline-success'   href='' id='$page'>{$page}</a>";
                 }
                 }
             }
             if($page_no<$total_pages){
                     $output .= "<button class='mx-1 btn btn-sm btn-outline-success' href='' id='forward'>></button>";
+            }
+            else if($page_no=$total_pages){
+            $output .= "<button class='mx-1 btn btn-sm bg-secondary'  id=''>></button>";
+                
             }
             $output .= "</div>";
 
@@ -163,16 +172,16 @@ class update
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<form><input type='number' id='id' hidden value='{$row['id']}'>";
 
-                echo "<input type='text' placeholder='name'  id='name' class='form-control form-control-sm mb-3' value='{$row['name']}' required><div id='name_valid' class='text-danger mb-3 ''></div>";
-                echo "<input type='text' placeholder='number'  id='number' class='form-control form-control-sm mb-3' value='{$row['phone']}' required><div id='number_valid'></div>";
-                echo "<input type='text' placeholder='email'  id='email' class='form-control form-control-sm mb-3' value='{$row['email']}' required><div id='email_valid'></div>";
+                echo "<input type='text' placeholder='name'  id='name' class='form-control mb-3' value='{$row['name']}' required><div id='name_valid' class='text-danger mb-3 ''></div>";
+                echo "<input type='text' placeholder='number'  id='number' class='form-control mb-3' value='{$row['phone']}' required><div id='number_valid'></div>";
+                echo "<input type='text' placeholder='email'  id='email' class='form-control mb-3' value='{$row['email']}' required><div id='email_valid'></div>";
 
-                echo "<select id='status' class='form-control' value='{$row['STATUS']}'>
+                echo "<select id='status' class='form-select mb-5' value='{$row['STATUS']}'>
                 <option value='ACTIVE'>ACTIVE</option>
                 <option value='INACTIVE'>INACTIVE</option>
-                </select>";
-                echo  "<input type='button' class='btn btn-outline-primary' id='edit' value='EDIT' >
-        <input type='reset' value='RESET' class='btn btn-outline-danger'></form>";
+                </select><hr>";
+                echo  "<input type='button' class='btn status-btn-green' id='edit' value='EDIT' >
+        <input type='reset' value='RESET' class='btn status-btn-red'></form>";
             }
         }
     }
