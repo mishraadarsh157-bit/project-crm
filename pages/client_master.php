@@ -71,8 +71,8 @@ include_once "dashboard.php";
 
                         <div class="col-8 p-3 pt-5"></div>
                         <div class="col-4 px-3">
-                            <input type="button" p-3 pt-5' id="insert_client" onclick='insertClient()' class="btn btn-outline-success w-50" value='Submit'>
-                            <button type="reset" class="btn  btn-outline-danger w-25">Reset</button>
+                            <input type="button" p-3 pt-5' id="insert_client" onclick='insertClient()' class="btn status-btn-green w-50" value='Submit'>
+                            <button type="reset" class="btn status-btn-red w-25">Reset</button>
                         </div>
 
 
