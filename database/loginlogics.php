@@ -1,6 +1,6 @@
 <?php
 
-include 'database.php';
+include 'database/database.php';
 
 class loginPage
 {
@@ -19,7 +19,7 @@ class loginPage
             while (mysqli_fetch_assoc($result)) {
                 $_SESSION['admin'] = $name;
 
-                echo "http://localhost/project/pages/home.php";
+                echo "/project/home/";
             }
         } else {
             echo "unknown";

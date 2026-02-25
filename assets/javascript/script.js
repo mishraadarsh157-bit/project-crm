@@ -12,7 +12,7 @@ $("#user_login").click(function (e) {
   var save = $("#user_login").val();
 
   $.ajax({
-    url: baseurl + "controllers/loginAPI.php",
+    url:  "/project/loginAPI/",
     type: "POST",
     data: {
       name: name,
@@ -23,7 +23,7 @@ $("#user_login").click(function (e) {
       console.log(response);
       console.log(typeof response);
 
-      if (response.trim() == "http://localhost/project/pages/home.php") {
+      if (response.trim() == "/project/home/") {
         console.log(response);
         window.location.href = response.trim();
       } else {
@@ -38,14 +38,14 @@ $("#logout").click(function (e) {
   console.log("logout");
   var logout = $("#logout").val();
   $.ajax({
-    url: "../controllers/loginAPI.php",
+    url: "/project/loginAPI/",
     type: "POST",
     data: {
       logout: logout,
     },
     success: function (response) {
       if (response.trim() == "logged_out") {
-        window.location.href = "login.php";
+        window.location.href = "/project/";
         console.log("logouted");
       } else {
         console.log("error");
@@ -55,7 +55,7 @@ $("#logout").click(function (e) {
 });
 
 $("#logo").click(function () {
-  window.location.href = "home.php";
+  window.location.href = "/project/home/";
 });
 
 $("#hide_sidebar").click(function () {
@@ -93,7 +93,7 @@ $("#show_sidebar").click(function () {
 
 function userData(page, limit, asc_id, asc_name, asc_phone) {
   $.ajax({
-    url: baseurl + "controllers/user_controller.php",
+    url:"/project/usercontroller/",
     type: "POST",
     data: {
       limit: limit,
@@ -104,7 +104,48 @@ function userData(page, limit, asc_id, asc_name, asc_phone) {
       asc_phone: asc_phone,
     },
     success: function (data) {
-      $("#load_users").html(data);
+      data = JSON.parse(data);
+      console.log(data)
+       let table = '<table border="1" class="table bg-white"> ';
+      table += '<tr><td colspan="9">ABCD</td></tr>';
+      table += '<tr class="bg-skyblue" style="whitespace:nowrap;">';
+      table += '<th class="id">id</th>';
+      table += '<th class="name">name</th>';
+      table += '<th class="phone">Phone</th>';
+      table += '<th class="email">email</th>';
+      table += '<th class="status text-center">Status</th>';
+      table += '<th class="action">Action</th>';
+      table += "</tr>";
+      data.forEach(function (value) {
+        table += '<tr style="height:40px;whitespace:nowrap;">';
+        table += `<td class='text-muted'>${value['id']}</td>`;
+        table += `<td class='text-success'>${value['name']}</td>`;
+        table += `<td class='text-muted'>${value['phone']}</td>`;
+        table += `<td class=''>${value['email']}</td>`;
+        if (value['STATUS'] == "ACTIVE") {
+          var btn_stat = "status-btn-green";
+        } else {
+          var btn_stat = "status-btn-red";
+        }
+        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value['STATUS']}</button></td>`;
+
+        table += `<td class='text-muted'>
+        
+        <button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value['id']}'  id='update_c' value='update_c'>
+                <i class='bi bi-pencil-square'>
+                </i></button>
+                
+                
+        <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='${value['id']}'  id='delete' value='delete'>
+        <i class='bi bi-trash3'></i></button>
+                
+                
+                </td>`;
+        table += "</tr>";
+      });
+
+      table += "</table>";
+      $("#load_users").html(table);
     },
   });
 }
@@ -250,7 +291,7 @@ function insertUser() {
   validEmail(user_email);
   let save_user = $("#save_user").val();
   $.ajax({
-    url: baseurl + "controllers/user_controller.php",
+    url:  "/project/usercontroller/",
     type: "POST",
     data: {
       user_name: user_name,
@@ -261,7 +302,7 @@ function insertUser() {
     },
     success: function (data) {
       if (data.trim() == 1) {
-        window.location.href = "user_master.php";
+        window.location.href = "/project/usermaster/";
         userData();
         $("#add_user").trigger("reset");
         $("#add_user div").hide();
@@ -276,7 +317,7 @@ $(document).on("click", "#update", function () {
   let id = $(this).data("uid");
   let update = $("#update").val();
   $.ajax({
-    url: baseurl + "controllers/user_controller.php",
+    url:  "/project/usercontroller/",
     type: "POST",
     data: {
       id: id,
@@ -301,7 +342,7 @@ $(document).on("click", "#edit", function (e) {
   let update_user = $("#edit").val();
   console.log(update_user);
   $.ajax({
-    url: baseurl + "controllers/user_controller.php",
+    url: "/project/usercontroller/",
     type: "POST",
     data: {
       id: id,
@@ -332,7 +373,7 @@ $(document).on("click", "#delete", function (e) {
   var delet = $("#delete").val();
   var element = this;
   $.ajax({
-    url: baseurl + "controllers/user_controller.php",
+    url: "/project/usercontroller/",
     type: "POST",
     data: {
       id: id,
@@ -359,7 +400,7 @@ function searc() {
   var s_status = $("#search_status").val();
   var search = "search";
   $.ajax({
-    url: baseurl + "controllers/user_controller.php",
+    url: baseurl + "/project/usercontroller/",
     type: "POST",
     data: {
       id: s_id,
@@ -487,29 +528,29 @@ function clientData() {
       table += "</tr>";
       data.forEach(function (value) {
         table += '<tr style="height:40px;whitespace:nowrap;">';
-        table += `<td class='text-muted'>${value[0]}</td>`;
-        table += `<td class='text-success'>${value[1]}</td>`;
-        table += `<td class='text-muted'>${value[2]}</td>`;
-        table += `<td class=''>${value[3]}</td>`;
-        table += `<td class='text-muted'>${value[4]}</td>`;
-        table += `<td class='text-muted'>${value[5]}</td>`;
-        table += `<td class='text-muted'>${value[6]}</td>`;
-        table += `<td class='text-muted'>${value[7]}</td>`;
-        if (value[8] == "ACTIVE") {
+        table += `<td class='text-muted'>${value['client_id']}</td>`;
+        table += `<td class='text-success'>${value['client_name']}</td>`;
+        table += `<td class='text-muted'>${value['phone']}</td>`;
+        table += `<td class=''>${value['client_email']}</td>`;
+        table += `<td class='text-muted'>${value['address']}</td>`;
+        table += `<td class='text-muted'>${value['name']}</td>`;
+        table += `<td class='text-muted'>${value['city']}</td>`;
+        table += `<td class='text-muted'>${value['pincode']}</td>`;
+        if (value['client_status'] == "ACTIVE") {
           var btn_stat = "status-btn-green";
         } else {
           var btn_stat = "status-btn-red";
         }
-        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value[8]}</button></td>`;
+        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value['client_status']}</button></td>`;
 
         table += `<td class='text-muted'>
         
-        <button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value[0]}'  id='update_c' value='update_c'>
+        <button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value['client_id']}'  id='update_c' value='update_c'>
                 <i class='bi bi-pencil-square'>
                 </i></button>
                 
                 
-        <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='${value[0]}'  id='delete' value='delete'>
+        <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='${value['client_id']}'  id='delete' value='delete'>
         <i class='bi bi-trash3'></i></button>
                 
                 

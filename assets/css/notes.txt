@@ -1,20 +1,34 @@
-<?php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+
+
+/////for .htaccess
+
+
+
 
 
 class Router {
     private $routes = [];
 
+    // Register a GET route
     public function get($path, $callback) {
         $this->addRoute('GET', $path, $callback);
     }
 
+    // Register a POST route
     public function post($path, $callback) {
         $this->addRoute('POST', $path, $callback);
     }
 
     private function addRoute($method, $path, $callback) {
+        // Convert route like /user/{id} into a regex pattern
        
         $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[a-zA-Z0-9_]+)', $path);
+        
         $this->routes[] = [
             'method' => $method,
             'pattern' => "#^" . $pattern . "$#",
@@ -28,6 +42,7 @@ class Router {
 
         foreach ($this->routes as $route) {
             if ($route['method'] === $method && preg_match($route['pattern'], $uri, $matches)) {
+                // Extract only the named parameters from regex matches
                 $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
                 return call_user_func_array($route['callback'], $params);
             }
@@ -39,4 +54,34 @@ class Router {
 }
 
 
-?>
+
+////////router
+
+
+
+
+$router = new Router();
+
+// Simple GET route
+$router->get('/', function() {
+    echo "Welcome to the Homepage!";
+});
+
+// GET route with a parameter (e.g., /user/42)
+$router->get('/user/{id}', function($id) {
+    echo "Viewing Profile for User ID: " . htmlspecialchars($id);
+});
+
+// POST route for handling form data
+$router->post('/submit', function() {
+    $name = $_POST['name'] ?? 'Guest';
+    echo "Form submitted! Hello, " . htmlspecialchars($name);
+});
+
+$router->dispatch();
+
+
+
+////////index
+
+

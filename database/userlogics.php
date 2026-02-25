@@ -1,6 +1,6 @@
 <?php
 
-include '../database/database.php';
+include '../project/database/database.php';
 
 class show
 {
@@ -18,7 +18,7 @@ class show
         } else {
             $page = 1;
         }
-        $limit = (int) $limit;
+           $limit = (int) $limit;
         $offset = ($page - 1) * $limit;
 
         $seql = "SELECT * FROM $table
@@ -202,26 +202,26 @@ class update
 
 $upd = new update($conn);
 
-class delete
-{
-    public $conn;
-    public function __construct($conn)
-    {
-        $this->conn = $conn;
-    }
-    public function deleteUser($id)
-    {
-        $sql = "DELETE from users where id = $id";
-        $result = mysqli_query($this->conn, $sql);
-        if ($result == true) {
-            echo 1;
-        } else {
-            echo 'not deleted';
-        }
-    }
-}
+// class delete
+// {
+//     public $conn;
+//     public function __construct($conn)
+//     {
+//         $this->conn = $conn;
+//     }
+//     public function deleteUser($id)
+//     {
+//         $sql = "DELETE from users where id = $id";
+//         $result = mysqli_query($this->conn, $sql);
+//         if ($result == true) {
+//             echo 1;
+//         } else {
+//             echo 'not deleted';
+//         }
+//     }
+// }
 
-$del = new delete($conn);
+// $del = new delete($conn);       //////////made alternate in db logics//////
 
 class search
 {
@@ -248,7 +248,7 @@ class search
          and phone like '%$number%' 
          and email like '%$email%' 
          and STATUS = '$status' 
-         limit {$offset} , {$limit_per_page}";
+         ";
         $result = mysqli_query($this->conn, $seql);
         $output = "";
         if (mysqli_num_rows($result) > 0) {
@@ -284,28 +284,33 @@ class search
                 </td>
                 </tr>";
             }
-            $output .= "</table>";
+            $output .= "</table><hr>";
+
             $sql = "select * from $table
             where id like '%$id%'
          and name like '%$name%' 
          and phone like '%$number%' 
          and email like '%$email%' 
          and STATUS = '$status' 
-         limit {$offset} , {$limit_per_page};";
-            $result = mysqli_query($this->conn, $sql);
-            $total_records = mysqli_num_rows($result);
-            $total_pages = ceil($total_records / $limit_per_page);
-            $output .= "<div id='pagination' class='text-center mb-5'>";
+         limit {$offset} , {$limit_per_page}
+         ";
+         
+         $result = mysqli_query($this->conn, $sql);
+         $total_records = mysqli_num_rows($result);
+         $total_pages = ceil($total_records / $limit_per_page);
+         $output .=$total_records;
+         $output .= "<div id='pagination' class='text-center mb-5'>";
 
             if ($total_records > $limit_per_page) {
+                
                 for ($i = 1; $i <= $total_pages; $i++) {
-
-                    $output .= "<a class='mx-1 btn btn-sm btn-outline-primary' href'' id='{$i}'>{$i}</a>";
-                }
+                  
+        $output .= "<a class='mx-1 btn btn-sm btn-outline-primary' href'' id='{$page}'>{$page}</a>";
+           }
             }
             $output .= "</div>";
 
-            echo $output;
+            echo $output ;
         } else {
             echo "<table class='table'>
             <tr class='bg-skyblue text-white'>
@@ -325,3 +330,19 @@ class search
 
 
 $ser = new search($conn);
+
+
+class user{
+    public $conn;
+    public function __construct($conn){
+        $this->conn=$conn;
+    }
+    public function fetchuser($where){
+        $sql=$where;
+        if($stmt=$this->conn->prepare($sql)){
+        $stmt->bind_param('ss',);
+        }
+    }
+}
+
+$newUser=new user($conn);

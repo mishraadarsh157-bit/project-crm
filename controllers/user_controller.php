@@ -1,9 +1,7 @@
 <?php
+include 'database/userlogics.php';
 
-
-include '../database/userlogics.php';
-
-
+include 'database/db_logics.php';
 
 
 
@@ -14,17 +12,17 @@ include '../database/userlogics.php';
 
 
 if(isset($_POST['page_name'])){
+    $table='users';
     $page_no=$_POST['page_no']??1;    
     $limit=$_POST['limit']??7;
     $odr_id=$_POST['asc_id']??'asc';
     $odr_name=$_POST['asc_name']??'asc';
     $odr_phone=$_POST['asc_phone']??'asc';
-    
+    // $show->showData($table,$page_no,$limit,$odr_id,$odr_name,$odr_phone);///////
+    $crud->fetchData("select * from $table  order by id $odr_id,name $odr_name,phone $odr_phone limit $page_no , $limit");
+    ;}
 
-    $show->showData('users',$page_no,$limit,$odr_id,$odr_name,$odr_phone);
 
-
-    }
 
 
 
@@ -58,7 +56,9 @@ else if(isset($_POST['update_user'])){
 }
 else if(isset($_POST['delete'])){
     $id=$_POST['id'];
-    $del->deleteUser($id);
+    $table='users';
+    // $del->deleteUser($id);///////////////////////
+    $crud->modifyData("delete from $table where id =$id");
 }
 else if(isset($_POST['search'])){
     $id=$_POST['id'];

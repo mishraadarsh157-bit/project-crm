@@ -3,9 +3,16 @@
 
 include '../database/client_logics.php';
 
-if(isset($_POST['page_name'])){
+include '../database/db_logics.php';
 
-$client->loadClients("client","cities","states");
+if(isset($_POST['page_name'])){
+$table1="client";
+$table2="cities";
+$table3="states";
+
+// $client->loadClients("client","cities","states");
+$crud->fetchData("SELECT client_id,client_name,phone,client_email,address,name,city,pincode,client_status FROM $table1 inner join $table2 on $table1.city_id=$table2.id inner join $table3 on $table1.state_id= $table3.id"
+);
 
 }
 
