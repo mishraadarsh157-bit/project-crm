@@ -33,12 +33,12 @@ include_once "dashboard.php";
                     <div class="row w-100">
                         <h1>ADD USER</h1>
                         <hr>
-                        <div class="col-12">
+                        <div class="col-12 my-4">
                             User Name <sup class="text-danger">*</sup>:
                             <input type="text" title="NAME" id="user_name" name="user_name" minlength="2" maxlength="15" class="form-control    border ">
                             <div id="name_valid" class="text-danger mb-3 "></div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 mb-4">
                             User Password :
                             <input type="password" title="PASSWORD" id="user_pass" name="user_pass" class="form-control  border ">
                             <div id="pass_valid" class="text-danger mb-3 "></div>
@@ -47,12 +47,11 @@ include_once "dashboard.php";
                             <input type="number" title="NUMBER" id="user_number" name="user_number" class="form-control  border " required>
                             <div id="number_valid" class="text-danger mb-3 "></div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 mb-4">
                             User E-Mail
                             <input type="email" title="Email" id="user_email" required name="user_email" class="form-control  border ">
                             <div id="email_valid" class="text-danger mb-3 "></div>
                         </div>
-                        <hr>
                         <div class="col-8"></div>
                         <div class="col-4">
                             <input type="button" value="SAVE" id="save_user" class="save w-50 status-btn-green  btn-sm bg-skyblue btn my-3" onclick="insertUser()">
@@ -96,10 +95,12 @@ include_once "dashboard.php";
             </table>
             <table class='w-100'>
                 <tr>
-                    <td colspan="5" align="">
+                    <td colspan="5" class="w-75" align="">
                     <input id="invis" hidden type="text" value='1'>
-                    <input type="text" class='field' onchange='userData()' value='id'>
-                    <input type="text" class='order' onchange='userData()' value='asc'></td><td>
+                    <input type="text"  class='field' onchange='userData()' hidden value='id'>
+                    <input type="text" class='order' onchange='userData()' hidden value='asc'>
+                    <input type="text" hidden id="icon_hold" value='bi-arrow-down-up'>
+                </td><td>
                 <select class='form-select' onchange='limitData()' name="" value='' id="limit">
                     <option value="5">5</option>
                     <option value="10">10</option>
@@ -110,6 +111,8 @@ include_once "dashboard.php";
                 </tr>
             </table>
             <div id="load_users" style='box-shadow:0px 0px 5px #afb9b9;' class="table_area bg-white rounded border">
+
+            
 
             </div>
 

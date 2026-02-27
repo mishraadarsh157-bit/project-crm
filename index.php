@@ -31,6 +31,18 @@ $router->post('/project/userlogics/', function() {
     require 'database/userlogics.php';
 });
 
+$router->get('/project/clientcontroller/', function() {
+    require 'controllers/client_controller.php';
+    
+    
+});
+$router->post('/project/clientcontroller/', function() {
+    require 'controllers/client_controller.php';
+    
+    
+});
+
+
 
 
 $request =parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

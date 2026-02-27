@@ -10,21 +10,25 @@ class loginPage
         $this->conn = $conn;
     }
 
-    public function userInfo($name, $password)
+    public function userInfo($email, $password)
     {
-
-        $sql = "SELECT * from users where binary name='{$name}' and binary pass='{$password}';";
-        $result = mysqli_query($this->conn, $sql);
-        if ($result->num_rows > 0) {
-            while (mysqli_fetch_assoc($result)) {
-                $_SESSION['admin'] = $name;
-
-                echo "/project/home/";
-            }
-        } else {
-            echo "unknown";
-        }
+$stmt = $this->conn->prepare("SELECT pass FROM users WHERE email = ?");
+$stmt->bind_param("s", $email); 
+$stmt->execute();
+$result = $stmt->get_result();
+if ($user = $result->fetch_assoc()) {
+    if ($user && password_verify($password, $user['pass'])) {
+        $_SESSION['admin'] = $email;
+        echo "/project/home/";
+    } else {
+        echo "incorrect password";
     }
+} else {
+    echo "user not found";
+}
+    }
+
+
     function logout()
     {
         session_unset();
@@ -33,6 +37,3 @@ class loginPage
     }
 }
 $user = new loginPage($conn);
-
-
-?>

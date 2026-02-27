@@ -23,11 +23,14 @@ function validPass(password) {                       /////////////////password
   if (password == "") {
     $("#pass_valid").show();
     $("#pass_valid").text("enter password").css("color", "red");
+    return false
   }else if(regex.test(password)==false){
     $("#pass_valid").show();
     $("#pass_valid").text("invalid password").css("color", "red");
+    return false
   }else{
     $("#pass_valid").hide();
+    return true
   }
 
 }
@@ -43,7 +46,13 @@ function validNumber(number){                          ///////////////////////nu
   $("#number_valid").show();
     $("#number_valid").text("enter valid number").css("color", "red");
   return false;
-}else{
+}
+else if(number.length !==10){
+ $("#number_valid").show();
+    $("#number_valid").text("enter 10 digit number").css("color", "red");
+  return false;
+}
+else{
     $("#number_valid").hide();
     return true;
   }
@@ -55,11 +64,14 @@ function validEmail(email){                          //////////////////email
  if(email==''){
     $("#email_valid").show();
     $("#email_valid").text("enter email").css("color", "red");
+    return false
  }else if(regex.test(email)==false){
     $("#email_valid").show();
     $("#email_valid").text("enter valid eamil").css("color", "red");
- }else{
+return false
+  }else{
     $("#email_valid").hide();
+    return true
   }
 }
 console.log("working");

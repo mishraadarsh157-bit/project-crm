@@ -33,10 +33,12 @@ else if (isset($_POST['save_user'])) {
     $user_password = $_POST['user_pass'];
     $user_phone = $_POST['user_phone'];
     $user_email = $_POST['user_email'];
+    $hashedPassword=password_hash($user_password,PASSWORD_DEFAULT);
+   
 
     // $insertUser->insertNewUser($user_name,$user_password,$user_phone,$user_email);
 
-    return $crud->insertData($table, ['name' => $user_name, 'pass' => $user_password, 'phone' => $user_phone, 'email' => $user_email]);
+ $crud->insertData($table, ['name' => $user_name, 'pass' => $hashedPassword, 'phone' => $user_phone, 'email' => $user_email]);
 }            /////////////>
 
 else if (isset($_POST['update'])) {

@@ -29,13 +29,13 @@ if (isset($_SESSION['admin'])===true) {
     
 </style>
 <body>
-    <div class="contaner-fluid m-0 row login_page ">
-       <div class="login_image col-6"></div>  <div class="col-6 justify-content-center p-5">
+    <div class="contaner-fluid m-0 row login_page p-5">
+       <div class="login_image col-6 bg-primary rounded ms-5"></div>  <div class="col-5 bg-dark  justify-content-center p-5 rounded">
             <form class="login-form m-5 p-5 ">
                 <h1 class="h1 mb-4" align="center">LOGIN</h1>
-                Name :
-                <input type="text" name="name" id="name" class="form-control from-control-sm rounded mb-3">
-                <div id="name_valid"></div>
+                Email :
+                <input type="email" name="email" id="email" class="form-control from-control-sm rounded mb-3">
+                <div id="email_valid"></div>
                 Password :
                 <input type="password" name="password" id="password" class="form-control from-control-sm rounded mb-3">
                 <div id="pass_valid"></div>

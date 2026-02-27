@@ -21,16 +21,23 @@ body{
 }
 .login_page{
     height: 100vh;
-     background-image: url(../images/login_background.jpg);
+     background-image: url(../images/bot-pattern.svg);
     background-size: 100% 100%;
     color: white; 
 }
 .login-form{
-    height: 70vh;
+    height: 90%;
     width: 60vh;
     border-radius: 10px;
-    box-shadow: 3px 3px 10px grey;
-    background-color: rgba(245, 245, 245, 0.737);
+    /* box-shadow: 3px 3px 10px grey; */
+    /* background-color: rgba(245, 245, 245, 0.737); */
+    background-color: white;
+    color: black;
+}
+.login_image{
+    background-image: url(../images/bg.jpg);
+    background-size: cover;
+    
 }
 .header{
     /* background-color: #0B2D72; */
@@ -41,9 +48,7 @@ body{
 .logo img{
     height: 25px;
 }
-.user_info i{
-    font-size: 1cm;
-}
+
 .content-body,.left_sidebar{
     height:93vh ;
 }
@@ -58,7 +63,7 @@ body{
 }
 .left_sidebar{
     background-color: #ffffff;
-
+    white-space: nowrap;
     overflow: hidden;
 }
 .masters li a{
@@ -83,19 +88,19 @@ transition: all ease-in-out .5s;
 }
 
 #left_sidebar,.content-body{
-    transition: .5s all ease-in-out;
+    transition: .2s all ease-in-out;
   
     
 }
 
 .bi-people{
-    font-size: .3cm;
+    font-size: .35cm;
 }
 .bi-person-circle{
-    font-size: .3cm;
+    font-size: .35cm;
 }
 .bi-diagram-3{
-    font-size: .3cm;
+    font-size: .35cm;
 }
 .table_area,.form_area,.client_form,#load_clients{
   height: calc(95vh - 178px);
@@ -124,9 +129,12 @@ transition: all ease-in-out .5s;
 
 .logout_form{
     bottom:20px;
+    height: 100px;
     width: 15%;
     position: fixed;
-    transition: .5s all ease-in-out;
+    transition: .2s all ease-in-out;
+    white-space: nowrap;
+    overflow-x: hidden;
 
 }
 #logout{
@@ -217,4 +225,14 @@ border: 0px;
     border: 1px solid red;
     border-radius: 5px;
 
+}
+.sort i{
+    display: none;
+}
+.sort:hover i{
+display:inline-block;
+}
+table tr td{
+    white-space: nowrap;
+    overflow-x: hidden;
 }

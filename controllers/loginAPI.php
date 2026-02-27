@@ -3,10 +3,12 @@ include 'database/loginlogics.php';
 session_start();
 
 if(isset($_POST["submit"])===TRUE){
-$name=$_POST['name'];
-$password=$_POST['password'];
+$email=$_POST['email'];
 
-$user->userInfo($name,$password);
+$password=$_POST['password'];
+// $hashedPassword=password_hash($password,PASSWORD_DEFAULT);
+
+$user->userInfo($email,$password);
 }
 
 else if(isset($_POST['logout'])){

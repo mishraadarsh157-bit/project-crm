@@ -33,10 +33,10 @@ class db
         $sql = $query;
           $result = mysqli_query($this->conn, $sql);
         if ($result == false) {
-            return false;
+            echo 'no data';
         }
       
-        if(mysqli_num_rows($result)>1){
+        if(mysqli_num_rows($result)>0){
         while ($row = $result->fetch_assoc()) {
         $data[]=$row;
         }
@@ -48,6 +48,10 @@ class db
          $dbdata['total_record']=$total_records;
         $dbdata['total_page']=$total_pages;
         
+           }
+           else{
+            $data[]='no data';
+            $dbdata['data']=$data;
            }
        $jsondata = json_encode($dbdata);
         echo $jsondata;
