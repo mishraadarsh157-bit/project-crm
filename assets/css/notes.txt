@@ -84,4 +84,118 @@ $router->dispatch();
 
 ////////index
 
+class Pagination {
+    private $totalRows;
+    private $perPage;
+    private $currentPage;
+    private $contentDiv;
+    private $baseURL;
+    private $numLinks = 2;
 
+    public function __construct($params = []) {
+        $this->totalRows = $params['totalRows'] ?? 0;
+        $this->perPage = $params['perPage'] ?? 10;
+        $this->currentPage = $params['currentPage'] ?? 1;
+        $this->contentDiv = $params['contentDiv'] ?? '';
+        $this->baseURL = $params['baseURL'] ?? '';
+    }
+
+    public function createLinks() {
+        if ($this->totalRows == 0 || $this->perPage == 0) return '';
+
+        $numPages = ceil($this->totalRows / $this->perPage);
+        if ($numPages == 1) return '';
+
+        $start = max(1, $this->currentPage - $this->numLinks);
+        $end = min($numPages, $this->currentPage + $this->numLinks);
+
+        $output = '<div class="pagination">';
+
+        if ($this->currentPage > 1) {
+            $output .= '<a href="javascript:void(0);" onclick="loadPage(' . ($this->currentPage - 1) . ')">&laquo; Previous</a>';
+        }
+
+        for ($i = $start; $i <= $end; $i++) {
+            $active = ($i == $this->currentPage) ? ' class="active"' : '';
+            $output .= '<a href="javascript:void(0);" onclick="loadPage(' . $i . ')"' . $active . '>' . $i . '</a>';
+        }
+
+        if ($this->currentPage < $numPages) {
+            $output .= '<a href="javascript:void(0);" onclick="loadPage(' . ($this->currentPage + 1) . ')">Next &raquo;</a>';
+        }
+
+        $output .= '</div>';
+        return $output;
+    }
+
+    public function getOffset() {
+        return ($this->currentPage - 1) * $this->perPage;
+    }
+}     ////////////pagination
+
+function loadPage(page) {
+    $.post('fetch_data.php', { page: page }, function(response) {
+        $('#dataContainer').html(response.data);
+        $('#paginationContainer').html(response.pagination);
+    }, 'json');
+}
+
+// Initialize: Load first page on page load
+$(document).ready(function() {
+    loadPage(1);
+});   
+
+<div id="dataContainer">
+    <!-- Data will be loaded here via AJAX -->
+</div>
+<div id="paginationContainer">
+    <!-- Pagination links will be inserted here -->
+</div>   
+
+
+<?php
+include 'Pagination.php';
+
+// Database connection
+$pdo = new PDO("mysql:host=localhost;dbname=your_db", "root", "");
+
+// Get page from AJAX
+$page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
+
+// Fetch total records
+$stmt = $pdo->query("SELECT COUNT(*) FROM users");
+$totalRows = $stmt->fetchColumn();
+
+// Initialize pagination
+$pagination = new Pagination([
+    'totalRows' => $totalRows,
+    'perPage' => 5,
+    'currentPage' => $page,
+    'contentDiv' => 'dataContainer',
+    'baseURL' => 'fetch_data.php'
+]);
+
+// Get offset for query
+$offset = $pagination->getOffset();
+
+// Fetch data for current page
+$stmt = $pdo->prepare("SELECT * FROM users ORDER BY id DESC LIMIT ?, ?");
+$stmt->bindValue(1, $offset, PDO::PARAM_INT);
+$stmt->bindValue(2, $pagination->perPage, PDO::PARAM_INT);
+$stmt->execute();
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Generate HTML for table
+$output = '<table class="table table-bordered">';
+$output .= '<tr><th>ID</th><th>Name</th><th>Email</th></tr>';
+foreach ($users as $user) {
+    $output .= "<tr><td>{$user['id']}</td><td>{$user['name']}</td><td>{$user['email']}</td></tr>";
+}
+$output .= '</table>';
+
+// Return JSON response
+echo json_encode([
+    'data' => $output,
+    'pagination' => $pagination->createLinks()
+]);
+?>   

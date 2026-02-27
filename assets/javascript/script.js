@@ -12,7 +12,7 @@ $("#user_login").click(function (e) {
   var save = $("#user_login").val();
 
   $.ajax({
-    url:  "/project/loginAPI/",
+    url: "/project/loginAPI/",
     type: "POST",
     data: {
       name: name,
@@ -91,75 +91,133 @@ $("#show_sidebar").click(function () {
   $("#show_sidebar").hide();
 });
 
-function userData(page, limit, asc_id, asc_name, asc_phone) {
+function userData(page, limit) {
+  
+  var field = $('.field').val();
+  console.log(field)
+  var order = $('.order').val();
+  console.log(order)
   $.ajax({
-    url:"/project/usercontroller/",
+    url: "/project/usercontroller/",
     type: "POST",
     data: {
-      limit: limit,
       page_no: page,
+      field:field,
+      order:order,
+      limit: limit,
       page_name: "userpage",
-      asc_id: asc_id,
-      asc_name: asc_name,
-      asc_phone: asc_phone,
     },
     success: function (data) {
       data = JSON.parse(data);
-      console.log(data)
-       let table = '<table border="1" class="table bg-white"> ';
-      table += '<tr><td colspan="9">ABCD</td></tr>';
+      let table = '<div class="holding-table"><table border="1" class="table  bg-white"> ';
       table += '<tr class="bg-skyblue" style="whitespace:nowrap;">';
-      table += '<th class="id">id</th>';
-      table += '<th class="name">name</th>';
-      table += '<th class="phone">Phone</th>';
-      table += '<th class="email">email</th>';
+      table += '<th onclick="userData()" class="id sort">Id <i class="bi bi-arrow-down-up"></i></th>';
+      table += '<th onclick="userData()" class="name sort">Name</th>';
+      table += '<th onclick="userData()" class="phone sort">Phone</th>';
+      table += '<th onclick="userData()" class="email sort">Email</th>';
       table += '<th class="status text-center">Status</th>';
       table += '<th class="action">Action</th>';
       table += "</tr>";
-      data.forEach(function (value) {
+      data.data.forEach(function (value) {
         table += '<tr style="height:40px;whitespace:nowrap;">';
-        table += `<td class='text-muted'>${value['id']}</td>`;
-        table += `<td class='text-success'>${value['name']}</td>`;
-        table += `<td class='text-muted'>${value['phone']}</td>`;
-        table += `<td class=''>${value['email']}</td>`;
-        if (value['STATUS'] == "ACTIVE") {
+        table += `<td class='text-muted'>${value["id"]}</td>`;
+        table += `<td class='text-success'>${value["name"]}</td>`;
+        table += `<td class='text-muted'>${value["phone"]}</td>`;
+        table += `<td class=''>${value["email"]}</td>`;
+        if (value["STATUS"] == "ACTIVE") {
           var btn_stat = "status-btn-green";
         } else {
           var btn_stat = "status-btn-red";
         }
-        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value['STATUS']}</button></td>`;
+        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value["STATUS"]}</button></td>`;
 
         table += `<td class='text-muted'>
         
-        <button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value['id']}'  id='update_c' value='update_c'>
+        <button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["id"]}'  id='update' value='update'>
                 <i class='bi bi-pencil-square'>
                 </i></button>
                 
                 
-        <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='${value['id']}'  id='delete' value='delete'>
+        <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='${value["id"]}'  id='delete' value='delete'>
         <i class='bi bi-trash3'></i></button>
                 
                 
                 </td>`;
         table += "</tr>";
       });
+      table += "</table></div>";
+      table += '<hr><div class=" w-100   d-flex justify-center"><ul class="pagination mx-auto pt-3 ps-3">';
+      total_pages = data.total_page;
 
-      table += "</table>";
+      total_records = data.total_record;
+      limit = $("#limit").val();
+      page = $("#invis").val();
+      if (page <= 1) {
+        table +=
+          ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
+      } else if (page > 1) {
+        table +=
+          "<li class='page-item'><button class='page-link' id='back'>Previous</button></li>";
+      }
+      if (total_records >= limit) {
+        for (i = 1; i <= total_pages; i++) {
+          if (i <= 1) {
+            table += `<li class="page-item"><a class="page-link" id='${page}' href="#">${page}</a></li>`;
+          } else {
+            continue;
+          }
+        }
+      }
+      if (page < total_pages) {
+        table +=
+          '<li class="page-item"><button class="page-link" id="forward" href="#">Next</button></li>';
+      } else if ((page = total_pages)) {
+        table +=
+          '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
+      }
+      table += "</ul></div>";
       $("#load_users").html(table);
     },
   });
 }
 
+$(document).on('click','.sort',function(){
+  var value=$(this).text();
+  $(this).addClass('desc')
+  var order='asc'
+  $('.field').val(value);
+$('.order').val(order)
+})
+
+
+$(document).on('click','.desc', function(){
+  console.log(2)
+  $(this).removeClass('desc');
+  var field=$(this).text();
+  var order='desc'
+  $(this).addClass('asc');
+  $('.field').val(field)
+  $('.order').val(order)
+
+})
+
+
+$(document).on('click','.sort .asc', function(){
+  console.log(2)
+  $(this).removeClass('asc');
+  var value=$(this).text();
+  var order='asc'
+  $(this).addClass('sort');
+  $('.field').val(value)
+  $('.order').val(order)
+})
+
 $(document).on("click", "#pagination a", function (e) {
   e.preventDefault();
-  var asc_id = $("#id_asc").val();
-
-  var asc_name = $("#name_asc").val();
-  var asc_phone = $("#phone_asc").val();
+ 
   var limit = $("#limit").val();
   var page = $(this).attr("id");
-  console.log(page);
-  userData(page, limit, asc_id, asc_name, asc_phone);
+  userData(page, limit);
   $("#invis").val(page);
   console.log("this page is :" + $("#invis").val());
 });
@@ -168,100 +226,31 @@ $(document).on("click", "#pagination a", function (e) {
 
 $(document).on("click", "#back", function (e) {
   e.preventDefault();
-  var asc_id = $("#id_asc").val();
-  var asc_name = $("#name_asc").val();
-  var asc_phone = $("#phone_asc").val();
+ 
   var limit = $("#limit").val();
-  var page = $("#invis").val() - 1;
-  console.log(Number(page));
+  var page = $("#invis").val();
+  var page = Number(page) - 1;
+  $("#invis").val(page);
 
-  userData(page, limit, asc_id, asc_name, asc_phone);
+  userData(page, limit);
 });
 
 /////////////////forward button>>>>>>>>>>>>
 
 $(document).on("click", "#forward", function (e) {
   e.preventDefault();
-  var asc_id = $("#id_asc").val();
-  var asc_name = $("#name_asc").val();
-  var asc_phone = $("#phone_asc").val();
+  
   var limit = $("#limit").val();
   var page = $("#invis").val();
   var page = Number(page) + 1;
+  $("#invis").val(page);
   console.log(page);
-  userData(page, limit, asc_id, asc_name, asc_phone);
+  userData(page, limit);
 });
 
-$("#id_asc").hide();
-$(document).on("click", "#id_desc", function (e) {
-  e.preventDefault();
-  var asc_id = $("#id_desc").val() ? "desc" : "asc";
-
-  var asc_name = $("#name_asc").val();
-  var asc_phone = $("#phone_asc").val();
-  var limit = $("#limit").val();
-  var page = $("#pagination a").attr("id");
-  console.log(userData(page, limit, asc_id, asc_name, asc_phone));
-  userData(page, limit, asc_id, asc_name, asc_phone);
-});
-$(document).on("click", "#id_asc", function (e) {
-  e.preventDefault();
-  var asc_id = $("#id_asc").val();
-  var asc_name = $("#name_asc").val();
-  var asc_phone = $("#phone_asc").val();
-  var limit = $("#limit").val();
-  var page = $("#pagination a").attr("id");
-  console.log(userData(page, limit, asc_id, asc_name, asc_phone));
-  userData(page, limit, asc_id, asc_name, asc_phone);
-});
-
-///////////order by name
-$(document).on("click", "#name_desc", function (e) {
-  e.preventDefault();
-  var asc_id = $("#id_desc").val() ? "desc" : "asc";
-  var asc_name = $("#name_desc").val() ? "desc" : "asc";
-  var asc_phone = $("#phone_desc").val() ? "desc" : "asc";
-  var limit = $("#limit").val();
-  var page = $("#pagination a").attr("id");
-  console.log(userData(page, limit, asc_id, asc_name, asc_phone));
-  userData(page, limit, asc_id, asc_name, asc_phone);
-});
-$(document).on("click", "#name_asc", function (e) {
-  e.preventDefault();
-  var asc_id = $("#id_asc").val();
-  var asc_name = $("#name_asc").val();
-  var asc_phone = $("#phone_asc").val();
-  var limit = $("#limit").val();
-  var page = $("#pagination a").attr("id");
-  console.log(userData(page, limit, asc_id, asc_name, asc_phone));
-  userData(page, limit, asc_id, asc_name, asc_phone);
-});
-
-///////////order by number
-$(document).on("click", "#phone_desc", function (e) {
-  e.preventDefault();
-  var asc_id = $("#id_desc").val() ? "desc" : "asc";
-  var asc_name = $("#name_desc").val() ? "desc" : "asc";
-  var asc_phone = $("#phone_desc").val() ? "desc" : "asc";
-  var limit = $("#limit").val();
-  var page = $("#pagination a").attr("id");
-  console.log(userData(page, limit, asc_id, asc_name, asc_phone));
-  userData(page, limit, asc_id, asc_name, asc_phone);
-});
-$(document).on("click", "#phone_asc", function (e) {
-  e.preventDefault();
-  var asc_id = $("#id_asc").val();
-  var asc_name = $("#name_asc").val();
-  var asc_phone = $("#phone_asc").val();
-  var limit = $("#limit").val();
-  var page = $("#pagination a").attr("id");
-  console.log(userData(page, limit, asc_id, asc_name, asc_phone));
-  userData(page, limit, asc_id, asc_name, asc_phone);
-});
 
 function limitData() {
   var limit = $("#limit").val();
-  console.log(limit);
   var page = $(this).attr("id");
   userData(page, Number(limit));
 }
@@ -269,8 +258,6 @@ function limitData() {
 window.addEventListener("load", () => {
   const path = window.location.pathname;
   const locate = path.replace(/\/$/, "").split("/").pop();
-  // console.log(locate)
-  // console.log(typeof(locate))
   if (locate.trim() == "user_master.php") {
     userData();
   }
@@ -278,20 +265,20 @@ window.addEventListener("load", () => {
 
 function insertUser() {
   let user_name = $("#user_name").val();
-  if(!validName(user_name)){
-    return 
-  };
+  if (!validName(user_name)) {
+    return;
+  }
   let user_pass = $("#user_pass").val();
   validPass(user_pass);
   let user_number = $("#user_number").val();
-  if(!validNumber((user_number.toString()))){
-    return
-  };
+  if (!validNumber(user_number.toString())) {
+    return;
+  }
   let user_email = $("#user_email").val();
   validEmail(user_email);
   let save_user = $("#save_user").val();
   $.ajax({
-    url:  "/project/usercontroller/",
+    url: "/project/usercontroller/",
     type: "POST",
     data: {
       user_name: user_name,
@@ -317,7 +304,7 @@ $(document).on("click", "#update", function () {
   let id = $(this).data("uid");
   let update = $("#update").val();
   $.ajax({
-    url:  "/project/usercontroller/",
+    url: "/project/usercontroller/",
     type: "POST",
     data: {
       id: id,
@@ -335,7 +322,7 @@ $(document).on("click", "#edit", function (e) {
   let user_name = $("#name").val();
   validName(user_name);
   let user_number = $("#number").val();
-  // validNumber(user_number)
+  validNumber(user_number)
   let user_email = $("#email").val();
   validEmail(user_email);
   let status = $("#status").val();
@@ -400,7 +387,7 @@ function searc() {
   var s_status = $("#search_status").val();
   var search = "search";
   $.ajax({
-    url: baseurl + "/project/usercontroller/",
+    url:  "/project/usercontroller/",
     type: "POST",
     data: {
       id: s_id,
@@ -458,7 +445,7 @@ function insertClient() {
   validName(client_name);
 
   let client_number = $("#client_number").val();
-  // validNumber(String(client_number));
+  validNumber(String(client_number));
   let client_email = $("#client_email").val();
   validEmail(client_email);
   let client_address = $("#client_address").val();
@@ -505,7 +492,6 @@ function clientData() {
   $.ajax({
     url: baseurl + "controllers/client_controller.php",
     type: "POST",
-    datatype: "json",
     data: {
       page_name: "clientPage",
     },
@@ -526,31 +512,31 @@ function clientData() {
       table += '<th class="status text-center">Status</th>';
       table += '<th class="action">Action</th>';
       table += "</tr>";
-      data.forEach(function (value) {
+      data.data.forEach(function (value) {
         table += '<tr style="height:40px;whitespace:nowrap;">';
-        table += `<td class='text-muted'>${value['client_id']}</td>`;
-        table += `<td class='text-success'>${value['client_name']}</td>`;
-        table += `<td class='text-muted'>${value['phone']}</td>`;
-        table += `<td class=''>${value['client_email']}</td>`;
-        table += `<td class='text-muted'>${value['address']}</td>`;
-        table += `<td class='text-muted'>${value['name']}</td>`;
-        table += `<td class='text-muted'>${value['city']}</td>`;
-        table += `<td class='text-muted'>${value['pincode']}</td>`;
-        if (value['client_status'] == "ACTIVE") {
+        table += `<td class='text-muted'>${value["client_id"]}</td>`;
+        table += `<td class='text-success'>${value["client_name"]}</td>`;
+        table += `<td class='text-muted'>${value["phone"]}</td>`;
+        table += `<td class=''>${value["client_email"]}</td>`;
+        table += `<td class='text-muted'>${value["address"]}</td>`;
+        table += `<td class='text-muted'>${value["name"]}</td>`;
+        table += `<td class='text-muted'>${value["city"]}</td>`;
+        table += `<td class='text-muted'>${value["pincode"]}</td>`;
+        if (value["client_status"] == "ACTIVE") {
           var btn_stat = "status-btn-green";
         } else {
           var btn_stat = "status-btn-red";
         }
-        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value['client_status']}</button></td>`;
+        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value["client_status"]}</button></td>`;
 
         table += `<td class='text-muted'>
         
-        <button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value['client_id']}'  id='update_c' value='update_c'>
+        <button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["client_id"]}'  id='update_c' value='update_c'>
                 <i class='bi bi-pencil-square'>
                 </i></button>
                 
                 
-        <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='${value['client_id']}'  id='delete' value='delete'>
+        <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='${value["client_id"]}'  id='delete' value='delete'>
         <i class='bi bi-trash3'></i></button>
                 
                 
@@ -602,7 +588,6 @@ $(document).on("click", "#update_c", async function () {
         table +=
           "</div><hr><div class='col-4'><input type='button' class='status-btn-green me-3' onclick='updateClient()' id='update_client' value='SAVE'><input type='reset' class='status-btn-red' value='RESET'></div>";
 
-          
         await $.ajax({
           url: baseurl + "controllers/client_controller.php",
           type: "POST",
@@ -618,13 +603,12 @@ $(document).on("click", "#update_c", async function () {
 
         var state = $("#select_state").val(Number(data[0].state_id));
 
-          $("#select_state").on("change", function () {
+        $("#select_state").on("change", function () {
           var state = $("#select_state").val();
 
           loadCity(state);
         });
- async function loadCity(state) {
-       
+        async function loadCity(state) {
           await $.ajax({
             url: baseurl + "controllers/client_controller.php",
             type: "POST",
@@ -639,18 +623,10 @@ $(document).on("click", "#update_c", async function () {
         }
       });
 
-
-
-
-      
       $(".update_client_form").html(table);
     },
   });
 });
-
-
-
-
 
 function updateClient() {
   let id = $("#updId").val();

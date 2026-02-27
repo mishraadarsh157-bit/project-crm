@@ -2,11 +2,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 *{
-    font-size: .35cm;
+    font-size: .35cm; 
     /* font-family:poppins; */
     font-family:roboto;
     /* font-family: cursive; */
 }
+*::-webkit-scrollbar{
+    background-color: white;
+    width: 5px;
+}
+*::-webkit-scrollbar-thumb{
+    background-color: #32cda2;
+    
+}
+
 body{
     background-color:#f5f5f5;
 }
@@ -42,6 +51,10 @@ body{
     /* background-color: #cce3f8 ; */
     /* background-color: #fef8f2 ; */
     background-image: url(../images/bot-pattern.svg);
+      overflow-y: auto;
+}
+.content-body::-webkit-scrollbar{
+    width: 0px;
 }
 .left_sidebar{
     background-color: #ffffff;
@@ -71,8 +84,10 @@ transition: all ease-in-out .5s;
 
 #left_sidebar,.content-body{
     transition: .5s all ease-in-out;
+  
     
 }
+
 .bi-people{
     font-size: .3cm;
 }
@@ -144,10 +159,11 @@ border: 0px;
 .sort i{
     font-size: .2cm;
 }
-.holding-user-table{
-    height: calc(83vh - 178px);
+.holding-table{
+    height: calc(80vh - 178px);
     overflow-x: auto;
     margin-bottom: 5px;
+    /* background-color: red; */
 }
 
 .id{
@@ -183,7 +199,8 @@ border: 0px;
     width: 100px; white-space: nowrap;
 }
 .status-btn-green{
-    /* height: 25px; */
+    /* height: 24px; */
+    border-radius:10px ;
     /* width: 70px; */
     background-color: rgb(185, 237, 185);
     color: green;

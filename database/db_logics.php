@@ -19,18 +19,35 @@ class db
 
     /////////read data
 
-    public function fetchData($query)
-    {
+    public function fetchData($table,$limit,$query)
+    {   
+         $page = "";
+        if (isset($_POST['page_no'])) {
+            $page = $_POST["page_no"];
+        } else {
+            $page = 1;
+        }
+         $limit = (int) $limit;
+        $offset = ($page - 1) * $limit;
+
         $sql = $query;
           $result = mysqli_query($this->conn, $sql);
         if ($result == false) {
             return false;
         }
+      
         if(mysqli_num_rows($result)>1){
-        $dbdata = array();
         while ($row = $result->fetch_assoc()) {
-            $dbdata[] = $row;
+        $data[]=$row;
         }
+        $dbdata['data']=$data;
+        $pagin="select * from $table";
+        $result=mysqli_query($this->conn,$pagin);
+        $total_records=mysqli_num_rows($result);
+        $total_pages=ceil($total_records/$limit);
+         $dbdata['total_record']=$total_records;
+        $dbdata['total_page']=$total_pages;
+        
            }
        $jsondata = json_encode($dbdata);
         echo $jsondata;
@@ -42,7 +59,7 @@ class db
     }
     ///////////// insert data
 
-    public function insert($table, $params = array())
+    public function insertData($table, $params = array())
     {
 
         $table_columns = implode(',', array_keys($params));
@@ -63,7 +80,7 @@ class db
     public function modifyData($query)
     {
         $sql = $query;
-        $result = mysqli_query($this->conn, $sql);
+       $result = mysqli_query($this->conn, $sql);
         if ($result == true) {
             echo 1;
         } else {
@@ -77,4 +94,7 @@ class db
 
 
     }
+
+
 $crud=new db();
+
