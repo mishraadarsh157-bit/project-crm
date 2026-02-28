@@ -40,3 +40,11 @@ if (!isset($_SESSION['admin'])) {
     <script src="../assets/javascript/validations.js"></script>
 </html>
  
+<?php 
+
+$value=$_SESSION['admin'];
+echo '<script>
+$("#profileInfo").html("' . $value .'")
+</script>';
+
+?>

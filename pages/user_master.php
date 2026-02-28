@@ -69,7 +69,7 @@ include_once "dashboard.php";
         </div>
         <!-- part -->
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-            <table class='bg-white w-100 border rounded mb-3 table' style='box-shadow:0px 0px 5px #afb9b9;'>
+            <table class='bg-white w-100 border rounded mb-3 table' style='box-shadow:0px 0px 10px grey;'>
                 <tr>
 
                     <th  class='p-2 '>Id</th>
@@ -106,8 +106,8 @@ include_once "dashboard.php";
                     <input type="text"  class='field' onchange='userData()' hidden value='id'>
                     <input type="text" class='order' onchange='userData()' hidden value='asc'>
                     <input type="text" hidden id="icon_hold" value='bi-arrow-down-up'>
-                </td><td>
-                <select class='form-select' onchange='limitData()' name="" value='' id="limit">
+                </td><td align='right'>
+                <select class='form-select w-25 mb-2' onchange='limitData()' name="" value='' id="limit">
                     <option onclick='userData()' value="5">5</option>
                     <option onclick='userData()' value="10">10</option>
                     <option onclick='userData()' value="15">15</option>
@@ -116,7 +116,7 @@ include_once "dashboard.php";
                 </td>
                 </tr>
             </table>
-            <div id="load_users" style='box-shadow:0px 0px 5px #afb9b9;' class="table_area bg-white rounded border">
+            <div id="load_users" style='box-shadow:0px 0px 10px grey;' class="table_area bg-white rounded border">
 
             
 

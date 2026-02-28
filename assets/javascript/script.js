@@ -62,6 +62,8 @@ $(".logout").click(function (e) {
   });
 });
 
+
+
 $("#logo").click(function () {
   window.location.href = "/project/home/";
 });
@@ -75,7 +77,7 @@ $("#hide_sidebar").click(function () {
   $(".masters #user_master button").html('<i class="bi bi-people"></i>');
   $(".masters #client_master button").html('<i class="bi bi-person-circle"></i>');
   $(".masters #item_master button").html('<i class="bi bi-diagram-3"></i>');
-  $(" #logout").html('<i class="bi bi-box-arrow-left"></i>');
+  $(" .logout").html('<i class="bi bi-box-arrow-left"></i>');
   $(".logout_form").css("width", "5%");
   $("#hide_sidebar").hide();
   $("#show_sidebar").show();
@@ -95,7 +97,7 @@ $("#show_sidebar").click(function () {
   $(".masters #item_master button").html(
     '<i class="bi bi-diagram-3"></i>    ITEM MASTER ',
   );
-  $(" #logout").html(
+  $(" .logout").html(
     ' <i class="bi bi-box-arrow-left"></i>   LOGOUT',
   );
   $(".logout_form").css("width", "15%");
@@ -130,20 +132,28 @@ function userData(page, limit) {
     },
     success: function (data) {
       data = JSON.parse(data);
+      console.log(data)
+      page = $("#invis").val();
+      limit = $("#limit").val();
+      
       let icon=$('#icon_hold').val()
       let table = '<div class="holding-table"><table border="1" class="table  bg-white table-bordered"> ';
       table += '<tr class="bg-blue" style="whitespace:nowrap;">';
       table += '<th class="action text-center">Action</th>';
-      table += `<th onclick="userData()" class="id sort">Id <i class="bi ${icon}" id="sort_icon"></i></th>`;
-      table += `<th onclick="userData()" class="name sort">Name <i class="bi ${icon}" id="sort_icon"></i></th>`;
-      table += `<th onclick="userData()" class="phone sort">Phone <i class="bi ${icon}" id="sort_icon"></i></th>`;
+      table += `<th class="id">Sr.NO</th>`;
+      table += `<th onclick="userData()" class="name sort border">Name <i class="bi ${icon}" id="sort_icon"></i></th>`;
+      table += `<th onclick="userData()" class="phone sort border">Phone <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="userData()" class="email sort">Email <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += '<th class="status text-center">Status</th>';
       table += "</tr>";
-      data.data.forEach(function (value) {
-        table += '<tr class="data" style="height:40px;whitespace:nowrap;">';
+      total_pages = data.total_page;
+       total_records = data.total_record;
+       data.data.forEach(function (value,index) {
+        ind=index+1;
+        index=(page-1)*limit+ind;
+          table += '<tr class="data" style="height:40px;whitespace:nowrap;">';
         
-        table += `<td class='text-muted'>
+        table += `<td class='text-muted text-center'>
         
         <button class='btn btn-sm rounded-pill btn-outline-primary' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["id"]}'  id='update' value='update'>
                 <i class='bi bi-pencil-square'>
@@ -155,7 +165,7 @@ function userData(page, limit) {
                 
                 
                 </td>`;
-        table += `<td class='text-muted'>${value["id"]}</td>`;
+                table += `<td class='text-muted' >${index}</td>`;
         table += `<td class='text-success'>${value["name"]}</td>`;
         table += `<td class='text-muted'>${value["phone"]}</td>`;
         table += `<td class=''>${value["email"]}</td>`;
@@ -167,17 +177,15 @@ function userData(page, limit) {
         table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value["STATUS"]}</button></td>`;
 
         table += "</tr>";
-      });
-      page = $("#invis").val();
-
+               });
+      
       table += "</table></div>";
       table += '<hr><div class=" w-100 p-2 px-auto   d-flex justify-center">';
       table +=`<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${data.total_page} </b>`;
       table +='<ul class="pagination ms-5 ms-auto ">';
-      total_pages = data.total_page;
-
-      total_records = data.total_record;
-      limit = $("#limit").val();
+      
+      
+      
       if (page <= 1) {
         table +=
           ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
@@ -414,8 +422,9 @@ function searc() {
       table += `<th onclick="searc()" class="email sort">Email <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += '<th class="status text-center">Status</th>';
       table += "</tr>";
-      data.data.forEach(function (value) {
-
+      data.data.forEach(function (value,index) {
+        index=index+1;
+        
         table += '<tr class="data" style="height:40px;whitespace:nowrap;">';
 
         table += `<td class='text-muted'>
@@ -430,7 +439,7 @@ function searc() {
                 
                 
                 </td>`;
-        table += `<td class='text-muted'>${value["id"]}</td>`;
+        table += `<td class='text-muted'>${index}</td>`;
         table += `<td class='text-success'>${value["name"]}</td>`;
         table += `<td class='text-muted'>${value["phone"]}</td>`;
         table += `<td class=''>${value["email"]}</td>`;
@@ -444,36 +453,7 @@ function searc() {
         table += "</tr>";
       });
       table += "</table></div>";
-      // table += '<hr><div class=" w-100   d-flex justify-center"><ul class="pagination mx-auto pt-3 ps-3">';
-      // total_pages = data.total_page;
       
-      // total_records = data.total_record;
-      // limit = $("#limit").val();
-      // page = $("#invis").val();
-      // if (page <= 1) {
-      //   table +=
-      //     ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
-      // } else if (page > 1) {
-      //   table +=
-      //     "<li class='page-item'><button class='page-link' id='back'>Previous</button></li>";
-      // }
-      // if (total_records >= limit) {
-      //   for (i = 1; i <= total_pages; i++) {
-      //     if (i <= 1) {
-      //       table += `<li class="page-item"><a class="page-link" id='${page}' href="#">${page}</a></li>`;
-      //     } else {
-      //       continue;
-      //     }
-      //   }
-      // }
-      // if (page < total_pages) {
-      //   table +=
-      //     '<li class="page-item"><button class="page-link" id="forward" href="#">Next</button></li>';
-      // } else if ((page = total_pages)) {
-      //   table +=
-      //     '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
-      // }
-      // table += "</ul></div>";
       $("#load_users").html(table);
       ////////////////////////////////////////////////
 
