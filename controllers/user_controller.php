@@ -15,7 +15,7 @@ if (isset($_POST['page_name'])) {
     $table = 'users';
     $page_no = $_POST['page_no'] ?? 1;
     $field=$_POST['field'] ?? 'id';
-    $order=$_POST['order'] ?? 'desc';
+    $order=$_POST['order'] ?? 'asc';
     $limit = $_POST['limit'] ?? 5;
     $offset= ($page_no -1) * $limit;
     $crud->fetchData($table,$limit,"select * from $table order by $field $order limit $offset,  $limit");;

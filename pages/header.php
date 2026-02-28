@@ -10,7 +10,7 @@
 
         <button id="show_sidebar" class="btn btn-sm btn-outline-dark  ms-5"><i class="bi bi-chevron-double-right"></i></button>
 
-        <div class="admin text-center me-5" id='profile'><i class="bi bi-person h2" ></i>
+        <div class="admin text-center me-5" id='profile'><i class="bi bi-person-circle h2"></i>
     <div class="profile_view pt-3"><div class="row">
         <div class="col-4"></div>
 

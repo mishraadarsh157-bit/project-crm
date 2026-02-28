@@ -62,7 +62,7 @@ body{
 .content-body{
     /* background-color: #cce3f8 ; */
     /* background-color: #fef8f2 ; */
-    background-image: url(../images/bot-pattern.svg);
+    /* background-image: url(../images/bot-pattern.svg); */
       overflow-y: auto;
 }
 .content-body::-webkit-scrollbar{
@@ -125,7 +125,7 @@ transition: all ease-in-out .5s;
 .bi-people{
     font-size: .35cm;
 }
-.bi-person-circle{
+.bi-person{
     font-size: .35cm;
 }
 .bi-diagram-3{

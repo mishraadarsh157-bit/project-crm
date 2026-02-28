@@ -26,7 +26,7 @@ class update
                 <option value='ACTIVE'>ACTIVE</option>
                 <option value='INACTIVE'>INACTIVE</option>
                 </select><hr>";
-                echo  "<input type='button' class='btn status-btn-green' id='edit' value='EDIT' >
+                echo  "<input type='button' class='btn status-btn-green' id='edit' value='EDIT' onclick='userData()'>
         <input type='reset' value='RESET' class='btn status-btn-red'></form>";
             }
         }

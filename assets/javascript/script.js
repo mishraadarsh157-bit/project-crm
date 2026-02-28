@@ -74,6 +74,7 @@ $("#hide_sidebar").click(function () {
   $(".logo").css("width", "8%");
   $(".content-body").css("width", "92%");
   $(".naav").css("width", "92%");
+  $(".logo").html("<img src='../assets/images/demo.png' class='mx-auto'>")
   $(".masters #user_master button").html('<i class="bi bi-people"></i>');
   $(".masters #client_master button").html('<i class="bi bi-person-circle"></i>');
   $(".masters #item_master button").html('<i class="bi bi-diagram-3"></i>');
@@ -88,6 +89,8 @@ $("#show_sidebar").click(function () {
   $(".logo").css("width", "16.5%");
   $(".content-body").css("width", "83.5%");
   $(".naav").css("width", "83.5%");
+  
+  $(".logo").html("<img src='../assets/images/demo.png' class='mx-auto'><b class='h4 logo_name ms-2'  > AppStack</b>")
   $(".masters #user_master button").html(
     '<i class="bi bi-people"></i>  USER MASTER ',
   );

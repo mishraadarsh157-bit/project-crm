@@ -69,7 +69,7 @@ include_once "dashboard.php";
         </div>
         <!-- part -->
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-            <table class='bg-white w-100 border rounded mb-3 table' style='box-shadow:0px 0px 10px grey;'>
+            <table class='bg-white w-100 border rounded mb-3 table' >
                 <tr>
 
                     <th  class='p-2 '>Id</th>
@@ -116,7 +116,7 @@ include_once "dashboard.php";
                 </td>
                 </tr>
             </table>
-            <div id="load_users" style='box-shadow:0px 0px 10px grey;' class="table_area bg-white rounded border">
+            <div id="load_users" class="table_area bg-white rounded border">
 
             
 
