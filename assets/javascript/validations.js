@@ -1,11 +1,13 @@
 function validName(name) {            ////////////////////////////////name
-  if (name == "") {
+  const pattern=/^([a-zA-Z ]){2,30}$/;
+
+  if (name.trim() == "") {
     $("#name_valid").show();
     $("#name_valid").text("enter name").css("color", "red");
     return false;
     
   }
-  else if(name.length <2 && name.length >15 ){
+  else if(!pattern.test(name.trim())){
 
     $("#name_valid").show();
     $("#name_valid").text("enter valid name").css("color", "red");

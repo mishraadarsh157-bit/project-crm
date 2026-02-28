@@ -3,6 +3,15 @@ var baseurl = "http://localhost/project/";
 
 console.log("working");
 
+if(window.location.href=='http://localhost/project/usermaster/'){
+  $('.side1').css('background','white').css('color','black');
+}else if(window.location.href=='http://localhost/project/clientmaster/'){
+  $('.side2').css('background','white').css('color','black');
+}
+else if(window.location.href=='http://localhost/project/itemmaster/'){
+  $('.side3').css('background','white').css('color','black');
+}
+
 $("#user_login").click(function (e) {
   e.preventDefault();
   var email = $("#email").val();
@@ -32,10 +41,10 @@ $("#user_login").click(function (e) {
   });
 });
 
-$("#logout").click(function (e) {
+$(".logout").click(function (e) {
   e.preventDefault();
   console.log("logout");
-  var logout = $("#logout").val();
+  var logout = $(".logout").val();
   $.ajax({
     url: "/project/loginAPI/",
     type: "POST",
@@ -60,32 +69,36 @@ $("#logo").click(function () {
 $("#hide_sidebar").click(function () {
   // console.log("good");
   $("#left_sidebar").css("width", "8%");
+  $(".logo").css("width", "8%");
   $(".content-body").css("width", "92%");
-  $(".masters li #user_master").html('<i class="bi bi-people"></i>');
-  $(".masters li #client_master").html('<i class="bi bi-person-circle"></i>');
-  $(".masters li #item_master").html('<i class="bi bi-diagram-3"></i>');
-  $(".logout form #logout").html('<i class="bi bi-box-arrow-left"></i>');
-  $(".logout form").css("width", "5%");
+  $(".naav").css("width", "92%");
+  $(".masters #user_master button").html('<i class="bi bi-people"></i>');
+  $(".masters #client_master button").html('<i class="bi bi-person-circle"></i>');
+  $(".masters #item_master button").html('<i class="bi bi-diagram-3"></i>');
+  $(" #logout").html('<i class="bi bi-box-arrow-left"></i>');
+  $(".logout_form").css("width", "5%");
   $("#hide_sidebar").hide();
   $("#show_sidebar").show();
 });
 $("#show_sidebar").click(function () {
   // console.log("good");
   $("#left_sidebar").css("width", "16.5%");
+  $(".logo").css("width", "16.5%");
   $(".content-body").css("width", "83.5%");
-  $(".masters li #user_master").html(
+  $(".naav").css("width", "83.5%");
+  $(".masters #user_master button").html(
     '<i class="bi bi-people"></i>  USER MASTER ',
   );
-  $(".masters li #client_master").html(
+  $(".masters #client_master button").html(
     '<i class="bi bi-person-circle"></i>   CLIENT MASTER  ',
   );
-  $(".masters li #item_master").html(
+  $(".masters #item_master button").html(
     '<i class="bi bi-diagram-3"></i>    ITEM MASTER ',
   );
-  $(".logout form #logout").html(
+  $(" #logout").html(
     ' <i class="bi bi-box-arrow-left"></i>   LOGOUT',
   );
-  $(".logout form").css("width", "15%");
+  $(".logout_form").css("width", "15%");
   $("#hide_sidebar").show();
   $("#show_sidebar").hide();
 });
@@ -118,17 +131,30 @@ function userData(page, limit) {
     success: function (data) {
       data = JSON.parse(data);
       let icon=$('#icon_hold').val()
-      let table = '<div class="holding-table"><table border="1" class="table  bg-white"> ';
-      table += '<tr class="bg-skyblue" style="whitespace:nowrap;">';
+      let table = '<div class="holding-table"><table border="1" class="table  bg-white table-bordered"> ';
+      table += '<tr class="bg-blue" style="whitespace:nowrap;">';
+      table += '<th class="action text-center">Action</th>';
       table += `<th onclick="userData()" class="id sort">Id <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="userData()" class="name sort">Name <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="userData()" class="phone sort">Phone <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="userData()" class="email sort">Email <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += '<th class="status text-center">Status</th>';
-      table += '<th class="action">Action</th>';
       table += "</tr>";
       data.data.forEach(function (value) {
         table += '<tr class="data" style="height:40px;whitespace:nowrap;">';
+        
+        table += `<td class='text-muted'>
+        
+        <button class='btn btn-sm rounded-pill btn-outline-primary' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["id"]}'  id='update' value='update'>
+                <i class='bi bi-pencil-square'>
+                </i></button>
+                
+                
+        <button class='btn btn-sm rounded-pill  btn-outline-warning' name='delete' data-did='${value["id"]}'  id='delete' value='delete'>
+        <i class='bi bi-trash3'></i></button>
+                
+                
+                </td>`;
         table += `<td class='text-muted'>${value["id"]}</td>`;
         table += `<td class='text-success'>${value["name"]}</td>`;
         table += `<td class='text-muted'>${value["phone"]}</td>`;
@@ -140,25 +166,13 @@ function userData(page, limit) {
         }
         table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value["STATUS"]}</button></td>`;
 
-        table += `<td class='text-muted'>
-        
-        <button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["id"]}'  id='update' value='update'>
-                <i class='bi bi-pencil-square'>
-                </i></button>
-                
-                
-        <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='${value["id"]}'  id='delete' value='delete'>
-        <i class='bi bi-trash3'></i></button>
-                
-                
-                </td>`;
         table += "</tr>";
       });
-      page = $("#invis").val() ?? 1;
+      page = $("#invis").val();
 
       table += "</table></div>";
       table += '<hr><div class=" w-100 p-2 px-auto   d-flex justify-center">';
-      table +=`<b class='on_page mt-2 ms-auto'> Pages : ${page} / ${data.total_page} </b>`;
+      table +=`<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${data.total_page} </b>`;
       table +='<ul class="pagination ms-5 ms-auto ">';
       total_pages = data.total_page;
 
@@ -188,7 +202,7 @@ function userData(page, limit) {
           '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
       }
       table += "</ul>"
-      table +=`<b class='on_page mt-2 mx-auto '> Total Records : ${total_records} </b>`;
+      table +=`<b class='on_page mt-2 mx-auto text-secondary'> Total Records : ${total_records} </b>`;
       
       table +="</div>";
       $("#load_users").html(table);
@@ -202,6 +216,7 @@ $(document).on("click", "#pagination a", function (e) {
   e.preventDefault();
  
   var limit = $("#limit").val();
+
   var page = $(this).attr("id");
   userData(page, limit);
   $("#invis").val(page);
@@ -237,8 +252,9 @@ $(document).on("click", "#forward", function (e) {
 
 function limitData() {
   var limit = $("#limit").val();
-  var page = $(this).attr("id");
+  var page=$(this).attr('id');
   userData(page, Number(limit));
+  
 }
 
 window.addEventListener("load", () => {
@@ -251,9 +267,9 @@ window.addEventListener("load", () => {
 
 function insertUser() {
   let user_name = $("#user_name").val();
-  // if (!validName(user_name)) {
-  //   return;
-  // }
+  if (!validName(user_name)) {
+    return;
+  }
   let user_pass = $("#user_pass").val();
   validPass(user_pass);
   let user_number = $("#user_number").val();
@@ -389,17 +405,31 @@ function searc() {
       
       
       let icon=$('#icon_hold').val()
-      let table = '<div class="holding-table"><table border="1" class="table  bg-white"> ';
-      table += '<tr class="bg-skyblue" style="whitespace:nowrap;">';
+      let table = '<div class="holding-table"><table border="1" class="table  bg-white table-bordered"> ';
+      table += '<tr class="bg-blue" style="whitespace:nowrap;">';
+      table += '<th class="action">Action</th>';
       table += `<th onclick="searc()" class="id sort">Id <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="searc()" class="name sort">Name <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="searc()" class="phone sort">Phone <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="searc()" class="email sort">Email <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += '<th class="status text-center">Status</th>';
-      table += '<th class="action">Action</th>';
       table += "</tr>";
       data.data.forEach(function (value) {
+
         table += '<tr class="data" style="height:40px;whitespace:nowrap;">';
+
+        table += `<td class='text-muted'>
+        
+        <button class='btn btn-sm rounded-pill btn-outline-primary' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["id"]}'  id='update' value='update'>
+                <i class='bi bi-pencil-square'>
+                </i></button>
+                
+                
+        <button class='btn btn-sm rounded-pill  btn-outline-warning' name='delete' data-did='${value["id"]}'  id='delete' value='delete'>
+        <i class='bi bi-trash3'></i></button>
+                
+                
+                </td>`;
         table += `<td class='text-muted'>${value["id"]}</td>`;
         table += `<td class='text-success'>${value["name"]}</td>`;
         table += `<td class='text-muted'>${value["phone"]}</td>`;
@@ -411,18 +441,6 @@ function searc() {
         }
         table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value["STATUS"]}</button></td>`;
 
-        table += `<td class='text-muted'>
-        
-        <button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["id"]}'  id='update' value='update'>
-                <i class='bi bi-pencil-square'>
-                </i></button>
-                
-                
-        <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='${value["id"]}'  id='delete' value='delete'>
-        <i class='bi bi-trash3'></i></button>
-                
-                
-                </td>`;
         table += "</tr>";
       });
       table += "</table></div>";
@@ -563,7 +581,7 @@ function clientData() {
       data = JSON.parse(data);
       console.log(data);
       let table = '<table border="1" class="table bg-white"> ';
-      table += '<tr class="bg-skyblue" style="whitespace:nowrap;">';
+      table += '<tr class="bg-blue" style="whitespace:nowrap;">';
       table += '<th class="id">Id</th>';
       table += '<th class="name">Name</th>';
       table += '<th class="phone">Phone</th>';

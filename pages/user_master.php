@@ -6,6 +6,12 @@ include_once "dashboard.php";
 
 ?>
 
+<style>
+
+
+
+</style>
+
 <div class="content-body col-10">
 
     <ul class="nav nav-tabs  mb-3 mt-2 " id="nav-tab" role="tablist">
@@ -55,7 +61,7 @@ include_once "dashboard.php";
                         <div class="col-8"></div>
                         <div class="col-4">
                             <input type="button" value="SAVE" id="save_user" class="save w-50 status-btn-green  btn-sm bg-skyblue btn my-3" onclick="insertUser()">
-                            <input type="reset" value="RESET" class="reset_insert w-25 btn btn-sm status-btn-red">
+                            <input type="reset" value="RESET" class="reset_insert w-25 btn btn-sm btn-outline-danger">
                         </div>
                     </div>
                 </form>
@@ -87,8 +93,8 @@ include_once "dashboard.php";
                             </select></td>
                         <td class='search-box-last '>
 
-                            <button type="button" onclick="searc()" class="btn bg-skyblue ms-4" name="search" value="search"><i class="bi bi-search"></i></button>
-                            <button class="bg-danger btn " type="reset" onclick="userData()"><i class="bi bi-arrow-clockwise"></i></button>
+                            <button type="button" onclick="searc()" class="btn btn-outline-success btn-sm ms-4" name="search" value="search"><i class="bi bi-search"></i></button>
+                            <button class="btn-outline-dark btn-sm btn " type="reset" onclick="userData()"><i class="bi bi-arrow-repeat"></i></button>
                         </td>
                     </form>
                 </tr>
@@ -102,10 +108,10 @@ include_once "dashboard.php";
                     <input type="text" hidden id="icon_hold" value='bi-arrow-down-up'>
                 </td><td>
                 <select class='form-select' onchange='limitData()' name="" value='' id="limit">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
+                    <option onclick='userData()' value="5">5</option>
+                    <option onclick='userData()' value="10">10</option>
+                    <option onclick='userData()' value="15">15</option>
+                    <option onclick='userData()' value="20">20</option>
                 </select>    
                 </td>
                 </tr>
@@ -149,3 +155,4 @@ include_once "dashboard.php";
         </div>
     </div>
 </div>
+
