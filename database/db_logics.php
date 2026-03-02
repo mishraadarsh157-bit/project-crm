@@ -19,7 +19,7 @@ class db
 
     /////////read data
 
-    public function fetchData($table,$limit,$query)
+    public function fetchData($table,$limit,$query,$limquery)
     {   
          $page = "";
         if (isset($_POST['page_no'])) {
@@ -30,7 +30,7 @@ class db
          $limit = (int) $limit;
         $offset = ($page - 1) * $limit;
 
-        $sql = $query;
+        $sql = $query . $limquery;
           $result = mysqli_query($this->conn, $sql);
         if ($result == false) {
             echo 'no data';
@@ -41,7 +41,7 @@ class db
         $data[]=$row;
         }
         $dbdata['data']=$data;
-        $pagin="select * from $table";
+        $pagin=$query;
         $result=mysqli_query($this->conn,$pagin);
         $total_records=mysqli_num_rows($result);
         $total_pages=ceil($total_records/$limit);

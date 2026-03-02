@@ -18,7 +18,7 @@ if (isset($_POST['page_name'])) {
     $order=$_POST['order'] ?? 'asc';
     $limit = $_POST['limit'] ?? 5;
     $offset= ($page_no -1) * $limit;
-    $crud->fetchData($table,$limit,"select * from $table order by $field $order limit $offset,  $limit");;
+    $crud->fetchData($table,$limit,"select * from $table order by $field  $order ", " limit $offset,  $limit");;
 }   ////////////>>>>
 
 
@@ -69,19 +69,19 @@ else if (isset($_POST['delete'])) {
 
 
 else if (isset($_POST['search'])) {
-    $id = $_POST['id'];
+    $page_no=$_POST['page_no'];
     $table='users';
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $number = $_POST['number'];
+    $s_user = $_POST['search_user'];
     $status = $_POST['status'];
     $limit=$_POST['limit'] ?? 5;
+    $offset= ($page_no -1) * $limit;
+
   
     $crud->fetchData($table,$limit,"select * from $table
-         where id like '%$id%'
-         and name like '%$name%' 
-         and phone like '%$number%' 
-         and email like '%$email%' 
-         and STATUS = '$status' 
-         limit $limit ");
+         where STATUS = '$status' 
+         and (id like '%$s_user%'
+         or name like '%$s_user%' 
+         or phone like '%$s_user%' 
+         or email like '%$s_user%') 
+         ","limit $offset, $limit");
 }

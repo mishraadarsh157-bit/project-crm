@@ -69,49 +69,33 @@ include_once "dashboard.php";
         </div>
         <!-- part -->
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-            <table class='bg-white w-100 border rounded mb-3 table' >
-                <tr>
-
-                    <th  class='p-2 '>Id</th>
-                    <th  class='p-2 '>Name</th>
-                    <th  class='p-2 '>Email</th>
-                    <th  class='p-2 '>Number</th>
-                    <th  class='p-2'>Status</th>
-                    <th class=""></th>
-                </tr>
-                <tr>
+            
+            <table class='w-100'>
+                <tr class='w-100 bg-white'>  
                     <form>
-                        <td class='search-box ps-2'>
-                            <input class='form-control' id="search_id" placeholder='search ' type='number'>
+                        <td class='search-box p-3 pe-0 w-25' colspan="">
+                           <div class="search_holder"> <input class='' id='search_user' placeholder='search ' type='text'><button type="button" onclick="searc()" class="search_button" name="search" value="search"><i class="bi bi-search"></i></button></div>
                         </td>
-                        <td class='search-box pb-0 ps-2'><input class='form-control' id='search_name' placeholder='search ' type='text'></td>
-                        <td class='search-box pb-0 ps-2'><input class='form-control' id='search_email' placeholder='search ' type='email'></td>
-                        <td class='search-box pb-0 ps-2'><input class='form-control' id='search_number' placeholder='search ' type='number'></td>
-                        <td class='search-box pb-0 ps-2'><select name='' id="search_status" class=' form-select'>
+                        <td class='search-box p-3 pe-0'>
+                            <select name='' onchange='searc()' id="search_status" class=' form-select searc_sel'>
                                 <option value='ACTIVE'>ACTIVE</option>
                                 <option value='INACTIVE'>INACTIVE</option>
-                            </select></td>
-                        <td class='search-box-last '>
-
-                            <button type="button" onclick="searc()" class="btn btn-outline-success btn-sm ms-4" name="search" value="search"><i class="bi bi-search"></i></button>
-                            <button class="btn-outline-dark btn-sm btn " type="reset" onclick="userData()"><i class="bi bi-arrow-repeat"></i></button>
-                        </td>
+                            </select>
+                            </td>
+                        <td class='w-50'>
+                            <button class="reset_btn " type="reset" onclick="userData()"><i class="bi bi-arrow-repeat"></i></button></td>
                     </form>
-                </tr>
-            </table>
-            <table class='w-100'>
-                <tr>
-                    <td colspan="5" class="w-75" align="">
+                    <td colspan="" class="" align="">
                     <input id="invis" hidden type="text" value='1'>
                     <input type="text"  class='field' onchange='userData()' hidden value='id'>
                     <input type="text" class='order' onchange='userData()' hidden value='asc'>
                     <input type="text" hidden id="icon_hold" value='bi-arrow-down-up'>
-                </td><td align='right'>
+                </td><td align='right' class="w-50">
                 <select class='form-select w-25 mb-2' onchange='limitData()' name="" value='' id="limit">
-                    <option onclick='userData()' value="5">5</option>
-                    <option onclick='userData()' value="10">10</option>
-                    <option onclick='userData()' value="15">15</option>
-                    <option onclick='userData()' value="20">20</option>
+                    <option onclick='userData()' id='1' value="5">5</option>
+                    <option onclick='userData()' id='1' value="10">10</option>
+                    <option onclick='userData()' id='1' value="15">15</option>
+                    <option onclick='userData()' id='1' value="20">20</option>
                 </select>    
                 </td>
                 </tr>

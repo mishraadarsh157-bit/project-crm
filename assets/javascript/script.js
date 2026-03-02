@@ -142,8 +142,8 @@ function userData(page, limit) {
       let icon=$('#icon_hold').val()
       let table = '<div class="holding-table"><table border="1" class="table  bg-white table-bordered"> ';
       table += '<tr class="bg-blue" style="whitespace:nowrap;">';
-      table += '<th class="action text-center">Action</th>';
       table += `<th class="id">Sr.NO</th>`;
+      table += '<th class="action text-center">Action</th>';
       table += `<th onclick="userData()" class="name sort border">Name <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="userData()" class="phone sort border">Phone <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="userData()" class="email sort">Email <i class="bi ${icon}" id="sort_icon"></i></th>`;
@@ -156,6 +156,7 @@ function userData(page, limit) {
         index=(page-1)*limit+ind;
           table += '<tr class="data" style="height:40px;whitespace:nowrap;">';
         
+          table += `<td class='text-muted text-center' >${index}</td>`;
         table += `<td class='text-muted text-center'>
         
         <button class='btn btn-sm rounded-pill btn-outline-primary' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["id"]}'  id='update' value='update'>
@@ -163,12 +164,11 @@ function userData(page, limit) {
                 </i></button>
                 
                 
-        <button class='btn btn-sm rounded-pill  btn-outline-warning' name='delete' data-did='${value["id"]}'  id='delete' value='delete'>
+        <button class='btn btn-sm rounded-pill  btn-outline-danger' name='delete' data-did='${value["id"]}'  id='delete' value='delete'>
         <i class='bi bi-trash3'></i></button>
                 
                 
                 </td>`;
-                table += `<td class='text-muted' >${index}</td>`;
         table += `<td class='text-success'>${value["name"]}</td>`;
         table += `<td class='text-muted'>${value["phone"]}</td>`;
         table += `<td class=''>${value["email"]}</td>`;
@@ -184,17 +184,16 @@ function userData(page, limit) {
       
       table += "</table></div>";
       table += '<hr><div class=" w-100 p-2 px-auto   d-flex justify-center">';
-      table +=`<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${data.total_page} </b>`;
       table +='<ul class="pagination ms-5 ms-auto ">';
       
       
       
       if (page <= 1) {
         table +=
-          ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
+        ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
       } else if (page > 1) {
         table +=
-          "<li class='page-item'><button class='page-link' id='back'>Previous</button></li>";
+        "<li class='page-item'><button class='page-link' id='back'>Previous</button></li>";
       }
       if (total_records >= limit) {
         for (i = 1; i <= total_pages; i++) {
@@ -207,12 +206,13 @@ function userData(page, limit) {
       }
       if (page < total_pages) {
         table +=
-          '<li class="page-item"><button class="page-link" id="forward" href="#">Next</button></li>';
+        '<li class="page-item"><button class="page-link" id="forward" href="#">Next</button></li>';
       } else if ((page = total_pages)) {
         table +=
-          '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
+        '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
       }
       table += "</ul>"
+      table +=`<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${data.total_page} </b>`;
       table +=`<b class='on_page mt-2 mx-auto text-secondary'> Total Records : ${total_records} </b>`;
       
       table +="</div>";
@@ -263,8 +263,11 @@ $(document).on("click", "#forward", function (e) {
 
 function limitData() {
   var limit = $("#limit").val();
-  var page=$(this).attr('id');
-  userData(page, Number(limit));
+  
+  $("#invis").val(1);
+  
+  var page=$("#invis").val();
+  userData(Number(page), Number(limit));
   
 }
 
@@ -394,42 +397,45 @@ $(document).on("click", "#delete", function (e) {
 });
 
 function searc() {
-  var s_id = $("#search_id").val();
-  var s_name = $("#search_name").val();
-  var s_email = $("#search_email").val();
-  var s_number = $("#search_number").val();
+  $('#invis').val(1);
+  var s_page=$('#invis').val();
+ 
+  var search_user = $("#search_user").val();
   var s_status = $("#search_status").val();
   var search = "search";
   $.ajax({
     url:  "/project/usercontroller/",
     type: "POST",
     data: {
-      id: s_id,
-      name: s_name,
-      email: s_email,
-      number: s_number,
+      page_no:s_page,
+      search_user: search_user,
       status: s_status,
       search: search,
     },
     success: function (data) {
       data = JSON.parse(data);
       
-      
+       page = $("#invis").val();
+      limit = $("#limit").val();
       let icon=$('#icon_hold').val()
       let table = '<div class="holding-table"><table border="1" class="table  bg-white table-bordered"> ';
       table += '<tr class="bg-blue" style="whitespace:nowrap;">';
-      table += '<th class="action">Action</th>';
       table += `<th onclick="searc()" class="id sort">Id <i class="bi ${icon}" id="sort_icon"></i></th>`;
+      table += '<th class="action">Action</th>';
       table += `<th onclick="searc()" class="name sort">Name <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="searc()" class="phone sort">Phone <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="searc()" class="email sort">Email <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += '<th class="status text-center">Status</th>';
       table += "</tr>";
+       total_pages = data.total_page;
+       total_records = data.total_record
       data.data.forEach(function (value,index) {
-        index=index+1;
+        ind=index+1;
+        index=(page-1)*limit+ind;
         
         table += '<tr class="data" style="height:40px;whitespace:nowrap;">';
 
+        table += `<td class='text-muted'>${index}</td>`;
         table += `<td class='text-muted'>
         
         <button class='btn btn-sm rounded-pill btn-outline-primary' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["id"]}'  id='update' value='update'>
@@ -437,12 +443,11 @@ function searc() {
                 </i></button>
                 
                 
-        <button class='btn btn-sm rounded-pill  btn-outline-warning' name='delete' data-did='${value["id"]}'  id='delete' value='delete'>
+        <button class='btn btn-sm rounded-pill  btn-outline-danger' name='delete' data-did='${value["id"]}'  id='delete' value='delete'>
         <i class='bi bi-trash3'></i></button>
                 
                 
                 </td>`;
-        table += `<td class='text-muted'>${index}</td>`;
         table += `<td class='text-success'>${value["name"]}</td>`;
         table += `<td class='text-muted'>${value["phone"]}</td>`;
         table += `<td class=''>${value["email"]}</td>`;
@@ -456,7 +461,39 @@ function searc() {
         table += "</tr>";
       });
       table += "</table></div>";
+       table += '<hr><div class=" w-100 p-2    d-flex justify-center">';
+       table +='<ul class="pagination ms-5 ms-auto ">';
+       
+       
+       
+       if (page <= 1) {
+         table +=
+         ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
+        } else if (page > 1) {
+          table +=
+          "<li class='page-item'><button class='page-link' id='back'>Previous</button></li>";
+        }
+        if (total_records >= limit) {
+          for (i = 1; i <= total_pages; i++) {
+            if (i <= 1) {
+              table += `<li class="page-item"><a class="page-link" id='${page}' href="#">${page}</a></li>`;
+            } else {
+              continue;
+            }
+          }
+        }
+        if (page < total_pages) {
+          table +=
+          '<li class="page-item"><button class="page-link" id="forward" href="#">Next</button></li>';
+        } else if ((page = total_pages)) {
+          table +=
+          '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
+        }
+        table += "</ul>"
+        table +=`<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${data.total_page} </b>`;
+      table +=`<b class='on_page mt-2 mx-auto text-secondary'> Total Records : ${total_records} </b>`;
       
+      table +="</div>";
       $("#load_users").html(table);
       ////////////////////////////////////////////////
 

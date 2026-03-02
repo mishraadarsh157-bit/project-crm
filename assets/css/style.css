@@ -177,15 +177,40 @@ transition: all ease-in-out .5s;
 #logout{
     transition: .5s all ease-in-out;
 }
+.search_holder{
+    overflow: hidden;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
 .search-boxes{
-    width: 10%;
+    width: 100px;
 }
 .search-box input{
-    width: 90%;
+    width: 87%;
     height: 30px;
+    margin-right: 0px;
+    border: 0px;
 }
-.search-box-last{
-    width:18%;
+.reset_btn{
+    height: 33px;
+    width: 33px;
+    border: 0px;
+    background-color: transparent;
+    transition: all ease .5s;
+}
+.reset_btn:hover{
+    background-color: rgb(212, 207, 207);
+    border-radius:5px ;
+}
+.search_button{
+    height: 30px;
+    width: 13%;
+    border: 0px;
+}
+.searc_sel{
+    height: 33px;
+    width: 100px;
+    border: 1px solid grey;
 }
 .home-con-h{
     height: 30vh;

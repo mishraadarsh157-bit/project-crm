@@ -9,11 +9,12 @@ if(isset($_POST['page_name'])){
 $table1="client";
 $table2="cities";
 $table3="states";
+$page=$_POST['page_no']??1;
 $limit=$_POST['limit']??5;
-
+$offset=($page-1)*$limit;
 // $client->loadClients("client","cities","states");
-$crud->fetchData($table1,$limit,"SELECT client_id,client_name,phone,client_email,address,name,city,pincode,client_status FROM $table1 inner join $table2 on $table1.city_id=$table2.id inner join $table3 on $table1.state_id= $table3.id"
-);
+$crud->fetchData($table1,$limit,"SELECT client_id,client_name,phone,client_email,address,name,city,pincode,client_status FROM $table1 inner join $table2 on $table1.city_id=$table2.id inner join $table3 on $table1.state_id= $table3.id "
+,"limit $offset, $limit");
 
 }
 
