@@ -48,13 +48,12 @@ class db
          $dbdata['total_record']=$total_records;
         $dbdata['total_page']=$total_pages;
         
-           }
-           else{
-            $data[]='no data';
-            $dbdata['data']=$data;
-           }
        $jsondata = json_encode($dbdata);
         echo $jsondata;
+           }
+           else{
+            echo 'empty';
+           }
     }
 
     public function escape_string($value)

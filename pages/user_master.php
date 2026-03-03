@@ -74,7 +74,7 @@ include_once "dashboard.php";
                 <tr class='w-100 bg-white border'>  
                     <form>
                         <td class='search-box p-3 pe-0 w-25' colspan="">
-                           <div class="search_holder"> <input class='' id='search_user' placeholder='search ' type='text'><button type="button" onclick="userData()" class="search_button" name="search" value="search"><i class="bi bi-search"></i></button></div>
+                           <div class="search_holder"> <input class='' id='search_user' placeholder='search ' type='text'><button type="button" onclick="userData(),searc()" class="search_button" name="search" value="search"><i class="bi bi-search"></i></button></div>
                         </td>
                         <td class='search-box p-3 pe-0'>
                             <select name='' onchange='userData()' id="search_status" class=' form-select searc_sel'>

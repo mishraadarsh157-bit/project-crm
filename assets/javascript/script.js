@@ -138,6 +138,24 @@ function userData(page, limit) {
       page_name: "userpage",
     },
     success: function (data) {
+     if(data.trim()=="empty"){
+          console.log(data)
+           let icon=$('#icon_hold').val()
+      let table = '<div class="holding-table"><table border="1" class="table  bg-white table-bordered"> ';
+      table += '<tr class="bg-blue" style="whitespace:nowrap;">';
+      table += `<th class="srno text-center">Sr.NO</th>`;
+      table += '<th class="action text-center">Action</th>';
+      table += `<th onclick="userData()" class="name sort border">Name <i class="bi ${icon}" id="sort_icon"></i></th>`;
+      table += `<th onclick="userData()" class="phone sort border">Phone <i class="bi ${icon}" id="sort_icon"></i></th>`;
+      table += `<th onclick="userData()" class="email sort">Email <i class="bi ${icon}" id="sort_icon"></i></th>`;
+      table += '<th class="status text-center">Status</th>';
+      table += "</tr>";
+      table +="<tr>"
+      table += '<th colspan="9" class="text-center"><h1>NO USER FOUND</h1></th>';
+      table +="</tr>"
+          $('#load_users').html(table)
+        }
+        else{
       data = JSON.parse(data);
       page = $("#invis").val();
       limit = $("#limit").val();
@@ -145,7 +163,7 @@ function userData(page, limit) {
       let icon=$('#icon_hold').val()
       let table = '<div class="holding-table"><table border="1" class="table  bg-white table-bordered"> ';
       table += '<tr class="bg-blue" style="whitespace:nowrap;">';
-      table += `<th class="id  text-center">Sr.NO</th>`;
+      table += `<th class="srno text-center">Sr.NO</th>`;
       table += '<th class="action text-center">Action</th>';
       table += `<th onclick="userData()" class="name sort border">Name <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="userData()" class="phone sort border">Phone <i class="bi ${icon}" id="sort_icon"></i></th>`;
@@ -222,7 +240,7 @@ function userData(page, limit) {
       
       table +="</div>";
       $("#load_users").html(table);
-    },
+    }},
   });
 }
 
@@ -266,12 +284,11 @@ $(document).on("click", "#forward", function (e) {
 
 
 function limitData() {
-  var limit = $("#limit").val();
   
   $("#invis").val(1);
   
   var page=$("#invis").val();
-  userData(Number(page), Number(limit));
+  userData(Number(page));
   
 }
 
@@ -362,8 +379,8 @@ $(document).on("click", "#edit", function (e) {
     },
     success: function (data) {
       if (data.trim() == 1) {
-        userData();
-
+        var page=$("#invis").val();
+        userData(page);
         $("#myModal").hide();
       } else {
         console.log("update js error");
@@ -389,7 +406,8 @@ $(document).on("click", "#delete", function (e) {
     },
     success: function (data) {
       console.log(data);
-      userData();
+       var page=$("#invis").val();
+      userData(page);
       if (data.trim() == 1) {
         $(element).closest("tr").fadeOut();
       } else {
@@ -399,3 +417,9 @@ $(document).on("click", "#delete", function (e) {
     },
   });
 });
+function searc(){
+  var val=1;
+  $("#invis").val(val)
+   var page = $("#invis").val();
+          userData(Number(page))
+}

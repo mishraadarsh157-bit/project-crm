@@ -82,24 +82,24 @@ function validAddress(address)
   if (address == "") {
     $("#address_valid").show();
     $("#address_valid").text("enter address").css("color", "red");
-    
+  return false    
   }
   else{
     
     $("#address_valid").hide();
-    
+    return true
   }
 }
 function validPincode(pincode){
   if (pincode == "") {
     $("#pincode_valid").show();
     $("#pincode_valid").text("enter pincode").css("color", "red");
-    
+    return false
   }
   
   else{
     
     $("#pincode_valid").hide();
-    
+    return true
   }
 }

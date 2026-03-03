@@ -199,3 +199,12 @@ echo json_encode([
     'pagination' => $pagination->createLinks()
 ]);
 ?>   
+
+
+
+
+<input type="text" name="name" pattern="[a-zA-Z ]{2,}" required />
+<input type="tel" name="phone" pattern="[0-9]{10}" maxlength="10" required />
+<input type="email" name="email" required />
+<input type="text" name="address" minlength="5" required />
+<input type="text" name="pincode" pattern="[0-9]{6}" maxlength="6" required />   

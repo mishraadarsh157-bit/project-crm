@@ -20,7 +20,7 @@ $offset=($page-1)*$limit;
 
 $crud->fetchData($table1,$limit,"SELECT client_id,client_name,phone,client_email,address,name,city,pincode,client_status FROM $table1 inner join $table2 on $table1.city_id=$table2.id inner join $table3 on $table1.state_id= $table3.id 
 where client_status like '%$status%' and 
- (client_name like '%$search%'
+ ( client_name like '%$search%'
 or phone like '%$search%' 
 or client_email like '%$search%' 
 or address like '%$search%' 

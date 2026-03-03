@@ -24,19 +24,21 @@ include_once "dashboard.php";
                 <tr>
                     <td><table class=" w-100">
                         <tr>
+                            <form>
                         <td class='w-25 search-box'>
                             <div class="search_holder">
-                            <input type="text" class='searc_c'><button onclick='clientData()' class='search_button'><i class='bi bi-search'></i></button></div></td><td>
+                            <input type="text" class='searc_c'><button onclick='clientData(),searc_c()' type="button" class='search_button'><i class='bi bi-search'></i></button></div></td><td>
                             <select name="" class='searc_sel rounded' onchange='clientData()' id="status_c">
                                 <option value="">STATUS</option>
                                 <option value="1">ACTIVE</option>
                                 <option value="0">INACTIVE</option>
                             </select>
-                            <input type="text" id='invis_c' value='1' hidden    >
+                            <input type="text" hidden id='invis_c' value='1' >
                             <input type="text" hidden class='field_c' value='client_id' >
                             <input type="text" hidden class='order_c' value='asc' >
                             <input type="text" hidden value='bi-arrow-down-up' id="icon_hold_c">
-                        </td>
+                        <button class="reset_btn " type="reset" onclick="clientData()"><i class="bi bi-arrow-repeat"></i></button>
+                        </td></form>
                         <td class='w-25' align='right'>
                             <select class='form-select w-25' onchange='clientData(),limitData_c()'  name="" id="limit_c">
                             <option value="5">5</option>

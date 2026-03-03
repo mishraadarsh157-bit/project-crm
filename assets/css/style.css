@@ -247,31 +247,39 @@ border: 0px;
     overflow-x: hidden;
     white-space: nowrap;
 }
-.name{
-    width: 300px;
+.srno_c,.srno{
+    width: 5vw;
+}
+.name_c,.name{
+    width: 10vw;
     overflow-x: hidden;
     white-space: nowrap;
 }
-.email{
-     white-space: nowrap;
-}
 .phone{
+    width: 20vw;
+}
+.email_c{
+    width:15vw;
      white-space: nowrap;
 }
-.address{
-    width: 300px; white-space: nowrap;
+.email{
+    width: 30vw;
 }
-.state{
-    width: 180px; white-space: nowrap;
+.phone_c{
+    width:10vw;
+     white-space: nowrap;
 }
-.city{
-    width: 100px; white-space: nowrap;
+.address_c{
+    width: 20vw; white-space: nowrap;
 }
-.status{
-    width: 100px; white-space: nowrap;
+.status_c,.status{
+    width: 6vw; white-space: nowrap;
 }
-.action{
-    width: 100px; white-space: nowrap;
+.pincode_c{
+
+}
+.action_c,.action{
+    width: 8vw; white-space: nowrap;
 }
 .status-btn-green{
     height: 24px;

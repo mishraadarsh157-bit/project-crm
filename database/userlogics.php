@@ -35,7 +35,7 @@ class update
                 <option value='1'>ACTIVE</option>
                 <option value='0'>INACTIVE</option>
                 </select><hr>";
-                echo  "<input type='button' class='btn btn-outline-primary' id='edit' value='EDIT' onclick='userData()'>
+                echo  "<input type='button' class='btn btn-outline-primary' id='edit' value='EDIT'>
         <input type='reset' value='RESET' class='btn btn-outline-danger'></form>";
             }
         }
