@@ -14,11 +14,18 @@ include 'database/db_logics.php';
 if (isset($_POST['page_name'])) {
     $table = 'users';
     $page_no = $_POST['page_no'] ?? 1;
+    $search=$_POST['search_user'] ??'';
+    $status=$_POST['status']?? '';
     $field=$_POST['field'] ?? 'id';
     $order=$_POST['order'] ?? 'asc';
     $limit = $_POST['limit'] ?? 5;
     $offset= ($page_no -1) * $limit;
-    $crud->fetchData($table,$limit,"select * from $table order by $field  $order ", " limit $offset,  $limit");;
+    $crud->fetchData($table,$limit,"select * from $table 
+    where STATUS like '%$status%' and (
+ name like '%$search%' 
+    or phone like '%$search%' 
+    or email like '%$search%' 
+    ) order by $field  $order ", " limit $offset,  $limit");;
 }   ////////////>>>>
 
 
@@ -68,20 +75,3 @@ else if (isset($_POST['delete'])) {
 }    //////>>>>
 
 
-else if (isset($_POST['search'])) {
-    $page_no=$_POST['page_no'];
-    $table='users';
-    $s_user = $_POST['search_user'];
-    $status = $_POST['status'];
-    $limit=$_POST['limit'] ?? 5;
-    $offset= ($page_no -1) * $limit;
-
-  
-    $crud->fetchData($table,$limit,"select * from $table
-         where STATUS = '$status' 
-         and (id like '%$s_user%'
-         or name like '%$s_user%' 
-         or phone like '%$s_user%' 
-         or email like '%$s_user%') 
-         ","limit $offset, $limit");
-}

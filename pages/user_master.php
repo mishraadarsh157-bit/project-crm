@@ -18,12 +18,12 @@ include_once "dashboard.php";
 
 
         <li class="nav-item " role="presentation">
-            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All Users</button>
+            <button class="nav-link active text-dark" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All Users</button>
         </li>
 
 
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Add Users</button>
+            <button class="nav-link text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Edit Users</button>
         </li>
 
     </ul>
@@ -60,7 +60,7 @@ include_once "dashboard.php";
                         </div>
                         <div class="col-8"></div>
                         <div class="col-4">
-                            <input type="button" value="SAVE" id="save_user" class="save w-50 status-btn-green  btn-sm bg-skyblue btn my-3" onclick="insertUser()">
+                            <input type="button" value="SAVE" id="save_user" class="save w-50 btn-outline-primary  btn-sm  btn my-3" onclick="insertUser()">
                             <input type="reset" value="RESET" class="reset_insert w-25 btn btn-sm btn-outline-danger">
                         </div>
                     </div>
@@ -71,15 +71,16 @@ include_once "dashboard.php";
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
             
             <table class='w-100'>
-                <tr class='w-100 bg-white'>  
+                <tr class='w-100 bg-white border'>  
                     <form>
                         <td class='search-box p-3 pe-0 w-25' colspan="">
-                           <div class="search_holder"> <input class='' id='search_user' placeholder='search ' type='text'><button type="button" onclick="searc()" class="search_button" name="search" value="search"><i class="bi bi-search"></i></button></div>
+                           <div class="search_holder"> <input class='' id='search_user' placeholder='search ' type='text'><button type="button" onclick="userData()" class="search_button" name="search" value="search"><i class="bi bi-search"></i></button></div>
                         </td>
                         <td class='search-box p-3 pe-0'>
-                            <select name='' onchange='searc()' id="search_status" class=' form-select searc_sel'>
-                                <option value='ACTIVE'>ACTIVE</option>
-                                <option value='INACTIVE'>INACTIVE</option>
+                            <select name='' onchange='userData()' id="search_status" class=' form-select searc_sel'>
+                                <option value=''>STATUS</option>
+                                <option value='1'>ACTIVE</option>
+                                <option value='0'>INACTIVE</option>
                             </select>
                             </td>
                         <td class='w-50'>
@@ -91,11 +92,11 @@ include_once "dashboard.php";
                     <input type="text" class='order' onchange='userData()' hidden value='asc'>
                     <input type="text" hidden id="icon_hold" value='bi-arrow-down-up'>
                 </td><td align='right' class="w-50">
-                <select class='form-select w-25 mb-2' onchange='limitData()' name="" value='' id="limit">
-                    <option onclick='userData()' id='1' value="5">5</option>
-                    <option onclick='userData()' id='1' value="10">10</option>
-                    <option onclick='userData()' id='1' value="15">15</option>
-                    <option onclick='userData()' id='1' value="20">20</option>
+                <select class='form-select w-25 mb-2 me-3' onchange='limitData()' name="" value='' id="limit">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
                 </select>    
                 </td>
                 </tr>
@@ -125,7 +126,7 @@ include_once "dashboard.php";
             <!-- Modal Header -->
             <div class="modal-header  bg-skyblue">
                 <h4 class="modal-title">Update User Data</h4>
-                <button type="button" class="btn-close btn-outline-danger" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal"></button>
             </div>
 
             <!-- Modal body -->

@@ -21,10 +21,19 @@ class update
                 echo "<input type='text' placeholder='name'  id='name' class='form-control mb-3' value='{$row['name']}' required><div id='name_valid' class='text-danger mb-3 ''></div>";
                 echo "<input type='text' placeholder='number'  id='number' class='form-control mb-3' value='{$row['phone']}' required><div id='number_valid'></div>";
                 echo "<input type='text' placeholder='email'  id='email' class='form-control mb-3' value='{$row['email']}' required><div id='email_valid'></div>";
-
+                if($row['STATUS']==1){
+                $status='ACTIVE';
+                }
+                else{
+                    $status='INACTIVE';
+                }
                 echo "<select id='status' class='form-select mb-5' value='{$row['STATUS']}'>
-                <option value='ACTIVE'>ACTIVE</option>
-                <option value='INACTIVE'>INACTIVE</option>
+                
+                <option value='{$row['STATUS']}'>$status</option>
+                
+                <option disabled>Select Status</option>
+                <option value='1'>ACTIVE</option>
+                <option value='0'>INACTIVE</option>
                 </select><hr>";
                 echo  "<input type='button' class='btn btn-outline-primary' id='edit' value='EDIT' onclick='userData()'>
         <input type='reset' value='RESET' class='btn btn-outline-danger'></form>";

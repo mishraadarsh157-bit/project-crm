@@ -6,25 +6,53 @@ include_once "dashboard.php";
 
 ?>
 
-<div class="content-body col-10 pt-3">
+<div class="content-body col-10 pt-2">
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Clients</button>
+            <button class="nav-link active text-dark" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Clients</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab " onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Add Clients</button>
+            <button class="nav-link text-dark" id="profile-tab " onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">EDIT Clients</button>
         </li>
     </ul>
 
     <div class="tab-content" id="myTabContent">
 
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-
+            <table class="table mt-3 border bg-white">
+                <tr>
+                    <td><table class=" w-100">
+                        <tr>
+                        <td class='w-25 search-box'>
+                            <div class="search_holder">
+                            <input type="text" class='searc_c'><button onclick='clientData()' class='search_button'><i class='bi bi-search'></i></button></div></td><td>
+                            <select name="" class='searc_sel rounded' onchange='clientData()' id="status_c">
+                                <option value="">STATUS</option>
+                                <option value="1">ACTIVE</option>
+                                <option value="0">INACTIVE</option>
+                            </select>
+                            <input type="text" id='invis_c' value='1' hidden    >
+                            <input type="text" hidden class='field_c' value='client_id' >
+                            <input type="text" hidden class='order_c' value='asc' >
+                            <input type="text" hidden value='bi-arrow-down-up' id="icon_hold_c">
+                        </td>
+                        <td class='w-25' align='right'>
+                            <select class='form-select w-25' onchange='clientData(),limitData_c()'  name="" id="limit_c">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select></td>
+                    </tr>
+                    </table></td>
+                </tr>
+                <tr><td >
             <div id="load_clients" class='table_area bg-white rounded border'>
 
             </div>
-
+            </td>
+            </table>
         </div>
 
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
@@ -71,8 +99,8 @@ include_once "dashboard.php";
 
                         <div class="col-8 p-3 pt-5"></div>
                         <div class="col-4 px-3">
-                            <input type="button" p-3 pt-5' id="insert_client" onclick='insertClient()' class="btn status-btn-green w-50" value='Submit'>
-                            <button type="reset" class="btn status-btn-red w-25">Reset</button>
+                            <input type="button" p-3 pt-5' id="insert_client" onclick='insertClient()' class="btn btn-outline-primary w-50" value='Submit'>
+                            <button type="reset" class="btn btn-outline-danger w-25">Reset</button>
                         </div>
 
 
@@ -118,3 +146,4 @@ include_once "dashboard.php";
         </div>
     </div>
 </div>
+

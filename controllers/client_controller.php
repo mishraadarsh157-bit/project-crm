@@ -1,26 +1,41 @@
 <?php
 
 
-include '../database/client_logics.php';
+include '../project/database/db_logics.php';
 
-include '../database/db_logics.php';
+include '../project/database/client_logics.php';
 
 if(isset($_POST['page_name'])){
 $table1="client";
 $table2="cities";
 $table3="states";
 $page=$_POST['page_no']??1;
+$field=$_POST['field']??'client_id';
+$order=$_POST['order'];
+$search=$_POST['searc']??'';
+$status=$_POST['status'] ?? '';
 $limit=$_POST['limit']??5;
+$limit=(int) $limit;
 $offset=($page-1)*$limit;
-// $client->loadClients("client","cities","states");
-$crud->fetchData($table1,$limit,"SELECT client_id,client_name,phone,client_email,address,name,city,pincode,client_status FROM $table1 inner join $table2 on $table1.city_id=$table2.id inner join $table3 on $table1.state_id= $table3.id "
+
+$crud->fetchData($table1,$limit,"SELECT client_id,client_name,phone,client_email,address,name,city,pincode,client_status FROM $table1 inner join $table2 on $table1.city_id=$table2.id inner join $table3 on $table1.state_id= $table3.id 
+where client_status like '%$status%' and 
+ (client_name like '%$search%'
+or phone like '%$search%' 
+or client_email like '%$search%' 
+or address like '%$search%' 
+or name like '%$search%' 
+or city like '%$search%' 
+or pincode like '%$search%') 
+order by $field $order "
 ,"limit $offset, $limit");
 
 }
 
-else if(isset($_POST['states'])){
 
-    $client->loadState();}
+else if(isset($_POST['states'])){
+$client->loadState();
+}
 
 
 else if(isset($_POST['city'])){
@@ -61,5 +76,9 @@ else if(isset($_POST['update_client'])){
 $client->update("client",['client_name'=>$c_name,'phone'=>$c_number,'client_email'=>$c_email,'address'=>$c_address,'city_id'=>$c_city,'state_id'=>$c_state,'pincode'=>$c_pincode,'client_status'=>$c_status],$c_id);
 }
 
-
+else if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+    $table='client';
+    $crud->modifyData("delete from $table where client_id =$id");
+}
 ?>

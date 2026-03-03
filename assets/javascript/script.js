@@ -120,7 +120,9 @@ $(document).on('click','.sort',function(){
 
 
 function userData(page, limit) {
-  
+  var limit = $("#limit").val();
+  var search_user = $("#search_user").val();
+  var s_status = $("#search_status").val();
   var field = $('.field').val();
   var order = $('.order').val();
   $.ajax({
@@ -128,6 +130,8 @@ function userData(page, limit) {
     type: "POST",
     data: {
       page_no: page,
+      search_user: search_user,
+      status: s_status,
       field:field,
       order:order,
       limit: limit,
@@ -135,14 +139,13 @@ function userData(page, limit) {
     },
     success: function (data) {
       data = JSON.parse(data);
-      console.log(data)
       page = $("#invis").val();
       limit = $("#limit").val();
       
       let icon=$('#icon_hold').val()
       let table = '<div class="holding-table"><table border="1" class="table  bg-white table-bordered"> ';
       table += '<tr class="bg-blue" style="whitespace:nowrap;">';
-      table += `<th class="id">Sr.NO</th>`;
+      table += `<th class="id  text-center">Sr.NO</th>`;
       table += '<th class="action text-center">Action</th>';
       table += `<th onclick="userData()" class="name sort border">Name <i class="bi ${icon}" id="sort_icon"></i></th>`;
       table += `<th onclick="userData()" class="phone sort border">Phone <i class="bi ${icon}" id="sort_icon"></i></th>`;
@@ -172,12 +175,14 @@ function userData(page, limit) {
         table += `<td class='text-success'>${value["name"]}</td>`;
         table += `<td class='text-muted'>${value["phone"]}</td>`;
         table += `<td class=''>${value["email"]}</td>`;
-        if (value["STATUS"] == "ACTIVE") {
+        if (value["STATUS"] == 1) {
           var btn_stat = "status-btn-green";
+          var status='ACTIVE'
         } else {
           var btn_stat = "status-btn-red";
+          var status='INACTIVE'
         }
-        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value["STATUS"]}</button></td>`;
+        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${status}</button></td>`;
 
         table += "</tr>";
                });
@@ -243,7 +248,7 @@ $(document).on("click", "#back", function (e) {
   var page = $("#invis").val();
   var page = Number(page) - 1;
   $("#invis").val(page);
-
+  
   userData(page, limit);
 });
 
@@ -256,7 +261,6 @@ $(document).on("click", "#forward", function (e) {
   var page = $("#invis").val();
   var page = Number(page) + 1;
   $("#invis").val(page);
-  console.log(page);
   userData(page, limit);
 });
 
@@ -395,390 +399,3 @@ $(document).on("click", "#delete", function (e) {
     },
   });
 });
-
-function searc() {
-  $('#invis').val(1);
-  var s_page=$('#invis').val();
- 
-  var search_user = $("#search_user").val();
-  var s_status = $("#search_status").val();
-  var search = "search";
-  $.ajax({
-    url:  "/project/usercontroller/",
-    type: "POST",
-    data: {
-      page_no:s_page,
-      search_user: search_user,
-      status: s_status,
-      search: search,
-    },
-    success: function (data) {
-      data = JSON.parse(data);
-      
-       page = $("#invis").val();
-      limit = $("#limit").val();
-      let icon=$('#icon_hold').val()
-      let table = '<div class="holding-table"><table border="1" class="table  bg-white table-bordered"> ';
-      table += '<tr class="bg-blue" style="whitespace:nowrap;">';
-      table += `<th onclick="searc()" class="id sort">Id <i class="bi ${icon}" id="sort_icon"></i></th>`;
-      table += '<th class="action">Action</th>';
-      table += `<th onclick="searc()" class="name sort">Name <i class="bi ${icon}" id="sort_icon"></i></th>`;
-      table += `<th onclick="searc()" class="phone sort">Phone <i class="bi ${icon}" id="sort_icon"></i></th>`;
-      table += `<th onclick="searc()" class="email sort">Email <i class="bi ${icon}" id="sort_icon"></i></th>`;
-      table += '<th class="status text-center">Status</th>';
-      table += "</tr>";
-       total_pages = data.total_page;
-       total_records = data.total_record
-      data.data.forEach(function (value,index) {
-        ind=index+1;
-        index=(page-1)*limit+ind;
-        
-        table += '<tr class="data" style="height:40px;whitespace:nowrap;">';
-
-        table += `<td class='text-muted'>${index}</td>`;
-        table += `<td class='text-muted'>
-        
-        <button class='btn btn-sm rounded-pill btn-outline-primary' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["id"]}'  id='update' value='update'>
-                <i class='bi bi-pencil-square'>
-                </i></button>
-                
-                
-        <button class='btn btn-sm rounded-pill  btn-outline-danger' name='delete' data-did='${value["id"]}'  id='delete' value='delete'>
-        <i class='bi bi-trash3'></i></button>
-                
-                
-                </td>`;
-        table += `<td class='text-success'>${value["name"]}</td>`;
-        table += `<td class='text-muted'>${value["phone"]}</td>`;
-        table += `<td class=''>${value["email"]}</td>`;
-        if (value["STATUS"] == "ACTIVE") {
-          var btn_stat = "status-btn-green";
-        } else {
-          var btn_stat = "status-btn-red";
-        }
-        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value["STATUS"]}</button></td>`;
-
-        table += "</tr>";
-      });
-      table += "</table></div>";
-       table += '<hr><div class=" w-100 p-2    d-flex justify-center">';
-       table +='<ul class="pagination ms-5 ms-auto ">';
-       
-       
-       
-       if (page <= 1) {
-         table +=
-         ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
-        } else if (page > 1) {
-          table +=
-          "<li class='page-item'><button class='page-link' id='back'>Previous</button></li>";
-        }
-        if (total_records >= limit) {
-          for (i = 1; i <= total_pages; i++) {
-            if (i <= 1) {
-              table += `<li class="page-item"><a class="page-link" id='${page}' href="#">${page}</a></li>`;
-            } else {
-              continue;
-            }
-          }
-        }
-        if (page < total_pages) {
-          table +=
-          '<li class="page-item"><button class="page-link" id="forward" href="#">Next</button></li>';
-        } else if ((page = total_pages)) {
-          table +=
-          '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
-        }
-        table += "</ul>"
-        table +=`<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${data.total_page} </b>`;
-      table +=`<b class='on_page mt-2 mx-auto text-secondary'> Total Records : ${total_records} </b>`;
-      
-      table +="</div>";
-      $("#load_users").html(table);
-      ////////////////////////////////////////////////
-
-    }
-  });
-}
-
-
-
-////////////////////////////////////client master
-
-// load select states into form////
-
-function loadStates() {
-  $.ajax({
-    url: baseurl + "controllers/client_controller.php",
-    type: "POST",
-    data: {
-      states: "states",
-    },
-    success: function (data) {
-      $("#loadState").html(data);
-    },
-  });
-}
-
-function loadedState() {
-  var state = $("#select_state").val();
-  loadCity(state);
-}
-
-function loadCity(state) {
-  console.log(state);
-  $.ajax({
-    url: baseurl + "controllers/client_controller.php",
-    type: "POST",
-    data: {
-      city: "city",
-      state: state,
-    },
-    success: function (data) {
-      $("#loadCity").html(data);
-    },
-  });
-}
-
-
-
-function insertClient() {
-  let client_name = $("#client_name").val();
-  validName(client_name);
-
-  let client_number = $("#client_number").val();
-  validNumber(String(client_number));
-  let client_email = $("#client_email").val();
-  validEmail(client_email);
-  let client_address = $("#client_address").val();
-  validAddress(client_address);
-
-  let client_state = $("#select_state").val();
-
-  let client_city = $("#select_city").val();
-
-  let client_pincode = $("#client_pincode").val();
-  validPincode(client_pincode);
-
-  let insert_client = $("#insert_client").val();
-
-  $.ajax({
-    url:  "/project/clientcontroller/",
-    type: "POST",
-    data: {
-      client_name: client_name,
-      client_phone: client_number,
-      client_email: client_email,
-      client_address: client_address,
-      client_city: client_city,
-      client_state: client_state,
-      client_pincode: client_pincode,
-      insert_client: insert_client,
-    },
-    success: function (data) {
-      if (data.trim() == 1) {
-        console.log(data);
-        window.location.href = "client_master.php";
-        $("#add_client").trigger("reset");
-      } else {
-        console.log(data);
-        console.log("error");
-      }
-    },
-  });
-}
-
-/////////////////////first load table using json
-function clientData() {
-  console.log("client data");
-  $.ajax({
-    url: baseurl + "controllers/client_controller.php",
-    type: "POST",
-    data: {
-      page_name: "clientPage",
-    },
-    success: function (data) {
-      data = JSON.parse(data);
-      console.log(data);
-      let table = '<table border="1" class="table bg-white"> ';
-      table += '<tr class="bg-blue" style="whitespace:nowrap;">';
-      table += '<th class="id">Id</th>';
-      table += '<th class="name">Name</th>';
-      table += '<th class="phone">Phone</th>';
-      table += '<th class="email">Email</th>';
-      table += '<th class="address">Address</th>';
-      table += '<th class="state">State</th>';
-      table += '<th class="city">City</th>';
-      table += '<th class="pincode">Pincode</th>';
-      table += '<th class="status text-center">Status</th>';
-      table += '<th class="action">Action</th>';
-      table += "</tr>";
-      data.data.forEach(function (value) {
-        table += '<tr style="height:40px;whitespace:nowrap;">';
-        table += `<td class='text-muted'>${value["client_id"]}</td>`;
-        table += `<td class='text-success'>${value["client_name"]}</td>`;
-        table += `<td class='text-muted'>${value["phone"]}</td>`;
-        table += `<td class=''>${value["client_email"]}</td>`;
-        table += `<td class='text-muted'>${value["address"]}</td>`;
-        table += `<td class='text-muted'>${value["name"]}</td>`;
-        table += `<td class='text-muted'>${value["city"]}</td>`;
-        table += `<td class='text-muted'>${value["pincode"]}</td>`;
-        if (value["client_status"] == "ACTIVE") {
-          var btn_stat = "status-btn-green";
-        } else {
-          var btn_stat = "status-btn-red";
-        }
-        table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${value["client_status"]}</button></td>`;
-
-        table += `<td class='text-muted'>
-        
-        <button class='btn btn-sm rounded-pill status-btn-green' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["client_id"]}'  id='update_c' value='update_c'>
-                <i class='bi bi-pencil-square'>
-                </i></button>
-                
-                
-        <button class='btn btn-sm rounded-pill  status-btn-red' name='delete' data-did='${value["client_id"]}'  id='delete' value='delete'>
-        <i class='bi bi-trash3'></i></button>
-                
-                
-                </td>`;
-        table += "</tr>";
-      });
-
-      table += "</table>";
-      $("#load_clients").html(table);
-    },
-  });
-}
-clientData();
-
-/////update form load //////
-
-$(document).on("click", "#update_c", async function () {
-  let id = $(this).data("uid");
-  let update_c = $("#update_c").val();
-  $.ajax({
-    url: baseurl + "controllers/client_controller.php",
-    type: "POST",
-    data: {
-      id: id,
-      update_c: update_c,
-    },
-    success: function (data) {
-      data = JSON.parse(data);
-      console.log(data, "clientdata");
-      let table = "";
-
-      data.forEach(async function (value) {
-        table += `<div class='row'><input type='text' hidden id='updId'  value='${value[0]}'>`;
-
-        table += `<div class='col-12'><input type='text' placeholder='name'  id='client_name_up' class='form-control form-control-sm mb-3' value='${value[1]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
-
-        table += `</div><div class='col-6'><input type='text' placeholder='name'  id='client_number_up' class='form-control form-control-sm mb-3' value='${value[2]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
-
-        table += `</div><div class='col-6'><input type='text' placeholder='name'  id='client_email_up' class='form-control form-control-sm mb-3' value='${value[3]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
-
-        table += `</div><div class='col-12'><input type='text' placeholder='name'  id='client_address_up' class='form-control form-control-sm mb-3' value='${value[4]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
-        table += `</div><div class='col-4 mb-3'  id='states_up'>`;
-        table += `</div><div class='col-4' id='cities_up'></select>`;
-
-        table += `</div><div class='col-4'><input type='text' placeholder='name'  id='client_pincode_up' class='form-control form-control-sm mb-3' value='${value[7]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
-
-        table += `</div><div class='col-6 mb-5'><select class='form-select form-select-sm' id='status_up'  value='${value[8]}' ><option value='ACTIVE'>ACTIVE</option><option value='INACTIVE'>INACTIVE</option></select></div>`;
-
-        table +=
-          "</div><hr><div class='col-4'><input type='button' class='status-btn-green me-3' onclick='updateClient()' id='update_client' value='SAVE'><input type='reset' class='status-btn-red' value='RESET'></div>";
-
-        await $.ajax({
-          url: baseurl + "controllers/client_controller.php",
-          type: "POST",
-          data: {
-            states: "states",
-          },
-          success: function (data) {
-            $("#states_up").html(data);
-          },
-        });
-
-        console.log(data[0].state_id);
-
-        var state = $("#select_state").val(Number(data[0].state_id));
-
-        $("#select_state").on("change", function () {
-          var state = $("#select_state").val();
-
-          loadCity(state);
-        });
-        async function loadCity(state) {
-          await $.ajax({
-            url: baseurl + "controllers/client_controller.php",
-            type: "POST",
-            data: {
-              city: "city",
-              state: state,
-            },
-            success: function (data) {
-              $("#cities_up").html(data);
-            },
-          });
-        }
-      });
-
-      $(".update_client_form").html(table);
-    },
-  });
-});
-
-function updateClient() {
-  let id = $("#updId").val();
-  let client_name = $("#client_name_up").val();
-  validName(client_name);
-
-  let client_number = $("#client_number_up").val();
-  // validNumber(String(client_number));
-  let client_email = $("#client_email_up").val();
-  validEmail(client_email);
-  let client_address = $("#client_address_up").val();
-  validAddress(client_address);
-
-  let client_state = $("#select_state").val();
-
-  let client_city = $("#cities_up #select_city").val();
-  console.log("not");
-  console.log(client_city);
-  let client_pincode = $("#client_pincode_up").val();
-  validPincode(client_pincode);
-  let client_status = $("#status_up").val();
-  let update_client = $("#update_client").val();
-
-  $.ajax({
-    url: baseurl + "controllers/client_controller.php",
-    type: "POST",
-    data: {
-      id: id,
-      client_name: client_name,
-      client_phone: client_number,
-      client_email: client_email,
-      client_address: client_address,
-      client_city: client_city,
-      client_state: client_state,
-      client_pincode: client_pincode,
-      client_status: client_status,
-      update_client: update_client,
-    },
-    success: function (data) {
-      if (data.trim() == 1) {
-        console.log(data);
-        clientData();
-        $("#myModal").hide();
-      } else {
-        console.log(data);
-        console.log("error");
-      }
-    },
-  });
-}
-
-
-userData()
-clientData()

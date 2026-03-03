@@ -1,6 +1,6 @@
 <?php
 
-include '../database/database.php';
+include '../project/database/database.php';
 
 class client_master
 {
@@ -11,19 +11,6 @@ class client_master
         $this->conn = $conn;
     }
 
-    public function loadClients($table1, $table2, $table3)
-    {
-        $sql = "SELECT client_id,client_name,phone,client_email,address,name,city,pincode,client_status FROM $table1 inner join $table2 on $table1.city_id=$table2.id inner join $table3 on $table1.state_id= $table3.id";
-
-        $result = mysqli_query($this->conn, $sql);
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_array($result)) {
-                $dbData[] = $row;
-            }
-        }
-        $jsondata = json_encode($dbData);
-        echo $jsondata;
-    }
 
     public function insert($table, $params = array())
     {
