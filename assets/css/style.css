@@ -2,10 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 *{
-    font-size: .35cm; 
+    font-size: .33cm; 
     /* font-family:poppins; */
-    font-family:roboto;
+    /* font-family:roboto; */
     /* font-family: cursive; */
+    /* font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+    font-family: sans-serif;
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
 }
 *::-webkit-scrollbar{
     background-color: white;
@@ -20,22 +23,34 @@ ul li{
 }
 body{
     /* background-color:#f5f5f5; */
-    background-color:#c9f2ffbe;
+    background-color:#d2f4ff;
+    /* background-image: url(../images/bot-pattern.svg); */
 }
 .login_page{
     height: 100vh;
      background-image: url(../images/bot-pattern.svg);
-    background-size: 100% 100%;
-    color: white; 
-}
-.login-form{
-    height: 90%;
-    width: 60vh;
-    border-radius: 10px;
-    /* box-shadow: 3px 3px 10px grey; */
+     background-size: 100vw 100vh;
+     /* color: rgba(255, 255, 255, 0.603);  */
+    }
+    .login-form{
+        height: 90%;
+        width: 85%;
+        border-radius: 10px;
+        /* box-shadow: 3px 3px 10px grey; */
     /* background-color: rgba(245, 245, 245, 0.737); */
     background-color: white;
     color: black;
+    transition: all ease-in-out .2s;
+}
+.login-form h1{
+    font-size: 1cm;
+}
+.login_bg{
+    background-color: white;
+    /* box-shadow: -15px 0px 40px rgb(135, 207, 235) inset; */
+}
+.login_bg:hover .login-form{
+    scale: 1.05;
 }
 .login_image{
     background-image: url(../images/bg.jpg);
@@ -64,9 +79,10 @@ body{
 }
 .content-body{
     /* background-color: #cce3f8 ; */
-    /* background-color: #fef8f2 ; */
-    /* background-image: url(../images/bot-pattern.svg); */
-      overflow-y: auto;
+    /* background-color: #fef8f279 ; */
+    /* background-color:#c9f2ffbe; */
+    background-image: url(../images/bot-pattern.svg);
+    overflow-y: auto;
 }
 .content-body::-webkit-scrollbar{
     width: 0px;

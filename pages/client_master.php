@@ -10,10 +10,10 @@ include_once "dashboard.php";
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active text-dark" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Clients</button>
+            <button class="nav-link fw-bold active text-dark" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Clients</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link text-dark" id="profile-tab " onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">EDIT Clients</button>
+            <button class="nav-link fw-bold text-dark" id="profile-tab " onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Edit Clients</button>
         </li>
     </ul>
 
@@ -64,23 +64,23 @@ include_once "dashboard.php";
                     <div class="row">
 
                         <div class="col-6 p-3 pt-5">
-                            Name:
-                            <input type="text" class="form-control mb-3" id="client_name">
-                            <div id="name_valid" class="text-danger mb-3 "></div>
+                            Client Name:
+                            <input type="text" class="form-control mb-3" placeholder="Client Name" id="client_name_c">
+                            <div class="name_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
-                            Phone:
-                            <input type="Number" class="form-control mb-3" id="client_number">
+                           Client Phone:
+                            <input type="Number" placeholder="Client phone number" class="form-control mb-3" minlength="2" maxlength="15"  id="client_number">
                             <div id="number_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
-                            Address:
-                            <textarea name="" class="form-control mb-3" id="client_address"></textarea>
+                            Client's Address:
+                            <textarea name="" placeholder="Address" class="form-control mb-3" id="client_address"></textarea>
                             <div id="address_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
-                            Email:
-                            <input type="email" class="form-control mb-3" id="client_email">
+                           Client Email:
+                            <input type="email" placeholder="Client email" class="form-control mb-3" id="client_email_c">
                             <div id="email_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-4  p-3 pt-5">State:
@@ -95,7 +95,7 @@ include_once "dashboard.php";
                                 </select>
                             </div>
                         </div>
-                        <div class="col-4  p-3 pt-5">Pincode:<input type="Number" id="client_pincode" class="form-control mb-3">
+                        <div class="col-4  p-3 pt-5">Pincode:<input type="Number" placeholder="Pincode" id="client_pincode" class="form-control mb-3">
                             <div id="pincode_valid" class="text-danger mb-3 "></div>
                         </div>
 
@@ -134,7 +134,7 @@ include_once "dashboard.php";
             <!-- Modal Header -->
             <div class="modal-header bg-skyblue">
                 <h4 class="modal-title">Update Client Data</h4>
-                <button type="button" class="btn-close btn-outline-danger" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal"></button>
             </div>
 
             <!-- Modal body -->

@@ -24,7 +24,7 @@ if ($user = $result->fetch_assoc()) {
         echo "incorrect password";
     }
 } else {
-    echo "user not found";
+    echo 0;
 }
     }
 

@@ -18,12 +18,12 @@ include_once "dashboard.php";
 
 
         <li class="nav-item " role="presentation">
-            <button class="nav-link active text-dark" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All Users</button>
+            <button class="nav-link fw-bold active text-dark" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All Users</button>
         </li>
 
 
         <li class="nav-item" role="presentation">
-            <button class="nav-link text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Edit Users</button>
+            <button class="nav-link fw-bold text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Edit Users</button>
         </li>
 
     </ul>
@@ -41,21 +41,21 @@ include_once "dashboard.php";
                         <hr>
                         <div class="col-12 my-4">
                             User Name <sup class="text-danger">*</sup>:
-                            <input type="text" title="NAME" id="user_name" name="user_name" minlength="2" maxlength="15" class="form-control    border ">
-                            <div id="name_valid" class="text-danger mb-3 "></div>
+                            <input type="text" title="NAME" id="user_name" placeholder="User Name" name="user_name" minlength="2" maxlength="15" class="form-control    border ">
+                            <div class="name_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 mb-4">
                             User Password :
-                            <input type="password" title="PASSWORD" id="user_pass" name="user_pass" class="form-control  border ">
+                            <input type="password" title="PASSWORD" id="user_pass" placeholder="User Password" name="user_pass" class="form-control  border ">
                             <div id="pass_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-6"> User Number :
-                            <input type="number" title="NUMBER" id="user_number" name="user_number" class="form-control  border " required>
+                            <input type="number" placeholder="User Phone Number" title="NUMBER" id="user_number" name="user_number" class="form-control  border " required>
                             <div id="number_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-12 mb-4">
-                            User E-Mail
-                            <input type="email" title="Email" id="user_email" required name="user_email" class="form-control  border ">
+                            User E-Mail :
+                            <input type="email" placeholder="User E-mail" title="Email" id="user_email" required name="user_email" class="form-control  border ">
                             <div id="email_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-8"></div>

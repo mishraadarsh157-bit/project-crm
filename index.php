@@ -42,6 +42,12 @@ $router->post('/project/clientcontroller/', function() {
     
 });
 
+$router->post('/project/itemcontroller/', function() {
+    require 'controllers/item_controller.php';
+    
+    
+});
+
 
 
 

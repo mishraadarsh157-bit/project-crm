@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+  
+<body>
+    
+    <input type="file" onchange="handelImage(event)" id="choosefile" accept="image/*">
+    <img id="imgpreview" src="" width="50" alt="Image preview">
+</body>
+    
+    
+  <script >
+      console.log('image')
+        const imgPreview = document.getElementById('imgpreview');
+function handelImage(event) {
+    const files = event.target.files;
+    if (files.length > 0) {
+        const file = files[0];    // Create a temporary URL for the file
+        const tempUrl = URL.createObjectURL(file);   // Set the image source to the temporary URL
+        imgPreview.src = tempUrl;  // Optional: Revoke the object URL once the image has loaded to free up memory
+        imgPreview.onload = function () {
+            URL.revokeObjectURL(this.src); // Revoke URL after use
+        }
+    }
+}
+
+    </script>
+</html>

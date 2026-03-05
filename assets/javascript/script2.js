@@ -36,32 +36,33 @@ function loadCity(state) {
 }
 
 function insertClient() {
-  let client_name = $("#client_name").val();
-  if(!validName(client_name)){
-    return
-  };
+  let client_name = $("#client_name_c").val();
+  console.log(client_name);
+  if (!validName(client_name)) {
+    return;
+  }
 
   let client_number = $("#client_number").val();
-  if(!validNumber(String(client_number))){
-    return
-  };
-  let client_email = $("#client_email").val();
-  if(!validEmail(client_email)){
-    return
-  };
+  if (!validNumber(String(client_number))) {
+    return;
+  }
+  let client_email = $("#client_email_c").val();
+  if (!validEmail(client_email)) {
+    return;
+  }
   let client_address = $("#client_address").val();
-  if(!validAddress(client_address)){
-return
-  };
+  if (!validAddress(client_address)) {
+    return;
+  }
 
   let client_state = $("#select_state").val();
 
   let client_city = $("#select_city").val();
 
   let client_pincode = $("#client_pincode").val();
-  if(!validPincode(client_pincode)){
-    return
-  };
+  if (!validPincode(client_pincode)) {
+    return;
+  }
 
   let insert_client = $("#insert_client").val();
 
@@ -93,29 +94,26 @@ return
 
 /////sorting/////
 
-$(document).on('click','.sort_c',function(){
-  var value=$(this).attr('id');
-  $('.field_c').val(value);
-})
-$(document).on('click','.sort_c',function(){
-   $('.order_c').val($('.order_c').val() === 'asc' ? 'desc' : 'asc');
+$(document).on("click", ".sort_c", function () {
+  var value = $(this).attr("id");
+  $(".field_c").val(value);
+});
+$(document).on("click", ".sort_c", function () {
+  $(".order_c").val($(".order_c").val() === "asc" ? "desc" : "asc");
 
-   $('#icon_hold_c').val($('#icon_hold_c').val()==='bi-arrow-up' ? 'bi-arrow-down' : 'bi-arrow-up')
+  $("#icon_hold_c").val(
+    $("#icon_hold_c").val() === "bi-arrow-up" ? "bi-arrow-down" : "bi-arrow-up",
+  );
+});
 
-})
-
-$(document).on('click','.sort',function(){
- 
-})
+$(document).on("click", ".sort", function () {});
 
 /////////////////////first load table using json
 function clientData(page) {
   // debugger
   try {
-    var field = $(".field_c").val()??'client_id';
-    console.log(field)
+    var field = $(".field_c").val() ?? "client_id";
     var order = $(".order_c").val() ?? "asc";
-    console.log(order)
     var searc = $(".searc_c").val() ?? "";
     var status_c = $("#status_c").val() ?? "";
     var limit = $("#limit_c").val() ?? 5;
@@ -133,58 +131,52 @@ function clientData(page) {
         page_name: "clientPage",
       },
       success: function (data) {
-        console.log(data)
-        if(data.trim()=="empty"){
-          let icon=$('#icon_hold_c').val()
-        let table =
-          '<div class="holding-table"><table class="table table-bordered bg-white"> ';
-        table += '<tr class="bg-blue" style="whitespace:nowrap;">';
-        table += "<th class='srno_c'>SR.NO</th>";
-        table += '<th class="action_c text-center">Action</th>';
-        table +=
-          `<th onclick='clientData()' id='client_name' class='sort_c name_c'>Name <i class="bi ${icon}"></i></th>`;
-        table +=
-          `<th onclick='clientData()' id='phone' class='sort_c phone_c'>Phone <i class="bi ${icon}"></i></th>`;
-        table +=
-          `<th onclick='clientData()' id='client_email' class='sort_c email_c'>Email <i class="bi ${icon}"></i></th>`;
-        table += '<th class="address_c">Address</th>';
-        table += '<th class="pincode_c">Pincode</th>';
-        table += '<th class="status_c text-center">Status</th>';
-        table += "</tr>";
-        table +="<tr>"
-        table += '<th colspan="9" class="text-center"><h1>NO CLIENT FOUND</h1></th>';
-        table +="</tr></table>"
-           $("#load_clients").html(table);
-        }
-        else{
-        data = JSON.parse(data);
-        page = $("#invis_c").val();
-        limit = $("#limit_c").val();
-          let icon=$('#icon_hold_c').val()
-        let table =
-          '<div class="holding-table"><table class="table table-bordered bg-white"> ';
-        table += '<tr class="bg-blue" style="whitespace:nowrap;">';
-        table += "<th class='srno_c'>SR.NO</th>";
-        table += '<th class="action_c text-center">Action</th>';
-        table +=
-          `<th onclick='clientData()' id='client_name' class='sort_c name_c'>Name <i class="bi ${icon}"></i></th>`;
-        table +=
-          `<th onclick='clientData()' id='phone' class='sort_c phone_c'>Phone <i class="bi ${icon}"></i></th>`;
-        table +=
-          `<th onclick='clientData()' id='client_email' class='sort_c email_c'>Email <i class="bi ${icon}"></i></th>`;
-        table += '<th class="address_c">Address</th>';
-        table += '<th class="pincode_c">Pincode</th>';
-        table += '<th class="status_c text-center">Status</th>';
-        table += "</tr>";
-        total_pages = data.total_page;
-        total_records = data.total_record;
-        data.data.forEach(function (value, index) {
-          ind = index + 1;
-          index = (page - 1) * limit + ind;
-          table += '<tr style="height:40px;whitespace:nowrap;">';
-          table += `<td class='text-muted text-center'>${index}</td>`;
+        // console.log(data);
+        if (data.trim() == "empty") {
+          let icon = $("#icon_hold_c").val();
+          let table =
+            '<div class="holding-table"><table class="table table-bordered bg-white"> ';
+          table += '<tr class="bg-blue" style="whitespace:nowrap;">';
+          table += "<th class='srno_c'>SR.NO</th>";
+          table += '<th class="action_c text-center">Action</th>';
+          table += `<th onclick='clientData()' id='client_name' class='sort_c name_c'>Name <i class="bi ${icon}"></i></th>`;
+          table += `<th onclick='clientData()' id='phone' class='sort_c phone_c'>Phone <i class="bi ${icon}"></i></th>`;
+          table += `<th onclick='clientData()' id='client_email' class='sort_c email_c'>Email <i class="bi ${icon}"></i></th>`;
+          table += '<th class="address_c">Address</th>';
+          table += '<th class="pincode_c">Pincode</th>';
+          table += '<th class="status_c text-center">Status</th>';
+          table += "</tr>";
+          table += "<tr>";
+          table +=
+            '<th colspan="9" class="text-center"><h1>NO CLIENT FOUND</h1></th>';
+          table += "</tr></table>";
+          $("#load_clients").html(table);
+        } else {
+          data = JSON.parse(data);
+          page = $("#invis_c").val();
+          limit = $("#limit_c").val();
+          let icon = $("#icon_hold_c").val();
+          let table =
+            '<div class="holding-table"><table class="table table-bordered bg-white"> ';
+          table += '<tr class="bg-blue" style="whitespace:nowrap;">';
+          table += "<th class='srno_c'>SR.NO</th>";
+          table += '<th class="action_c text-center">Action</th>';
+          table += `<th onclick='clientData()' id='client_name' class='sort_c name_c'>Name <i class="bi ${icon}"></i></th>`;
+          table += `<th onclick='clientData()' id='phone' class='sort_c phone_c'>Phone <i class="bi ${icon}"></i></th>`;
+          table += `<th onclick='clientData()' id='client_email' class='sort_c email_c'>Email <i class="bi ${icon}"></i></th>`;
+          table += '<th class="address_c">Address</th>';
+          table += '<th class="pincode_c">Pincode</th>';
+          table += '<th class="status_c text-center">Status</th>';
+          table += "</tr>";
+          total_pages = data.total_page;
+          total_records = data.total_record;
+          data.data.forEach(function (value, index) {
+            ind = index + 1;
+            index = (page - 1) * limit + ind;
+            table += '<tr style="height:40px;whitespace:nowrap;">';
+            table += `<td class='text-muted text-center'>${index}</td>`;
 
-          table += `<td class='text-muted'>
+            table += `<td class='text-muted text-center   '>
         
         <button class='btn btn-sm rounded-pill btn-outline-primary' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["client_id"]}'  id='update_c' value='update_c'>
                 <i class='bi bi-pencil-square'>
@@ -196,57 +188,58 @@ function clientData(page) {
                 
                 
                 </td>`;
-          table += `<td class='text-success'>${value["client_name"]}</td>`;
-          table += `<td class='text-muted'>${value["phone"]}</td>`;
-          table += `<td class=''>${value["client_email"]}</td>`;
-          table += `<td class='text-muted'>${value["address"]} , ${value["city"]} (${value["name"]})</td>`;
-          table += `<td class='text-muted'>${value["pincode"]}</td>`;
-          if (value["client_status"] == 1) {
-            var btn_stat = "status-btn-green";
-            var status = "ACTIVE";
-          } else {
-            var btn_stat = "status-btn-red";
-            var status = "INACTIVE";
-          }
-          table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${status}</button></td>`;
-
-          table += "</tr>";
-        });
-
-        table += "</table></div>";
-        table += '<hr><div class=" w-100    d-flex justify-center">';
-        table += '<ul class="pagination_c ms-5 ms-auto d-flex">';
-
-        if (page <= 1) {
-          table +=
-            ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
-        } else if (page > 1) {
-          table +=
-            "<li class='page-item'><button class='page-link' id='back_c'>Previous</button></li>";
-        }
-        if (total_records >= limit) {
-          for (i = 1; i <= total_pages; i++) {
-            if (i <= 1) {
-              table += `<li class="page-item"><a class="page-link" id='${page}' href="#">${page}</a></li>`;
+            table += `<td class='text-success'>${value["client_name"]}</td>`;
+            table += `<td class='text-muted'>${value["phone"]}</td>`;
+            table += `<td class=''>${value["client_email"]}</td>`;
+            table += `<td class='text-muted'>${value["address"]} , ${value["city"]} (${value["name"]})</td>`;
+            table += `<td class='text-muted'>${value["pincode"]}</td>`;
+            if (value["client_status"] == 1) {
+              var btn_stat = "status-btn-green";
+              var status = "ACTIVE";
             } else {
-              continue;
+              var btn_stat = "status-btn-red";
+              var status = "INACTIVE";
+            }
+            table += `<td class='text-muted text-center'><button id='' class='btn w-100 btn-sm ${btn_stat}'>${status}</button></td>`;
+
+            table += "</tr>";
+          });
+
+          table += "</table></div>";
+          table += '<hr><div class=" w-100    d-flex justify-center">';
+          table += '<ul class="pagination_c ms-5 ms-auto d-flex">';
+
+          if (page <= 1) {
+            table +=
+              ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
+          } else if (page > 1) {
+            table +=
+              "<li class='page-item'><button class='page-link' id='back_c'>Previous</button></li>";
+          }
+          if (total_records >= limit) {
+            for (i = 1; i <= total_pages; i++) {
+              if (i <= 1) {
+                table += `<li class="page-item"><a class="page-link" id='${page}' href="#">${page}</a></li>`;
+              } else {
+                continue;
+              }
             }
           }
-        }
-        if (page < total_pages) {
-          table +=
-            '<li class="page-item"><button class="page-link" id="forward_c" href="#">Next</button></li>';
-        } else if ((page = total_pages)) {
-          table +=
-            '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
-        }
-        table += "</ul>";
-        table += `<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${total_pages} </b>`;
-        table += `<b class='on_page mt-2 mx-auto text-secondary'> Total Records : ${total_records} </b>`;
+          if (page < total_pages) {
+            table +=
+              '<li class="page-item"><button class="page-link" id="forward_c" href="#">Next</button></li>';
+          } else if ((page = total_pages)) {
+            table +=
+              '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
+          }
+          table += "</ul>";
+          table += `<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${total_pages} </b>`;
+          table += `<b class='on_page mt-2 mx-auto text-secondary'> Total Records : ${total_records} </b>`;
 
-        table += "</div>";
-        $("#load_clients").html(table);
-      }},
+          table += "</div>";
+          $("#load_clients").html(table);
+        }
+      },
     });
   } catch (response) {
     console.log(response + "this is a error");
@@ -316,7 +309,7 @@ $(document).on("click", "#update_c", async function () {
     },
     success: function (data) {
       data = JSON.parse(data);
-      console.log(data, "clientdata");
+      // console.log(data, "clientdata");
       let table = "";
 
       data.forEach(async function (value) {
@@ -333,11 +326,10 @@ $(document).on("click", "#update_c", async function () {
         table += `</div><div class='col-4' id='cities_up'></select>`;
 
         table += `</div><div class='col-4'><input type='text' placeholder='name'  id='client_pincode_up' class='form-control form-control-sm mb-3' value='${value[7]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
-        if(value[8]==1){
-          text='ACTIVE'
-        }
-        else{
-          text='INACTIVE'
+        if (value[8] == 1) {
+          text = "ACTIVE";
+        } else {
+          text = "INACTIVE";
         }
         table += `</div><div class='col-6 mb-5'><select class='form-select form-select-sm' id='status_up'  value='${value[8]}' >
         <option value='${value[8]}'>${text}</option>
@@ -360,15 +352,19 @@ $(document).on("click", "#update_c", async function () {
           },
         });
 
-        // console.log(data[0].state_id);
+        // console.log(data,"d");
 
-        var state = $("#select_state").val(Number(data[0].state_id));
-        var state = $("#select_state").val();
-        loadCity(state);
+        $("#select_state").val(Number(data[0].state_id));
+        state = $("#select_state").val();
+        // console.log(state,"hhh")
+      await  loadCity(Number(state));
 
         // $("#select_state").on("", function () {
 
         // });
+        
+      $("#select_city").val(Number(data[0].city_id));
+      $("#select_city").val();  
         async function loadCity(state) {
           await $.ajax({
             url: "/project/clientcontroller/",
@@ -378,10 +374,8 @@ $(document).on("click", "#update_c", async function () {
               state: state,
             },
             success: function (data) {
-              console.log(data);
+              // console.log(data);
 
-              var city=$("#select_city").val(Number(data[0].city_id));
-              $("#select_city").val(city);
               $("#cities_up").html(data);
             },
           });
@@ -444,42 +438,40 @@ function updateClient() {
   });
 }
 
-
 ///////delete client
 
-$(document).on('click','#delete_c',function(){
-  var id=$(this).data('did');
-  const isConfirm=confirm('do you really want to delete data for client id ' + id)
-  if(isConfirm){
-    var element=this;
+$(document).on("click", "#delete_c", function () {
+  var id = $(this).data("did");
+  const isConfirm = confirm(
+    "do you really want to delete data for client id " + id,
+  );
+  if (isConfirm) {
+    var element = this;
     $.ajax({
-      url:"/project/clientcontroller/",
-      type:"POST",
-      data:{
-        id:id,
-        delete:"deleteClient"
+      url: "/project/clientcontroller/",
+      type: "POST",
+      data: {
+        id: id,
+        delete: "deleteClient",
       },
-      success: function(data){
+      success: function (data) {
         if (data.trim() == 1) {
           $(element).closest("tr").fadeOut();
           var page = $("#invis_c").val();
-          clientData(Number(page))
-      }
-      
-      else{
-        console.log(data)
-      }
-    }})
-    
-
-  }else{
-    clientData()
+          clientData(Number(page));
+        } else {
+          console.log(data);
+        }
+      },
+    });
+  } else {
+    clientData();
   }
-})
+});
 
-function searc_c(){
-  var val=1;
-  $("#invis_c").val(val)
-   var page = $("#invis_c").val();
-          clientData(Number(page))
+function searc_c() {
+  var val = 1;
+  $("#invis_c").val(val);
+  var page = $("#invis_c").val();
+  clientData(Number(page));
 }

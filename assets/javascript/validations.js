@@ -2,21 +2,21 @@ function validName(name) {            ////////////////////////////////name
   const pattern=/^([a-zA-Z ]){2,30}$/;
 
   if (name.trim() == "") {
-    $("#name_valid").show();
-    $("#name_valid").text("enter name").css("color", "red");
+    $(".name_valid").show();
+    $(".name_valid").text("enter name").css("color", "red");
     return false;
     
   }
-  else if(!pattern.test(name.trim())){
+  else if(pattern.test(name.trim())==false){
 
-    $("#name_valid").show();
-    $("#name_valid").text("enter valid name").css("color", "red");
+    $(".name_valid").show();
+    $(".name_valid").text("enter valid name").css("color", "red");
     return false;
     
   }
   else{
     
-    $("#name_valid").hide();
+    $(".name_valid").hide();
     return true;
   }
 }

@@ -1,6 +1,6 @@
 <div class="header  container-fluid m-0 row w-100 p-0">
 
-    <div class="logo p-2 m-0 col-2 px-auto bg-skyblue border" align='center' id='logo'>
+    <div class="logo p-2 m-0 col-2 px-auto bg-skyblue" align='center' id='logo'>
 
         <img src="../assets/images/demo.png" class='mx-auto' alt=""><b class='h4 logo_name ms-2'  > AppStack</b>
 

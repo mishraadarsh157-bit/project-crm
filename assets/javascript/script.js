@@ -29,13 +29,15 @@ $("#user_login").click(function (e) {
       submit: save,
     },
     success: function (response) {
-      console.log(response);
+      console.log(response)
       console.log(typeof response);
 
       if (response.trim() == "/project/home/") {
         window.location.href = response.trim();
-      } else {
-        console.log("unknown user");
+      } else if(response.trim()=='0') {
+        console.log(response)
+        $('#pass_valid').show()
+        $('#pass_valid').text("user not found").css('color','red');
       }
     },
   });
@@ -92,16 +94,16 @@ $("#show_sidebar").click(function () {
   
   $(".logo").html("<img src='../assets/images/demo.png' class='mx-auto'><b class='h4 logo_name ms-2'  > AppStack</b>")
   $(".masters #user_master button").html(
-    '<i class="bi bi-people"></i>  USER MASTER ',
+    '<i class="bi me-3 bi-people"></i>  USER MASTER ',
   );
   $(".masters #client_master button").html(
-    '<i class="bi bi-person-circle"></i>   CLIENT MASTER  ',
+    '<i class="bi me-3 bi-person-circle"></i>   CLIENT MASTER  ',
   );
   $(".masters #item_master button").html(
-    '<i class="bi bi-diagram-3"></i>    ITEM MASTER ',
+    '<i class="bi me-3 bi-diagram-3"></i>    ITEM MASTER ',
   );
   $(" .logout").html(
-    ' <i class="bi bi-box-arrow-left"></i>   LOGOUT',
+    ' <i class="bi me-3 bi-box-arrow-left"></i>   LOGOUT',
   );
   $(".logout_form").css("width", "15%");
   $("#hide_sidebar").show();
@@ -394,8 +396,9 @@ userData();
 
 $(document).on("click", "#delete", function (e) {
   var id = $(this).data("did");
-  alert("DO YOU REALLY WANT TO DELETE DATA FOR ID: " + id);
   var delet = $("#delete").val();
+  const isConfirm=confirm('do you really want to delete data for client id ' + id)
+  if(isConfirm){
   var element = this;
   $.ajax({
     url: "/project/usercontroller/",
@@ -416,7 +419,16 @@ $(document).on("click", "#delete", function (e) {
       }
     },
   });
-});
+}
+
+else{
+  console.log(data)
+}
+
+}
+
+
+);
 function searc(){
   var val=1;
   $("#invis").val(val)

@@ -39,6 +39,7 @@ if (!isset($_SESSION['admin'])) {
 <script src="../assets/javascript/validations.js"></script>
     <script src="../assets/javascript/script.js"></script>
     <script src="../assets/javascript/script2.js"></script>
+    <script src="../assets/javascript/script3.js"></script>
 </html>
  
 <?php 
