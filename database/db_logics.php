@@ -35,7 +35,7 @@ class db
         if ($result == false) {
             echo 'no data';
         }
-      
+      else{
         if(mysqli_num_rows($result)>0){
         while ($row = $result->fetch_assoc()) {
         $data[]=$row;
@@ -55,7 +55,7 @@ class db
             echo 'empty';
            }
     }
-
+    }
     public function escape_string($value)
     {
         return $this->connection->real_escape_string($value);
@@ -90,7 +90,28 @@ class db
             echo 0;
         }
     }
-    
+        public function updateForm($query){
+        $sql=$query;
+        $result=mysqli_query($this->conn,$sql);
+        if($result==false){
+            echo 0;
+        }
+        else{
+    if(mysqli_num_rows($result)>0){
+        while($row=$result->fetch_array()){
+            $data[]=$row;
+        }
+        $dbdata['data']=$data;
+        $jsondata=json_encode($dbdata);
+        echo $jsondata;
+    }
+    else {
+        echo 0;
+    }
+        }
+        
+
+        }    
 
 
 

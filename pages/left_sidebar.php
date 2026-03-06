@@ -1,4 +1,4 @@
-<div id="left_sidebar" class="left_sidebar bg-skyblue  col-2 pt-5  " >
+<div id="left_sidebar" class="left_sidebar bg-white border-end border-dark  col-2 pt-5  " >
 
     <div class="masters d-flex align-items-start ms-5 text-muted" >
 
@@ -15,7 +15,7 @@
 <hr>
             <a href="<?php echo "/project/itemmaster/"; ?>" id="item_master" onclick="loadItems()">
 
-                <button class="nav-link fw-bold side3" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <i class="bi bi-diagram-3 me-3"></i>
+                <button class="nav-link fw-bold side3" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <i class="bi bi-cart me-3"></i>
                     ITEM MASTER</button></a>
         </div>
     </div>
@@ -25,7 +25,7 @@
     
         <form action="" method="post" class="logout_form">
             <button class="btn bg-danger mt-5 ms-3 me-5 rounded  w-100 text-white logout" value="logout">
-                <i class="bi bi-box-arrow-left"></i>
+                <i class="bi bi-box-arrow-left me-3"></i>
                 LOGOUT </button>
         </form>
 </div>

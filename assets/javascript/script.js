@@ -4,12 +4,12 @@ var baseurl = "http://localhost/project/";
 console.log("working");
 
 if(window.location.href=='http://localhost/project/usermaster/'){
-  $('.side1').css('background','white').css('color','black');
+  $('.side1').css('background','orangered').css('color','white');
 }else if(window.location.href=='http://localhost/project/clientmaster/'){
-  $('.side2').css('background','white').css('color','black');
+  $('.side2').css('background','orangered').css('color','white');
 }
 else if(window.location.href=='http://localhost/project/itemmaster/'){
-  $('.side3').css('background','white').css('color','black');
+  $('.side3').css('background','orangered').css('color','white');
 }
 
 $("#user_login").click(function (e) {
@@ -79,7 +79,7 @@ $("#hide_sidebar").click(function () {
   $(".logo").html("<img src='../assets/images/demo.png' class='mx-auto'>")
   $(".masters #user_master button").html('<i class="bi bi-people"></i>');
   $(".masters #client_master button").html('<i class="bi bi-person-circle"></i>');
-  $(".masters #item_master button").html('<i class="bi bi-diagram-3"></i>');
+  $(".masters #item_master button").html('<i class="bi bi-cart"></i>');
   $(" .logout").html('<i class="bi bi-box-arrow-left"></i>');
   $(".logout_form").css("width", "5%");
   $("#hide_sidebar").hide();
@@ -100,7 +100,7 @@ $("#show_sidebar").click(function () {
     '<i class="bi me-3 bi-person-circle"></i>   CLIENT MASTER  ',
   );
   $(".masters #item_master button").html(
-    '<i class="bi me-3 bi-diagram-3"></i>    ITEM MASTER ',
+    '<i class="bi me-3 bi-cart"></i>    ITEM MASTER ',
   );
   $(" .logout").html(
     ' <i class="bi me-3 bi-box-arrow-left"></i>   LOGOUT',

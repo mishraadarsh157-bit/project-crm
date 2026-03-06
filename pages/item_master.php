@@ -21,14 +21,15 @@ include_once "dashboard.php";
             <table class='table bg-white mt-3'>
                 <tr>
                     <td><input type="text"></td>
-                    <td><select name="" id=""></select>
+                    <td>
+                        <button onclick="loadItems()">SEARCH</button>
                         <input type="text" id="#invis_i" value="1">
                         <input type="text" class="field_i" value='item_id'>
                         <input type="text" class='order_i' value='asc'>
 
                     </td>
 
-                    <td><select name="" id="">
+                    <td><select name="" onchange="loadItems(),limitItem()" id="limit_i" class='form-select'>
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -37,13 +38,15 @@ include_once "dashboard.php";
                 </tr>
 
             </table>
+            
+            <div id="load_Items"></div>
         </div>
 
         <!-- edit item -->
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
             <h1>Add Item</h1>
             <form id="itemInsertForm">
-                <div class="row w-100 bg-white mx-0 p-0 pb-5 border">
+                <div class="row w-100 bg-white mx-0 mt-4 pt-5 pb-5 border">
                     <div class="col-6 mb-5 ">
                         Item Name
                         <input type="text" name='item_name' id="item_name" class='form-control '>
@@ -75,3 +78,26 @@ include_once "dashboard.php";
 
 </div>
 </div>
+
+<div class="modal " id="myModal" data-bs-backdrop="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-skyblue">
+                <h4 class="modal-title">Update Item Data</h4>
+                <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="" name="update_Item_Form" class="update_item_form p-3">
+
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+

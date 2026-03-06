@@ -25,10 +25,10 @@ include_once "dashboard.php";
                     <td><table class=" w-100">
                         <tr>
                             <form>
-                        <td class='w-25 search-box'>
+                        <td class='w-25 search-box p-2'>
                             <div class="search_holder">
-                            <input type="text" class='searc_c'><button onclick='clientData(),searc_c()' type="button" class='search_button'><i class='bi bi-search'></i></button></div></td><td>
-                            <select name="" class='searc_sel rounded' onchange='clientData()' id="status_c">
+                            <input type="text" placeholder="search" class='searc_c'><button onclick='clientData(),searc_c()' type="button" class='search_button'><i class='bi bi-search'></i></button></div></td><td>
+                            <select name="" class='searc_sel rounded ps-2' onchange='clientData()' id="status_c">
                                 <option value="">STATUS</option>
                                 <option value="1">ACTIVE</option>
                                 <option value="0">INACTIVE</option>
