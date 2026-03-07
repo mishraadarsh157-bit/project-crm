@@ -20,16 +20,18 @@ include_once "dashboard.php";
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
             <table class='table bg-white mt-3'>
                 <tr>
-                    <td><input type="text"></td>
+                    <td class='w-25'><div class="search_holder m-2"><input type="text" placeholder="search" class='searc_i'><button onclick="loadItems(),searc_i()" class='search_button'><i class='bi bi-search'></i></button></div></td>
+                    <td class='pt-3'> <button class="reset_btn " type="reset" onclick="clientData()"><i class="bi bi-arrow-repeat"></i></button></td>
                     <td>
-                        <button onclick="loadItems()">SEARCH</button>
-                        <input type="text" id="#invis_i" value="1">
-                        <input type="text" class="field_i" value='item_id'>
-                        <input type="text" class='order_i' value='asc'>
+                        
+                        <input type="text"  hidden id="invis_i" value="1">
+                        <input type="text"  hidden class="field_i" onchange="loadItems()" value='item_id'>
+                        <input type="text"  hidden class='order_i' onchange="loadItems()" value='asc'>
+                         <input type="text" hidden  value='bi-arrow-down-up' id="icon_hold_i">
 
                     </td>
 
-                    <td><select name="" onchange="loadItems(),limitItem()" id="limit_i" class='form-select'>
+                    <td align='right'><select name="" onchange="loadItems(),limitItem()" id="limit_i" class='form-select w-25'>
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -37,9 +39,11 @@ include_once "dashboard.php";
                         </select></td>
                 </tr>
 
-            </table>
             
+            <tr><td colspan="5">
             <div id="load_Items"></div>
+            </td></tr>
+        </table>
         </div>
 
         <!-- edit item -->

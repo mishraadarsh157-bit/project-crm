@@ -18,9 +18,13 @@ class update
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<form><input type='number' id='id' hidden value='{$row['id']}'>";
 
-                echo "<input type='text' placeholder='name'  id='name' class='form-control mb-3' value='{$row['name']}' required><div id='name_valid' class='text-danger mb-3 ''></div>";
-                echo "<input type='text' placeholder='number'  id='number' class='form-control mb-3' value='{$row['phone']}' required><div id='number_valid'></div>";
-                echo "<input type='text' placeholder='email'  id='email' class='form-control mb-3' value='{$row['email']}' required><div id='email_valid'></div>";
+                echo "<input type='text' placeholder='name'  id='name' class='form-control mb-3' value='{$row['name']}' required>
+                
+                <div class='name_valid text-danger mb-3  '></div>";
+                echo "<input type='text' placeholder='number'  id='number' class='form-control mb-3' value='{$row['phone']}' required>
+                <div class='number_valid'></div>";
+                echo "<input type='text' placeholder='email'  id='email' class='form-control mb-3' value='{$row['email']}' required>
+                <div class='email_valid'></div>";
                 if($row['STATUS']==1){
                 $status='ACTIVE';
                 }

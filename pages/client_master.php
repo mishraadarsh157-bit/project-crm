@@ -49,8 +49,8 @@ include_once "dashboard.php";
                     </tr>
                     </table></td>
                 </tr>
-                <tr><td >
-            <div id="load_clients" class='table_area bg-white rounded border'>
+                <tr><td colspan="5">
+            <div id="load_clients" class='p-0'>
 
             </div>
             </td>

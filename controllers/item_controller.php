@@ -18,7 +18,7 @@ if (isset($_POST['submit_item'])) {
     $crud->insertData($table, ['item_name' => $i_name, 'price' => $i_price, 'description' => $i_description, 'item_image' => $filePath]);
 } else if (isset($_POST['showItems'])) {
     $table = 'items';
-    $page = $_POST['page'] ?? 1;
+    $page = $_POST['page'] ??1;
     $field = $_POST['field'] ?? 'item_id';
     $order = $_POST['order'] ?? 'asc';
     $limit = $_POST['limit'] ?? 10;
@@ -61,4 +61,10 @@ if (isset($_POST['submit_item'])) {
     $path 
     where item_id=$id
     ");
+}
+
+else if(isset($_POST['delete'])){
+    $id=$_POST['id'];
+    $table='items';
+        $crud->modifyData("delete from $table where item_id =$id");
 }

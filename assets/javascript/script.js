@@ -113,6 +113,9 @@ $("#show_sidebar").click(function () {
 $(document).on('click','.sort',function(){
   var value=$(this).text();
   $('.field').val(value);
+   $("#invis").val(1);
+  var page=$("#invis").val();
+  userData(Number(page));
 })
 
 $(document).on('click','.sort',function(){
@@ -360,11 +363,17 @@ $(document).on("click", "#edit", function (e) {
   e.preventDefault();
   let id = $("#id").val();
   let user_name = $("#name").val();
-  validName(user_name);
+  if(!validName(user_name)){
+    return;
+  };
   let user_number = $("#number").val();
-  validNumber(user_number)
+  if(!validNumber(user_number)){
+    return;
+  }
   let user_email = $("#email").val();
-  validEmail(user_email);
+  if(!validEmail(user_email)){
+    return
+  }
   let status = $("#status").val();
   let update_user = $("#edit").val();
   console.log(update_user);

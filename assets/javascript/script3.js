@@ -14,9 +14,9 @@ function insertItem() {
     contentType: false,
     success: function (data) {
       console.log(data);
-      if (data.trim == 1) {
+      if (data.trim()== 1) {
+        $("#itemInsertForm").trigger('reset')
         window.location.href = "/project/itemmaster/";
-
         loadItems();
       }
     },
@@ -36,16 +36,36 @@ function itmImg(event) {
   }
 }
 
+
+
+////////////////order by
+
+$(document).on("click", ".sort_i", function () {
+  var value = $(this).attr("id");
+  $(".field_i").val(value);
+  
+    $("#invis_i").val(1);
+  var page = $("#invis_i").val();
+  loadItems(Number(page));
+
+});
+$(document).on("click", ".sort_i", function () {
+  $(".order_i").val($(".order_i").val() === "asc" ? "desc" : "asc");
+
+  $("#icon_hold_i").val(
+    $("#icon_hold_i").val() === "bi-arrow-up" ? "bi-arrow-down" : "bi-arrow-up",
+  );
+
+});
 //////////load
 
-function loadItems() {
-  var page = $("#invis_i").val() ?? 1;
+
+
+
+function loadItems(page) {
   var field = $(".field_i").val() ?? "item_id";
-  console.log(field);
   var order = $(".order_i").val() ?? "asc";
-  console.log(order);
   var searc = $(".searc_i").val() ?? "";
-  console.log(searc);
   var limit = $("#limit_i").val() ?? 5;
   var limit = Number(limit);
   $.ajax({
@@ -61,73 +81,112 @@ function loadItems() {
     },
     success: function (data) {
       data = JSON.parse(data);
+       limit = $("#limit_i").val();
+      var page = $("#invis_i").val();
 
-      table = "<table class='table bg-white table-bordered'>";
+      let icon=$("#icon_hold_i").val();
+      table = "<div class='holding-table'><table class='table bg-white table-bordered'>";
       table += "<tr class='bg-blue '>";
       table += "<th class='srno_c'>Sr. NO</th>";
-      table += "<th class='action_c'>Action</th>";
-      table += "<th class='ps-5'>Item</th>";
+      table += "<th class='action_c text-center'>Action</th>";
+      table += `<th  onclick="loadItems()" id="item_name" class='sort_i ps-5'>Item <i class="bi ${icon}"></i></th>`;                     
       table += "<th>Description</th>";
-      table += "<th>Price</th>";
+      table += `<th onclick="loadItems()" id="price" class="sort_i">Price  <i class="bi ${icon}"></i></th>`;
       table += "</tr>";
-      page = 1;
+      
+      total_pages=data.total_page;
+      total_records=data.total_record;
       data.data.forEach(function (value, index) {
         ind = index + 1;
         indx = (page - 1) * limit + ind;
         table += `<tr>`;
 
         table += `<td>${indx}</td>`;
-        table += `<td>
+        table += `<td class='text-center'>
         <button class='btn btn-sm rounded-pill btn-outline-primary' name='update_i' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["item_id"]}'  id='update_i' value='update_i'>
                 <i class='bi bi-pencil-square'>
                 </i></button>
+                 <button class='btn btn-sm rounded-pill  btn-outline-danger' name='delete' data-did='${value["item_id"]}'  id='delete_i' value='delete'>
+        <i class='bi bi-trash3'></i></button>
         </td>`;
 
-        table += `<td class='fw-bold'> <img src='/project/${data.data[index]["item_image"]}' height="50px" alt="" class="dynamicImg me-5">   ${value["item_name"]}</td>`;
+        table += `<td class='text-success'> <img src='/project/${data.data[index]["item_image"]}' height="50px" alt="" class="dynamicImg me-5">   ${value["item_name"]}</td>`;
 
-        table += `<td>${value["description"]}</td>`;
-        table += `<td>${value["price"]}</td>`;
+        table += `<td class='text-secondary'>${value["description"]}</td>`;
+        table += `<td class='text-primary'>${value["price"]}</td>`;
 
         table += `</tr>`;
       });
-      table += "</table>";
-      /////////////pagination
-      //  table += '<hr><div class=" w-100    d-flex justify-center">';
-      //           table += '<ul class="pagination_c ms-5 ms-auto d-flex">';
+      table += "</table></div>";
+      ///////////pagination
+       table += '<hr><div class=" w-100    d-flex justify-center">';
+                table += '<ul class="pagination_i ms-5 ms-auto d-flex">';
 
-      //           if (page <= 1) {
-      //             table +=
-      //               ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
-      //           } else if (page > 1) {
-      //             table +=
-      //               "<li class='page-item'><button class='page-link' id='back_c'>Previous</button></li>";
-      //           }
-      //           if (total_records >= limit) {
-      //             for (i = 1; i <= total_pages; i++) {
-      //               if (i <= 1) {
-      //                 table += `<li class="page-item"><a class="page-link" id='${page}' href="#">${page}</a></li>`;
-      //               } else {
-      //                 continue;
-      //               }
-      //             }
-      //           }
-      //           if (page < total_pages) {
-      //             table +=
-      //               '<li class="page-item"><button class="page-link" id="forward_c" href="#">Next</button></li>';
-      //           } else if ((page = total_pages)) {
-      //             table +=
-      //               '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
-      //           }
-      //           table += "</ul>";
-      //           table += `<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${total_pages} </b>`;
-      //           table += `<b class='on_page mt-2 mx-auto text-secondary'> Total Records : ${total_records} </b>`;
+                if (page <= 1) {
+                  table +=
+                    ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
+                } else if (page > 1) {
+                  table +=
+                    "<li class='page-item'><button class='page-link' id='back_i'>Previous</button></li>";
+                }
+                if (total_records >= limit) {
+                  for (i = 1; i <= total_pages; i++) {
+                    if (i <= 1) {
+                      table += `<li class="page-item"><a class="page-link" id='${page}' href="#">${page}</a></li>`;
+                    } else {
+                      continue;
+                    }
+                  }
+                }
+                if (page < total_pages) {
+                  table +=
+                    '<li class="page-item"><button class="page-link" id="forward_i" href="#">Next</button></li>';
+                } else if ((page = total_pages)) {
+                  table +=
+                    '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
+                }
+                table += "</ul>";
+                table += `<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${total_pages} </b>`;
+                table += `<b class='on_page mt-2 mx-auto text-secondary'> Total Records : ${total_records} </b>`;
 
-      //           table += "</div>";
+                table += "</div>";
 
       $("#load_Items").html(table);
     },
   });
 }
+
+$(document).on("click", "#pagination_i a", function (e) {
+  e.preventDefault();
+
+  var limit = $("#limit_i").val();
+  var page = $(this).attr("id");
+  $("#invis_i").val(page);
+  loadItems(page, limit);
+});
+
+////////////back button<<<<<<<<<<
+
+$(document).on("click", "#back_i", function (e) {
+  e.preventDefault();
+
+  var page = $("#invis_i").val();
+  var page = Number(page) - 1;
+  $("#invis_i").val(page);
+
+  loadItems(page);
+});
+
+/////////////////forward button>>>>>>>>>>>>
+
+$(document).on("click", "#forward_i", function (e) {
+  e.preventDefault();
+
+  var page = $("#invis_i").val();
+  var page = Number(page) + 1;
+  $("#invis_i").val(page);
+  loadItems(page);
+});
 
 function limitItem() {
   $("#invis_i").val(1);
@@ -203,3 +262,40 @@ function updateItm() {
   });
 }
 //////delete
+$(document).on('click','#delete_i',function(){
+var id=$(this).data('did');
+const isConfirm= confirm(
+  "do you really want to delete this item "
+)
+if(isConfirm)
+{
+var element=this;
+$.ajax({
+  url:"/project/itemcontroller/",
+  type:"POST",
+  data:{
+    id:id,
+    delete:"delete"
+  },
+  success:function (data){
+if(data.trim()==1){
+  $(element).closest('tr').fadeOut();
+  var page=$('#invis_i').val();
+  loadItems(Number(page))
+}
+  }
+  
+})
+}
+else{
+  loadItems()
+}
+
+})
+
+function searc_i() {
+  var val = 1;
+  $("#invis_i").val(val);
+  var page = $("#invis_i").val();
+  loadItems(Number(page));
+}

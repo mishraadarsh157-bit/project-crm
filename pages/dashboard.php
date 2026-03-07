@@ -37,6 +37,8 @@ if (!isset($_SESSION['admin'])) {
 </body>
 <script src="../assets/javascript/jquery.js"></script> 
 <script src="../assets/javascript/validations.js"></script>
+
+    <script src="../assets/javascript/home.js"></script>
     <script src="../assets/javascript/script.js"></script>
     <script src="../assets/javascript/script2.js"></script>
     <script src="../assets/javascript/script3.js"></script>
@@ -45,8 +47,9 @@ if (!isset($_SESSION['admin'])) {
 <?php 
 
 $value=$_SESSION['admin'];
+
 echo '<script>
-$("#profileInfo").html("' . $value .'")
+$("#profileInfo").html("' . $value .'");
 </script>';
 
 ?>

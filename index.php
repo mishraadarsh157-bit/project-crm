@@ -12,6 +12,10 @@ $router->post('/project/loginAPI/', function() {
 $router->get('/project/home/', function() {
     require 'pages/home.php';    
 });
+$router->post('/project/homecontroller/', function() {
+    require 'controllers/home_controller.php';    
+});
+
 $router->get('/project/usermaster/', function() {
     require 'pages/user_master.php';
 });

@@ -21,9 +21,10 @@ if (isset($_SESSION['admin'])===true) {
 </head>
 <style>
 </style>
-<body>
+<body class='bg-danger'>
     <div class="contaner-fluid m-0 row login_page p-5">
-       <div class="login_image col-6 bg-primary rounded ms-5"></div>  <div class="col-5 login_bg  justify-content-center p-5 rounded">
+       <div class="login_image col-6 ms-5"></div> 
+        <div class="col-5 login_bg  justify-content-center p-5">
             <form class="login-form m-5 p-5 ">
                 <h1 class=" mb-4" align="center">LOGIN</h1>
                 Email :

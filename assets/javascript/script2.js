@@ -97,6 +97,9 @@ function insertClient() {
 $(document).on("click", ".sort_c", function () {
   var value = $(this).attr("id");
   $(".field_c").val(value);
+    $("#invis_c").val(1);
+  var page = $("#invis_c").val();
+  clientData(Number(page));
 });
 $(document).on("click", ".sort_c", function () {
   $(".order_c").val($(".order_c").val() === "asc" ? "desc" : "asc");
@@ -135,10 +138,11 @@ function clientData(page) {
         if (data.trim() == "empty") {
           let icon = $("#icon_hold_c").val();
           let table =
-            '<div class="holding-table"><table class="table table-bordered bg-white"> ';
+            '<div class="holding-table m-0"><table class="table table-bordered bg-white"> ';
           table += '<tr class="bg-blue" style="whitespace:nowrap;">';
           table += "<th class='srno_c'>SR.NO</th>";
           table += '<th class="action_c text-center">Action</th>';
+
           table += `<th onclick='clientData()' id='client_name' class='sort_c name_c'>Name <i class="bi ${icon}"></i></th>`;
           table += `<th onclick='clientData()' id='phone' class='sort_c phone_c'>Phone <i class="bi ${icon}"></i></th>`;
           table += `<th onclick='clientData()' id='client_email' class='sort_c email_c'>Email <i class="bi ${icon}"></i></th>`;
