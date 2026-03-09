@@ -37,7 +37,6 @@ function loadCity(state) {
 
 function insertClient() {
   let client_name = $("#client_name_c").val();
-  console.log(client_name);
   if (!validName(client_name)) {
     return;
   }
@@ -319,17 +318,19 @@ $(document).on("click", "#update_c", async function () {
       data.forEach(async function (value) {
         table += `<div class='row'><input type='text' hidden id='updId'  value='${value[0]}'>`;
 
-        table += `<div class='col-12'><input type='text' placeholder='name'  id='client_name_up' class='form-control form-control-sm mb-3' value='${value[1]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
+        table += `<div class='col-12'><input type='text' placeholder='Client Name'  id='client_name_up' class='form-control form-control-sm mb-3' value='${value[1]}' >
+        <div class="name_valid text-danger mb-3"></div>`;
 
-        table += `</div><div class='col-6'><input type='text' placeholder='name'  id='client_number_up' class='form-control form-control-sm mb-3' value='${value[2]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
+        table += `</div><div class='col-6'><input type='text' placeholder='Number'  id='client_number_up' class='form-control form-control-sm mb-3' value='${value[2]}' required><div class='number_valid text-danger mb-3 ''></div>`;
 
-        table += `</div><div class='col-6'><input type='text' placeholder='name'  id='client_email_up' class='form-control form-control-sm mb-3' value='${value[3]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
+        table += `</div><div class='col-6'><input type='text' placeholder='Email'  id='client_email_up' class='form-control form-control-sm mb-3' value='${value[3]}' required><div class='email_valid text-danger mb-3 ''></div>`;
 
-        table += `</div><div class='col-12'><input type='text' placeholder='name'  id='client_address_up' class='form-control form-control-sm mb-3' value='${value[4]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
+        table += `</div><div class='col-12'><input type='text' placeholder='Address'  id='client_address_up' class='form-control form-control-sm mb-3' value='${value[4]}' required><div class='address_valid text-danger mb-3 ''></div>`;
         table += `</div><div class='col-4 mb-3'  id='states_up'>`;
         table += `</div><div class='col-4' id='cities_up'></select>`;
 
-        table += `</div><div class='col-4'><input type='text' placeholder='name'  id='client_pincode_up' class='form-control form-control-sm mb-3' value='${value[7]}' required><div id='name_valid' class='text-danger mb-3 ''></div>`;
+        table += `</div><div class='col-4'>
+        <input type='text' placeholder='pincode'  id='client_pincode_up' class='form-control form-control-sm mb-3' value='${value[7]}' required><div class='pincode_valid' class='text-danger mb-3 ''></div>`;
         if (value[8] == 1) {
           text = "ACTIVE";
         } else {
@@ -338,12 +339,11 @@ $(document).on("click", "#update_c", async function () {
         table += `</div><div class='col-6 mb-5'><select class='form-select form-select-sm' id='status_up'  value='${value[8]}' >
         <option value='${value[8]}'>${text}</option>
         <option value='' disabled>Select Status</option>
-        <option value='ACTIVE'>ACTIVE</option>
-        <option value='INACTIVE'>INACTIVE</option>
+        <option value='1'>ACTIVE</option>
+        <option value='0'>INACTIVE</option>
         </select></div>`;
 
-        table +=
-          "</div><hr><div class='col-4'><input type='button' class='btn btn-outline-primary me-2' onclick='updateClient()' id='update_client' value='SAVE'><input type='reset' class='btn btn-outline-danger' value='RESET'></div>";
+        table +="</div><hr><div class='col-4'><button type='button' class='btn btn-outline-primary me-2' onclick='updateClient()' id='update_client'>SAVE</button> <input type='reset' class='btn btn-outline-danger' value='RESET'></div>";
 
         await $.ajax({
           url: "/project/clientcontroller/",
@@ -360,13 +360,7 @@ $(document).on("click", "#update_c", async function () {
 
         $("#select_state").val(Number(data[0].state_id));
         state = $("#select_state").val();
-        // console.log(state,"hhh")
-      await  loadCity(Number(state));
-
-        // $("#select_state").on("", function () {
-
-        // });
-        
+      await  loadCity(Number(state));        
       $("#select_city").val(Number(data[0].city_id));
       $("#select_city").val();  
         async function loadCity(state) {
@@ -378,8 +372,6 @@ $(document).on("click", "#update_c", async function () {
               state: state,
             },
             success: function (data) {
-              // console.log(data);
-
               $("#cities_up").html(data);
             },
           });
@@ -394,22 +386,30 @@ $(document).on("click", "#update_c", async function () {
 function updateClient() {
   let id = $("#updId").val();
   let client_name = $("#client_name_up").val();
-  validName(client_name);
+  if(!validName(client_name)){
+    return
+  }
 
   let client_number = $("#client_number_up").val();
-  // validNumber(String(client_number));
+  if(!validNumber(client_number)){
+    return
+  }
   let client_email = $("#client_email_up").val();
-  validEmail(client_email);
+  if(!validEmail(client_email)){
+    return
+  }
   let client_address = $("#client_address_up").val();
-  validAddress(client_address);
-
+  if(!validAddress(client_address)){
+    return
+  }
   let client_state = $("#select_state").val();
-
   let client_city = $("#cities_up #select_city").val();
   console.log("not");
   console.log(client_city);
   let client_pincode = $("#client_pincode_up").val();
-  validPincode(client_pincode);
+  if(!validPincode(client_pincode)){
+    return
+  }
   let client_status = $("#status_up").val();
   let update_client = $("#update_client").val();
 
@@ -435,6 +435,7 @@ function updateClient() {
         clientData(Number(page));
         $("#myModal").hide();
       } else {
+
         console.log(data);
         console.log("error");
       }
@@ -474,6 +475,13 @@ $(document).on("click", "#delete_c", function () {
 });
 
 function searc_c() {
+  var val = 1;
+  $("#invis_c").val(val);
+  var page = $("#invis_c").val();
+  clientData(Number(page));
+}
+function resetClient(){
+  $('.searc_c').val('')
   var val = 1;
   $("#invis_c").val(val);
   var page = $("#invis_c").val();

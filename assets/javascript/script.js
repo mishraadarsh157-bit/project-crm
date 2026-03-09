@@ -1,23 +1,37 @@
 ////////login page///////////
 var baseurl = "http://localhost/project/";
 
-console.log("working");
 
 if(window.location.href=='http://localhost/project/usermaster/'){
-  $('.side1').css('background','orangered').css('color','white');
+  $('.side1').css('background','orangered').css({'color':'white','margin-left':'25px','border-right':'10px solid yellow'});
 }else if(window.location.href=='http://localhost/project/clientmaster/'){
-  $('.side2').css('background','orangered').css('color','white');
+  $('.side2').css('background','orangered').css({'color':'white','margin-left':'25px','border-right':'10px solid yellow'});
 }
 else if(window.location.href=='http://localhost/project/itemmaster/'){
-  $('.side3').css('background','orangered').css('color','white');
+  $('.side3').css('background','orangered').css({'color':'white','margin-left':'25px','border-right':'10px solid yellow'});
+}
+else if(window.location.href=='http://localhost/project/invoice/'){
+  $('.side4').css('background','orangered').css({'color':'white','margin-left':'25px','border-right':'10px solid yellow'});
 }
 
 $("#user_login").click(function (e) {
   e.preventDefault();
   var email = $("#email").val();
-  validName(email);
+  if(email==""){
+    $('.email_valid').show()
+    $('.email_valid').text('enter email')
+  }
+  else{
+    $('.email_valid').hide()
+  }
   var password = $("#password").val();
-  validPass(password);
+  if(password==""){
+    $('.pass_valid').show()
+    $('.pass_valid').text('enter password')
+  }
+  else{
+    
+    $('.pass_valid').hide()
   var save = $("#user_login").val();
 
   $.ajax({
@@ -36,11 +50,11 @@ $("#user_login").click(function (e) {
         window.location.href = response.trim();
       } else if(response.trim()=='0') {
         console.log(response)
-        $('#pass_valid').show()
-        $('#pass_valid').text("user not found").css('color','red');
+        $('.pass_valid').show()
+        $('.pass_valid').text("user not found").css('color','red');
       }
     },
-  });
+  });}
 });
 
 $(".logout").click(function (e) {
@@ -80,8 +94,9 @@ $("#hide_sidebar").click(function () {
   $(".masters #user_master button").html('<i class="bi bi-people"></i>');
   $(".masters #client_master button").html('<i class="bi bi-person-circle"></i>');
   $(".masters #item_master button").html('<i class="bi bi-cart"></i>');
+  $(".masters #invoice button").html('<i class="bi bi-receipt"></i>');
   $(" .logout").html('<i class="bi bi-box-arrow-left"></i>');
-  $(".logout_form").css("width", "5%");
+  $(".logout_form").css("width", "6.6%");
   $("#hide_sidebar").hide();
   $("#show_sidebar").show();
 });
@@ -102,6 +117,7 @@ $("#show_sidebar").click(function () {
   $(".masters #item_master button").html(
     '<i class="bi me-3 bi-cart"></i>    ITEM MASTER ',
   );
+  $(".masters #invoice button").html('<i class="bi bi-receipt"></i>   INVOICE');
   $(" .logout").html(
     ' <i class="bi me-3 bi-box-arrow-left"></i>   LOGOUT',
   );
@@ -144,7 +160,6 @@ function userData(page, limit) {
     },
     success: function (data) {
      if(data.trim()=="empty"){
-          console.log(data)
            let icon=$('#icon_hold').val()
       let table = '<div class="holding-table"><table border="1" class="table  bg-white table-bordered"> ';
       table += '<tr class="bg-blue" style="whitespace:nowrap;">';
@@ -338,6 +353,8 @@ function insertUser() {
         $("#add_user").trigger("reset");
       } else {
         console.log("error");
+        $('.email_valid').show()
+        $('.email_valid').text('email already exist').css('color','blue')
       }
     },
   });
@@ -393,8 +410,12 @@ $(document).on("click", "#edit", function (e) {
         var page=$("#invis").val();
         userData(page);
         $("#myModal").hide();
-      } else {
-        console.log("update js error");
+      } 
+         else {
+        console.log("error");
+        $('.email_valid').show()
+        $('.email_valid').text('email already exist').css('color','blue')
+      
       }
     },
   });
@@ -440,6 +461,14 @@ else{
 );
 function searc(){
   var val=1;
+  $("#invis").val(val)
+   var page = $("#invis").val();
+          userData(Number(page))
+}
+
+function resetUsers(){
+  $('#search_user').val('')
+   var val=1;
   $("#invis").val(val)
    var page = $("#invis").val();
           userData(Number(page))

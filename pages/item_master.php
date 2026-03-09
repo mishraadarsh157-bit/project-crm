@@ -21,7 +21,8 @@ include_once "dashboard.php";
             <table class='table bg-white mt-3'>
                 <tr>
                     <td class='w-25'><div class="search_holder m-2"><input type="text" placeholder="search" class='searc_i'><button onclick="loadItems(),searc_i()" class='search_button'><i class='bi bi-search'></i></button></div></td>
-                    <td class='pt-3'> <button class="reset_btn " type="reset" onclick="clientData()"><i class="bi bi-arrow-repeat"></i></button></td>
+                    <td class='pt-3'> 
+                        <button class="reset_btn " type="reset" onclick="clientData(),resetItems()"><i class="bi bi-arrow-repeat"></i></button></td>
                     <td>
                         
                         <input type="text"  hidden id="invis_i" value="1">
@@ -48,30 +49,33 @@ include_once "dashboard.php";
 
         <!-- edit item -->
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            <h1>Add Item</h1>
             <form id="itemInsertForm">
-                <div class="row w-100 bg-white mx-0 mt-4 pt-5 pb-5 border">
-                    <div class="col-6 mb-5 ">
+                <div class="row w-100 bg-white mx-0 mt-4 pt-4 px-4 pb-5 border ">
+                    <h1 class='pt-3'>Add Item</h1><hr>
+                    <div class="col-6 mb-5 mt-4">
                         Item Name
-                        <input type="text" name='item_name' id="item_name" class='form-control '>
+                        <input type="text" name='item_name' id="item_name" placeholder="Item name" class='form-control '>
                     </div>
-                    <div class="col-6 mb-5 ">
+                    <div class="col-6 mb-5 mt-4">
                         Item Price
-                        <input type="number" name='item_price' id="item_price" class='form-control '>
+                        <input type="number" name='item_price' id="item_price" placeholder="Item Price" class='form-control '>
                     </div>
                     <div class="col-12 mb-5 p-2">
                         Item Description
-                        <input type="text" name='item_description' id="item_description" class='form-control '>
+                        <input type="text" name='item_description' id="item_description" placeholder="Item Description" class='form-control '>
                     </div>
                     <div class="col-6 mb-5 p-2">
                         Item Image
-                        <input type="file" name='itemimage' onchange="itmImg(event)" id="item_image" class='form-control'>
+                        <div class='image_holder'>
+                        <input type="file" accept="image/*" name='itemimage' onchange="itmImg(event)" id="item_image" class='form-control w-75'><button class="btn border border-0 btn-outline-danger" type="button" onclick="resetImage()"><i class="bi bi-x-lg"></i></button></div>
                     </div>
                     <div class="col-6 mb-5 p-2"><img src="" name='image' alt="" height="100px" class="itemImage"></div>
                     <div class="col-9"></div>
-                    <div class="col-3">
+                    <div class="col-3 text-end ps-5" >
                         <input type="text" name='submit_item' hidden value='submititem'>
+                        <div class="valid_item text-danger mb-3"></div>
                         <button type="button" onclick="insertItem()" id="itemSubmit" name='itemSubmit' class="btn btn-outline-primary">Save Item</button>
+                        <input type="reset" class='btn btn-outline-danger' onclick="resetImage()" value='Reset'>
                     </div>
 </div>
                     </form>

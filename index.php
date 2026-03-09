@@ -5,6 +5,9 @@ require '../project/routes/routes.php';
 $router = new Router();
 $router->get('/project/', function() {
     require 'pages/login.php';
+});
+$router->get('/project/login', function() {
+    require 'pages/login.php';
 });   ///>>>
 $router->post('/project/loginAPI/', function() {
     require 'controllers/loginAPI.php';
@@ -24,6 +27,9 @@ $router->get('/project/clientmaster/', function() {
 });
 $router->get('/project/itemmaster/', function() {
     require 'pages/item_master.php';
+});
+$router->get('/project/invoice/', function() {
+    require 'pages/invoice.php';
 });
 
 $router->post('/project/usercontroller/', function() {

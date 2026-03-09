@@ -1,4 +1,3 @@
-console.log("home")
 
 function totalUsers(){
     $.ajax({
@@ -59,7 +58,6 @@ function totalinActiveUsers(){
             tabl:"users"
         },
         success: function(data){
-            console.log(data)
             $("#total_inactive_users").html("Inactive " + data);
         }
     })
@@ -76,7 +74,6 @@ function totalActiveUsers(){
             tabl:"users"
         },
         success: function(data){
-            console.log(data)
             $("#total_active_users").html("Active " + data);
         }
     })
@@ -93,7 +90,6 @@ function totalinActiveClients(){
             tabl:"client"
         },
         success: function(data){
-            console.log(data)
             $("#total_inactive_client").html("Inactive " + data);
         }
     })
@@ -110,7 +106,6 @@ function totalinActiveClinets(){
             tabl:"client"
         },
         success: function(data){
-            console.log(data)
             $("#total_active_client").html("Active " + data);
         }
     })

@@ -76,7 +76,6 @@ return false
     return true
   }
 }
-console.log("working");
 function validAddress(address)
 {
   if (address == "") {
@@ -100,6 +99,33 @@ function validPincode(pincode){
   else{
     
     $(".pincode_valid").hide();
+    return true
+  }
+}
+function validPrice(price){
+    if (price == "") {
+    $(".price_valid").show();
+    $(".price_valid").text("enter price").css("color", "red");
+    return false
+  }
+  
+  else{
+    
+    $(".price_valid").hide();
+    return true
+  }
+}
+
+function validDescription(des){
+    if (des == "") {
+    $(".des_valid").show();
+    $(".des_valid").text("enter Description").css("color", "red");
+    return false
+  }
+  
+  else{
+    
+    $(".des_valid").hide();
     return true
   }
 }

@@ -2,12 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 *{
-    font-size: .33cm; 
-    /* font-family:poppins; */
+    font-size: .31cm; 
+    font-family:poppins;
     /* font-family:roboto; */
     /* font-family: cursive; */
     /* font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
-    font-family: sans-serif;
+    /* font-family: sans-serif; */
     /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
 }
 *::-webkit-scrollbar{
@@ -128,16 +128,20 @@ width: 95%;
 transition: all ease-in-out .5s;
 
 }
-.masters a button:hover{
-    background-color: rgba(128, 128, 128, 0.458);
-    color: white;
-    
-}
 
 .masters {
     list-style: none;
     height: 100%;
 }
+.masters a:nth-child(4){
+margin-left: -100px;
+}
+.masters a button:hover{
+    background-color: rgba(190, 190, 190, 0.458);
+    color: red;
+    
+}
+
 #show_sidebar{
     display: none;
 }
@@ -158,16 +162,13 @@ transition: all ease-in-out .5s;
     font-size: .35cm;
 }
 .table_area,.form_area,.client_form,#load_clients{
-  height: calc(95vh - 178px);
+  height: calc(95vh - 158px);
   overflow-y: auto;
   padding: 0px;
   overflow-x: auto;
 
 }
-/* table tr:nth-child(even){
-    background-color: #32cda2;
-    padding: 10%;
-} */
+
 .form_area{
   height: calc(95vh - 98px);
 }
@@ -185,11 +186,6 @@ transition: all ease-in-out .5s;
     background-color: rgb(250, 96, 40);
     color: white;
 }
-/* .logout{
-    margin-top: auto;
-    margin-left: -20px;
-    width: 15%;
-} */
 
 .logout_form{
     bottom:20px;
@@ -258,7 +254,7 @@ transition: all ease-in-out .5s;
     
 }
 .modal{
-    background:rgba(0, 0, 0, 0.767);
+    background:rgba(0, 0, 0, 0.531);
 }
 .sort{
 height: 25px;
@@ -274,7 +270,6 @@ border: 0px;
     height: calc(80vh - 178px);
     overflow-x: auto;
     margin-bottom: 5px;
-    /* background-color: red; */
 }
 
 .id{
@@ -348,4 +343,10 @@ table tr td{
     height: 30px ;
     width: 30px;
     border-radius: 50%;
+}
+
+.image_holder{
+    display: flex;
+    white-space: nowrap;
+    overflow-x: auto;
 }

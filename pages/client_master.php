@@ -13,7 +13,7 @@ include_once "dashboard.php";
             <button class="nav-link fw-bold active text-dark" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Clients</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold text-dark" id="profile-tab " onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Edit Clients</button>
+            <button class="nav-link fw-bold text-dark" id="profile-tab " onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Add New Clients</button>
         </li>
     </ul>
 
@@ -37,7 +37,7 @@ include_once "dashboard.php";
                             <input type="text" hidden class='field_c' value='client_id' >
                             <input type="text" hidden class='order_c' value='asc' >
                             <input type="text" hidden value='bi-arrow-down-up' id="icon_hold_c">
-                        <button class="reset_btn " type="reset" onclick="clientData()"><i class="bi bi-arrow-repeat"></i></button>
+                        <button class="reset_btn " type="reset" onclick="clientData(),resetClient()"><i class="bi bi-arrow-repeat"></i></button>
                         </td></form>
                         <td class='w-25' align='right'>
                             <select class='form-select w-25' onchange='clientData(),limitData_c()'  name="" id="limit_c">
@@ -58,10 +58,10 @@ include_once "dashboard.php";
         </div>
 
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            <h1 class="mt-4">Add Client</h1>
             <div class="row m-0 mt-3 client_form w-100 bg-white border p-4">
                 <form id="add_client">
                     <div class="row">
+                        <h1 class="mt-4">Add Client</h1><hr>
 
                         <div class="col-6 p-3 pt-5">
                             Client Name:
@@ -71,17 +71,17 @@ include_once "dashboard.php";
                         <div class="col-6 p-3 pt-5">
                            Client Phone:
                             <input type="Number" placeholder="Client phone number" class="form-control mb-3" minlength="2" maxlength="15"  id="client_number">
-                            <div id="number_valid" class="text-danger mb-3 "></div>
+                            <div class="number_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
                             Client's Address:
                             <textarea name="" placeholder="Address" class="form-control mb-3" id="client_address"></textarea>
-                            <div id="address_valid" class="text-danger mb-3 "></div>
+                            <div class="address_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
                            Client Email:
                             <input type="email" placeholder="Client email" class="form-control mb-3" id="client_email_c">
-                            <div id="email_valid" class="text-danger mb-3 "></div>
+                            <div class="email_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-4  p-3 pt-5">State:
                             <div id="loadState">
@@ -96,14 +96,16 @@ include_once "dashboard.php";
                             </div>
                         </div>
                         <div class="col-4  p-3 pt-5">Pincode:<input type="Number" placeholder="Pincode" id="client_pincode" class="form-control mb-3">
-                            <div id="pincode_valid" class="text-danger mb-3 "></div>
+                            <div class="pincode_valid text-danger mb-3 "></div>
                         </div>
 
                         <div class="col-8 p-3 pt-5"></div>
-                        <div class="col-4 px-3">
-                            <input type="button" p-3 pt-5' id="insert_client" onclick='insertClient()' class="btn btn-outline-primary w-50" value='Submit'>
-                            <button type="reset" class="btn btn-outline-danger w-25">Reset</button>
+                        <div class="col-4 ps-5 text-end">
+                            <input type="button"  id="insert_client" onclick='insertClient()' class="btn btn-outline-primary " value='Submit'>
+                            <button type="reset" class="btn btn-outline-danger ">Reset</button>
+                        
                         </div>
+                        
 
 
                     </div>
@@ -139,7 +141,7 @@ include_once "dashboard.php";
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="" class="update_client_form p-3">
+                <form class="update_client_form p-3">
 
 
                 </form>

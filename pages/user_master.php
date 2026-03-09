@@ -6,11 +6,7 @@ include_once "dashboard.php";
 
 ?>
 
-<style>
 
-
-
-</style>
 
 <div class="content-body col-10">
 
@@ -23,7 +19,7 @@ include_once "dashboard.php";
 
 
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Edit Users</button>
+            <button class="nav-link fw-bold text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Add New Users</button>
         </li>
 
     </ul>
@@ -35,33 +31,33 @@ include_once "dashboard.php";
                 <!-- /////////////////////////////////////////////////////////////////////////////
  /////////////////////////////////////////////////////////////////////// -->
 
-                <form id="add_user" class="p-5">
+                <form id="add_user" autocomplete="off" class="p-5">
                     <div class="row w-100">
                         <h1>ADD USER</h1>
                         <hr>
                         <div class="col-12 my-4">
                             User Name <sup class="text-danger">*</sup>:
-                            <input type="text" title="NAME" id="user_name" placeholder="User Name" name="user_name" minlength="2" maxlength="15" class="form-control    border ">
+                            <input type="text" title="NAME" id="user_name" placeholder="User Name" autocomplete="off" name="user_name" minlength="2" maxlength="15" class="form-control    border ">
                             <div class="name_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 mb-4">
                             User Password :
-                            <input type="password" title="PASSWORD" id="user_pass" placeholder="User Password" name="user_pass" class="form-control  border ">
-                            <div id="pass_valid" class="text-danger mb-3 "></div>
+                            <input type="password" title="PASSWORD" autocomplete="off" id="user_pass" placeholder="User Password" name="user_pass" class="form-control  border ">
+                            <div class="pass_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-6"> User Number :
                             <input type="number" placeholder="User Phone Number" title="NUMBER" id="user_number" name="user_number" class="form-control  border " required>
-                            <div id="number_valid" class="text-danger mb-3 "></div>
+                            <div class="number_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-12 mb-4">
                             User E-Mail :
                             <input type="email" placeholder="User E-mail" title="Email" id="user_email" required name="user_email" class="form-control  border ">
-                            <div id="email_valid" class="text-danger mb-3 "></div>
+                            <div class="email_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-8"></div>
-                        <div class="col-4">
-                            <input type="button" value="SAVE" id="save_user" class="save w-50 btn-outline-primary  btn-sm  btn my-3" onclick="insertUser()">
-                            <input type="reset" value="RESET" class="reset_insert w-25 btn btn-sm btn-outline-danger">
+                        <div class="col-4 text-end">
+                            <input type="button" value="SAVE" id="save_user" class="save btn-outline-primary   btn my-3" onclick="insertUser()">
+                            <input type="reset" value="RESET" class="reset_insert  btn btn-outline-danger">
                         </div>
                     </div>
                 </form>
@@ -84,7 +80,7 @@ include_once "dashboard.php";
                             </select>
                             </td>
                         <td class='w-50'>
-                            <button class="reset_btn " type="reset" onclick="userData()"><i class="bi bi-arrow-repeat"></i></button></td>
+                            <button class="reset_btn " type="reset" onclick="userData(),resetUsers()"><i class="bi bi-arrow-repeat"></i></button></td>
                     </form>
                     <td colspan="" class="" align="">
                     <input id="invis" hidden type="text" value='1'>
