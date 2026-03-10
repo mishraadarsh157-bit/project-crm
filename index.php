@@ -57,11 +57,16 @@ $router->post('/project/itemcontroller/', function() {
     
     
 });
-// $router->get('/project/uploads/', function() {
-//     require '';
+$router->get('/project/invoiceController/', function() {
+    require 'controllers/invoiceController.php';
     
     
-// });
+});
+$router->post('/project/invoiceController/', function() {
+    require 'controllers/invoiceController.php';
+    
+    
+});
 
 
 

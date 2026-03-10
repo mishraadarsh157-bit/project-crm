@@ -108,7 +108,6 @@ $(document).on("click", ".sort_c", function () {
   );
 });
 
-$(document).on("click", ".sort", function () {});
 
 /////////////////////first load table using json
 function clientData(page) {

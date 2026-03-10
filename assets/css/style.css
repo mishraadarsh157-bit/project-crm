@@ -328,11 +328,12 @@ border: 0px;
     border-radius: 5px;
 
 }
-.sort i,.sort_c i,.sort_i i{
+.sort i,.sort_c i,.sort_i i,.sort_iv i{
     display: none;
     font-size: .25cm;
 }
-.sort:hover i ,.sort_c:hover i,.sort_i:hover i{
+.sort:hover i ,.sort_c:hover i,.sort_i:hover i,.sort_iv:hover i{
+    white-space: nowrap;
 display:inline-block;
 }
 table tr td{
