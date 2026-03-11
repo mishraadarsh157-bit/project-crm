@@ -114,11 +114,15 @@ function loadItems(page) {
           table += `<tr>`;
 
           table += `<td>${indx}</td>`;
-          table += `<td class='text-center'>
-        <button class='btn btn-sm rounded-pill btn-outline-primary' name='update_i' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["item_id"]}'  id='update_i' value='update_i'>
-                <i class='bi bi-pencil-square'>
+          table += `<td class='text-center d-flex'>
+ <ul class="nav me-2" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="update_i nav-link btn btn-sm rounded-pill btn-outline-primary border border-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["item_id"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false"><i class='bi bi-pencil-square'>
                 </i></button>
-                 <button class='btn btn-sm rounded-pill  btn-outline-danger' name='delete' data-did='${value["item_id"]}'  id='delete_i' value='delete'>
+        </li>
+    </ul>
+      
+                 <button class='btn btn-sm rounded-pill  btn-outline-danger border border-0' name='delete' data-did='${value["item_id"]}'  id='delete_i' value='delete'>
         <i class='bi bi-trash3'></i></button>
         </td>`;
 
@@ -211,9 +215,10 @@ if (window.location.href == "http://localhost/project/itemmaster/") {
 }
 
 ///////////update
-$(document).on("click", "#update_i", function () {
+$(document).on("click", ".update_i", function () {
+  $('#profile-tab').tab('show')
   let id = $(this).data("uid");
-  let update = $("#update_i").val();
+  let update = $(".update_i").val();
   $.ajax({
     url: "/project/itemcontroller/",
     type: "POST",
@@ -223,41 +228,31 @@ $(document).on("click", "#update_i", function () {
     },
     success: function (data) {
       data = JSON.parse(data);
+      console.log(data)
       data.data.forEach(function (value) {
-        table = `<input type="text" name='id'  class="form-control mb-5" hidden value="${value[0]}">`;
-        table += `<input type="text" placeholder="Item Name" name='item_name' class="form-control mb-5" value="${value[1]}">`;
-        table += `<input type="text" placeholder="Description" name='des' class="form-control mb-5" value="${value[2]}">`;
-        table += `<input type="text" placeholder="Price" name='price' class="form-control mb-5" value="${value[3]}">`;
-        table += `<input type="file" accept="image/*" onchange='itmUpImg(event)' name='itemUpImage' class="itemUpImage form-control mb-2" value="">`;
-        table += `<img src='/project/${value[4]}' height='30px' class='upimg mb-5'>`;
-
-        table += `<input type="text" class="form-control mb-2" hidden name='updateItem' value="updateItm">`;
-        table += "<div class='invalid_item text-danger mb-3'> </div>";
-        table += `<input type="button" onclick='updateItm()' class="btn btn-outline-primary w-25 me-2" value="Save">`;
-        table += `<input type='reset' class='btn btn-outline-danger w-25'>`;
+        
+        $(".item_name").val(value[1]);
+        console.log("name value : " ,  $(".item_name").val() )
+        $('#item_description').val(value[2])
+        $('#item_price').val(value[3])
+        $('.itemImage').attr('src',`/project/${value[4]}`)
+        $('.updItm').html(`
+          <input type='number' name='item_id' value='${value[0]}'>
+          <input type="text" name='updateItem' value="updateItm">
+          
+          `)
+          $('.itemSaver').html("<div class='invalid_item text-danger mb-3'> </div>\
+            <input type='button' onclick='updateItm()' class='btn btn-outline-primary w-25 me-2' value='Save'> \
+            <input type='reset' class='btn btn-outline-danger w-25'>\
+            ")
+            
+          });    
+        },
       });
-
-      $(".update_item_form").html(table);
-    },
-  });
-});
-
-function itmUpImg(event) {
-  const imgPrieview = $(".itemUpImage");
-  const files = event.target.files;
-  if (files.length > 0) {
-    const file = files[0];
-    const tempUrl = URL.createObjectURL(file);
-    console.log(tempUrl);
-    $(".upimg").attr("src", tempUrl);
-    imgPrieview.onload = function () {
-      URL.revokeObjectURL(this.src);
-    };
-  }
-}
-
+    });
+    
 function updateItm() {
-  var fd = new FormData(update_Item_Form);
+  var fd = new FormData(itemInsertForm);
   $.ajax({
     url: "/project/itemcontroller/",
     type: "POST",
@@ -266,7 +261,11 @@ function updateItm() {
     contentType: false,
     success: function (data) {
       if (data.trim() == 1) {
-        $("#myModal").hide();
+        $('#home-tab').tab('show')
+
+
+        $("#itemInsertForm").trigger("reset");
+        // window.location.href='http://localhost/project/itemmaster/'
         var page = $("#invis_i").val();
         loadItems(Number(page));
       } else {

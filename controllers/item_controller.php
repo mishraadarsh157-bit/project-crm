@@ -52,32 +52,36 @@ if (isset($_POST['submit_item'])) {
     $table = 'items';
     $id = $_POST['id'];
     $crud->updateForm("select * from $table where item_id=$id");
-} else if (isset($_POST['updateItem'])) {
+} 
+
+
+
+else if (isset($_POST['updateItem'])) {
     $table = 'items';
-    $id = $_POST['id'];
+    $id = $_POST['item_id'];
     $name = $_POST['item_name'];
      if(empty($name)){
     echo "enter item name";
     return;
     }
-    $description = $_POST['des'];
+    $description = $_POST['item_description'];
 if(empty($description)){
     echo "enter description";
     return;
     }
-    $price = $_POST['price'];
+    $price = $_POST['item_price'];
 if(empty($price)){
     echo "enter price";
     return;
     }
-    $image_name = $_FILES['itemUpImage']['name'];
-
-    $image_tmp = $_FILES['itemUpImage']['tmp_name'];
-    $image_type = $_FILES['itemUpImage']['type'];
+    $image_name = $_FILES['itemimage']['name'];
 
     if (empty($image_name)) {
         $path = "";
-    } else {
+        } else {
+    $image_tmp = $_FILES['itemimage']['tmp_name'];
+    $image_type = $_FILES['itemimage']['type'];
+
         $image_content = file_get_contents($image_tmp);
         $uploadDir = 'uploads/';
         $filePath = $uploadDir . basename($image_name);

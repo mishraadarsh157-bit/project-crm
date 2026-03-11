@@ -72,6 +72,28 @@ function subQty() {
   }
 }
 
+function addMore(){
+  var row ='<table class="table"><tr>'
+row +='<td>Item Name <sup class="text-danger">*</sup><input type="text" onchange="fetchItemData()" class="item-name-invoice form-control mb-3" placeholder="Item Name"></td>\
+<td>Item Price<input disabled type="text" class="item-price-invoice form-control mb-3 bg-white" placeholder="Item Price"></td>\
+<div class="col-4 d-flex align-item-center">\
+  <td class="d-flex"><button class="btn btn-sm" type="button" onclick="subQty()">\
+    <i class="bi bi-dash-lg"></i></button>\
+    <input disabled type="number" class="item-quantity-invoice  bg-white  border border-0" value="1">\
+    <button class="btn  btn-sm" type="button" onclick="addQty()"><i class="bi bi-plus-lg"></i></button></td>\
+    <td><button type="button" class="removeForm btn btn-outline-danger">X</button></div></td></tr></table>\
+'
+
+$('.loadmoreForm').append(row);
+}
+
+$(document).on('click','.removeForm',function(){
+  console.log('remove')
+  $(this).closest('tr').remove()
+})
+
+
+
 function insertInvoice() {} /////////////////////////////////////////////////
 
 
@@ -122,11 +144,11 @@ function invoiceData(page) {
 
         table += `<th id='item_name' class='sort_iv'>Item Name</th>`;
 
-        table += `<th id='price' class='sort_iv text-center'>Price</th>`;
+        table += `<th id='itemPrice' class='sort_iv text-center'>Price</th>`;
 
         table += `<th id='quantity' class='sort_iv text-center'>Quantity</th>`;
 
-        table += `<th id='issueDate' class='sort_iv'>Issue Date</th>`;
+        table += `<th id='issueTime' class='sort_iv'>Issue Date</th>`;
 
         table += `<th id='total' class='sort_iv text-center'>Total</th>`;
 
@@ -155,11 +177,11 @@ function invoiceData(page) {
 
         table += `<th id='item_name' class='sort_iv'>Item Name <i class="bi ${icon}"></i></th>`;
 
-        table += `<th id='price'  class='sort_iv text-center'>Price <i class="bi ${icon}"></i></th>`;
+        table += `<th id='itemPrice'  class='sort_iv text-center'>Price <i class="bi ${icon}"></i></th>`;
 
         table += `<th id='quantity' class='sort_iv text-center'>Quantity <i class="bi ${icon}"></i></th>`;
 
-        table += `<th id='issueDate' class='sort_iv'>Issue Date <i class="bi ${icon}"></i></th>`;
+        table += `<th id='issueTim  e' class='sort_iv'>Issue Date <i class="bi ${icon}"></i></th>`;
 
         table += `<th id='total' class='sort_iv text-center'>Total <i class="bi ${icon}"></i></th>`;
         table += "</tr>";
@@ -171,16 +193,16 @@ function invoiceData(page) {
           table += `<tr><td class='text-center'>${index }</td>`;
           table += `<td class='text-muted text-center   '>
         
-        <button class='btn btn-sm rounded-pill btn-outline-primary' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["client_id"]}'  id='update_iv' value='update_iv'>
+        <button class='btn btn-sm rounded-pill btn-outline-primary border border-0x' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["client_id"]}'  id='update_iv' value='update_iv'>
                 <i class='bi bi-pencil-square'>
                 </i></button>
                 
                 
-        <button class='btn btn-sm rounded-pill  btn-outline-danger' name='delete' data-did='${value["client_id"]}'  id='delete_iv' value='delete'>
+        <button class='btn btn-sm rounded-pill  btn-outline-danger border border-0x' name='delete' data-did='${value["client_id"]}'  id='delete_iv' value='delete'>
         <i class='bi bi-trash3'></i></button>
                 
-                <button class='btn btn-sm rounded-pill btn-outline-info'><i class="bi bi-envelope-paper"></i></button>
-                <button class='btn btn-sm rounded-pill btn-outline-success'><i class="bi bi-filetype-pdf"></i></button>
+                <button class='btn btn-sm rounded-pill btn-outline-info border border-0x'><i class="bi bi-envelope-paper"></i></button>
+                <button class='btn btn-sm rounded-pill btn-outline-success border border-0x'><i class="bi bi-filetype-pdf"></i></button>
                 </td>`;
           table += `<td class="text-info text-center">#${value["invoiceID"]}</td>`;
           table += `<td class="text-success">${value["client_name"]}</td>`;
@@ -193,7 +215,7 @@ function invoiceData(page) {
         });
         table += "</table></div>";
 
-        table += "<div class='pagination w-100'>";
+        table += "<div class='pagination pt-3 w-100'>";
         table += '<ul class="pagination_iv ms-5 ms-auto d-flex">';
         if (page <= 1) {
           table +=

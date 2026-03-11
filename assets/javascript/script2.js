@@ -10,7 +10,14 @@ function loadStates() {
       states: "states",
     },
     success: function (data) {
-      $("#loadState").html(data);
+      data = JSON.parse(data);
+      var row =
+        "<select  name='' value='' class='form-select' id='select_state' onchange='loadedState()'><option value=''>----Select State----</option>";
+      data.data.forEach(function (value) {
+        row += `<option value='${value["id"]}'>${value["name"]}</option>`;
+      });
+      row += "</select>";
+      $("#loadState").html(row);
     },
   });
 }
@@ -30,10 +37,27 @@ function loadCity(state) {
       state: state,
     },
     success: function (data) {
-      $("#loadCity").html(data);
+      data = JSON.parse(data);
+      var row =
+       "<select name='' class='form-select' id='select_city' value''><option value=''>----Select City----</option>";
+      data.data.forEach(function (value) {
+        row +=`<option  value='${value['id']}'>${value['city']}</option>`;
+      });
+      row += "</select>";
+      $("#loadCity").html(row);
     },
   });
 }
+
+
+function resetClientForm(){
+  
+  $('.updateclint').html('<input type="button"  id="insert_client" onclick="insertClient()" class="btn btn-outline-primary " value="Submit">\
+                            <button type="reset" class="btn btn-outline-danger ">Reset</button>')   
+  $('#clientUpStatus').html('');                         
+  $('#add_client').trigger('reset')
+}
+
 
 function insertClient() {
   let client_name = $("#client_name_c").val();
@@ -96,7 +120,7 @@ function insertClient() {
 $(document).on("click", ".sort_c", function () {
   var value = $(this).attr("id");
   $(".field_c").val(value);
-    $("#invis_c").val(1);
+  $("#invis_c").val(1);
   var page = $("#invis_c").val();
   clientData(Number(page));
 });
@@ -107,7 +131,6 @@ $(document).on("click", ".sort_c", function () {
     $("#icon_hold_c").val() === "bi-arrow-up" ? "bi-arrow-down" : "bi-arrow-up",
   );
 });
-
 
 /////////////////////first load table using json
 function clientData(page) {
@@ -176,16 +199,16 @@ function clientData(page) {
             ind = index + 1;
             index = (page - 1) * limit + ind;
             table += '<tr style="height:40px;whitespace:nowrap;">';
-            table += `<td class='text-muted text-center'>${index}</td>`;
+            table += `<td class='text-dark text-center'>${index}</td>`;
 
-            table += `<td class='text-muted text-center   '>
-        
-        <button class='btn btn-sm rounded-pill btn-outline-primary' name='update' data-bs-toggle='modal' data-bs-target='#myModal' data-uid='${value["client_id"]}'  id='update_c' value='update_c'>
-                <i class='bi bi-pencil-square'>
-                </i></button>
+            table += `<td class='text-muted text-white text-center  d-flex '>
+            <ul class="nav text-white" id="myTab" role="tablist">
+            <li class="nav-item text-white " role="presentation">
+            <button class="update_c nav-link btn btn-sm rounded-pill  btn-outline-primary border border-0" type='button' id="profile-tab " name='update onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" data-uid='${value["client_id"]}'   value='update_c'><i class='bi bi-pencil-square'></button>
+        </li>
+        </ul>
                 
-                
-        <button class='btn btn-sm rounded-pill  btn-outline-danger' name='delete' data-did='${value["client_id"]}'  id='delete_c' value='delete'>
+        <button class='btn btn-sm rounded-pill  btn-outline-danger border border-0' name='delete' data-did='${value["client_id"]}'  id='delete_c' value='delete'>
         <i class='bi bi-trash3'></i></button>
                 
                 
@@ -291,17 +314,12 @@ function limitData_c() {
   clientData(Number(page));
 }
 
-// window.addEventListener("load", () => {
-//   const path = window.location.pathname;
-//   const locate = path.replace(/\/$/, "").split("/").pop();
-//   if (locate.trim() == "client_master.php") {
-//     clientData();
-//   }
-// });
 
-$(document).on("click", "#update_c", async function () {
+$(document).on("click", ".update_c", async function () {
+   $('#profile-tab').tab('show')
+  
   let id = $(this).data("uid");
-  let update_c = $("#update_c").val();
+  let update_c = $(".update_c").val();
   $.ajax({
     url: "/project/clientcontroller/",
     type: "POST",
@@ -311,39 +329,13 @@ $(document).on("click", "#update_c", async function () {
     },
     success: function (data) {
       data = JSON.parse(data);
-      // console.log(data, "clientdata");
-      let table = "";
-
-      data.forEach(async function (value) {
-        table += `<div class='row'><input type='text' hidden id='updId'  value='${value[0]}'>`;
-
-        table += `<div class='col-12'><input type='text' placeholder='Client Name'  id='client_name_up' class='form-control form-control-sm mb-3' value='${value[1]}' >
-        <div class="name_valid text-danger mb-3"></div>`;
-
-        table += `</div><div class='col-6'><input type='text' placeholder='Number'  id='client_number_up' class='form-control form-control-sm mb-3' value='${value[2]}' required><div class='number_valid text-danger mb-3 ''></div>`;
-
-        table += `</div><div class='col-6'><input type='text' placeholder='Email'  id='client_email_up' class='form-control form-control-sm mb-3' value='${value[3]}' required><div class='email_valid text-danger mb-3 ''></div>`;
-
-        table += `</div><div class='col-12'><input type='text' placeholder='Address'  id='client_address_up' class='form-control form-control-sm mb-3' value='${value[4]}' required><div class='address_valid text-danger mb-3 ''></div>`;
-        table += `</div><div class='col-4 mb-3'  id='states_up'>`;
-        table += `</div><div class='col-4' id='cities_up'></select>`;
-
-        table += `</div><div class='col-4'>
-        <input type='text' placeholder='pincode'  id='client_pincode_up' class='form-control form-control-sm mb-3' value='${value[7]}' required><div class='pincode_valid' class='text-danger mb-3 ''></div>`;
-        if (value[8] == 1) {
-          text = "ACTIVE";
-        } else {
-          text = "INACTIVE";
-        }
-        table += `</div><div class='col-6 mb-5'><select class='form-select form-select-sm' id='status_up'  value='${value[8]}' >
-        <option value='${value[8]}'>${text}</option>
-        <option value='' disabled>Select Status</option>
-        <option value='1'>ACTIVE</option>
-        <option value='0'>INACTIVE</option>
-        </select></div>`;
-
-        table +="</div><hr><div class='col-4'><button type='button' class='btn btn-outline-primary me-2' onclick='updateClient()' id='update_client'>SAVE</button> <input type='reset' class='btn btn-outline-danger' value='RESET'></div>";
-
+      console.log(data)
+      data.data.forEach(async function (value) {
+        $('#updId').val(`${value['client_id']}`)
+        $('#client_name_c').val(`${value['client_name']}`)
+        $('#client_number').val(`${value['phone']}`)
+        $('#client_email_c').val(`${value['client_email']}`)
+        $('#client_address').val(`${value['address']}`)        
         await $.ajax({
           url: "/project/clientcontroller/",
           type: "POST",
@@ -351,17 +343,24 @@ $(document).on("click", "#update_c", async function () {
             states: "states",
           },
           success: function (data) {
-            $("#states_up").html(data);
+            data=JSON.parse(data)
+            var row =
+            "<select  name='' value='' class='form-select' id='select_state' onchange='loadedState()'><option value=''>----Select State----</option>";
+            data.data.forEach(function (value) {
+              row += `<option value='${value["id"]}'>${value["name"]}</option>`;
+            });
+            row += "</select>";
+            
+            $("#loadState").html(row);
           },
         });
-
-        // console.log(data,"d");
-
-        $("#select_state").val(Number(data[0].state_id));
+        
+        
+        $("#select_state").val(Number(value['state_id']));
         state = $("#select_state").val();
-      await  loadCity(Number(state));        
-      $("#select_city").val(Number(data[0].city_id));
-      $("#select_city").val();  
+        await loadCity(Number(state));
+        $("#select_city").val(Number(value['city_id']));
+        $("#select_city").val();
         async function loadCity(state) {
           await $.ajax({
             url: "/project/clientcontroller/",
@@ -371,43 +370,65 @@ $(document).on("click", "#update_c", async function () {
               state: state,
             },
             success: function (data) {
-              $("#cities_up").html(data);
-            },
+              data = JSON.parse(data)
+              var row =
+              "<select name='' class='form-select' id='select_city' value''><option value=''>----Select City----</option>";
+              data.data.forEach(function (value) {
+                row +=`<option  value='${value['id']}'>${value['city']}</option>`;
+              });
+              row += "</select>";
+              $("#loadCity").html(row);
+              if(value['client_status']==1){
+                var status='ACTIVE'
+              }
+              else{
+                var status='INACTIVE'
+              }
+              $('#clientUpStatus').html(`Status<select id='status_up' class='form-select w-25' value='${value['client_status']}'>
+                
+                <option value='${value['client_status']}'>${status}</option>
+                
+                <option disabled>Select Status</option>
+                <option value='1'>ACTIVE</option>
+                <option value='0'>INACTIVE</option>
+                </select>`)
+                $('#client_pincode').val(`${value['pincode']}`)
+                
+                $('.updateclint').html("<button type='button' class='btn btn-outline-primary me-2' onclick='updateClient()' id='update_client'>SAVE</button> <input type='reset' class='btn btn-outline-danger' value='RESET'>")
+              },
           });
         }
       });
-
-      $(".update_client_form").html(table);
     },
   });
 });
 
 function updateClient() {
   let id = $("#updId").val();
-  let client_name = $("#client_name_up").val();
-  if(!validName(client_name)){
-    return
+  let client_name = $("#client_name_c").val();
+  if (!validName(client_name)) {
+    return;
   }
 
-  let client_number = $("#client_number_up").val();
-  if(!validNumber(client_number)){
-    return
+  let client_number = $("#client_number").val();
+  if (!validNumber(client_number)) {
+    return;
   }
-  let client_email = $("#client_email_up").val();
-  if(!validEmail(client_email)){
-    return
+  let client_email = $("#client_email_c").val();
+  if (!validEmail(client_email)) {
+    return;
   }
-  let client_address = $("#client_address_up").val();
-  if(!validAddress(client_address)){
-    return
+  let client_address = $("#client_address").val();
+  if (!validAddress(client_address)) {
+    return;
   }
   let client_state = $("#select_state").val();
-  let client_city = $("#cities_up #select_city").val();
+  let client_city = $("#select_city").val();
   console.log("not");
   console.log(client_city);
-  let client_pincode = $("#client_pincode_up").val();
-  if(!validPincode(client_pincode)){
-    return
+  let client_pincode = $("#client_pincode").val();
+  if (!validPincode(client_pincode)) {
+    return;
   }
   let client_status = $("#status_up").val();
   let update_client = $("#update_client").val();
@@ -430,11 +451,11 @@ function updateClient() {
     success: function (data) {
       if (data.trim() == 1) {
         console.log(data);
+         $('#home-tab').tab('show')
+        $("#add_client").trigger("reset");
         var page = $("#invis_c").val();
         clientData(Number(page));
-        $("#myModal").hide();
       } else {
-
         console.log(data);
         console.log("error");
       }
@@ -479,8 +500,8 @@ function searc_c() {
   var page = $("#invis_c").val();
   clientData(Number(page));
 }
-function resetClient(){
-  $('.searc_c').val('')
+function resetClient() {
+  $(".searc_c").val("");
   var val = 1;
   $("#invis_c").val(val);
   var page = $("#invis_c").val();

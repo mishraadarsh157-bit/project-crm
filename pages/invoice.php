@@ -22,14 +22,14 @@ include_once "dashboard.php";
 
   <div class="table_show mt-3 bg-white border ">
     
-  <div class="search_area p-3 row pt-3 pb-1">
-  <div class="col-9">
-    <div class="searchHolder w-25 d-flex">
-        <input type="text" onchange="invoiceData()" placeholder="search" class="searc_iv form-control">
-        <button class='btn btn-outline-success' onclick="invoiceData(),searc_iv()">P</button>
-         <button class="reset_btn " type="reset" onclick="invoiceData(),resetinvoice  ()"><i class="bi bi-arrow-repeat"></i></button>
-    </div>
-    <input type="text" hidden  id="invis_iv" value="1">
+  <div class="search_area p-3 row pt-3 pb-1 d-flex">
+  <div class="col-9 d-flex">
+    <div class="search_holder w-25 d-flex">
+        <input type="text" onchange="invoiceData()" placeholder="search" class="searc_iv border border-0">
+        <button class='searchbtniv' onclick="invoiceData(),searc_iv()"><i class="bi bi-search"></i></button>
+      </div><div>
+      <button class="reset_btn " type="reset" onclick="invoiceData(),resetinvoice  ()"><i class="bi bi-arrow-repeat"></i></button></div>
+      <input type="text" hidden  id="invis_iv" value="1">
     <input type="text" hidden onchange='invoiceData()' class="field_iv" value="invoiceID">
     <input type="text" hidden onchange='invoiceData()' class="order_iv" value="asc">
     <input type="text" hidden onchange='invoiceData()' id="icon_hold_iv" value="bi-arrow-down-up">
@@ -56,7 +56,8 @@ include_once "dashboard.php";
      <form>
 
     <div class="invoice_form w-100 ms-1 row bg-white border mt-3 px-3">
-        <h1 class='pt-3'>Add Invoice</h1>
+        <div class="col-9"><h1 class='pt-3'>Add Invoice</h1></div>
+        <div class="col-3 pt-3" align='right'><button type="button" class="btn btn-outline-primary" onclick="addMore()">Add More</button></div>
         <hr>
     
     <!-- client part -->
@@ -71,9 +72,10 @@ include_once "dashboard.php";
 <div class="col-4 d-flex align-item-center">
   <button class="btn btn-sm" type="button" onclick="subQty()">
     <i class="bi bi-dash-lg"></i></button>
-    <input disabled type="number" class="item-quantity-invoice form-control w-50 h-75 mt-3 mb-3 bg-white ps-5" value='1'>
+    <input disabled type="number" class="item-quantity-invoice bg-white  border border-0" value='1'>
     <button class="btn  btn-sm" type="button" onclick="addQty()"><i class="bi bi-plus-lg"></i></button></div>
     <!-- total -->
+     <div class="loadmoreForm w-100 row"></div>
     <div class="col-8"></div>
     <div class="col-4 mt-4" align="right">Total Amount<input type="text" class="total-amount-invoice form-control mb-4" placeholder="Total Amount"><button  class="btn btn-outline-primary mb-4" type="button">Save Invoice</button><button type="reset" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button></div>
     

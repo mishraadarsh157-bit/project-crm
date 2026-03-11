@@ -54,7 +54,7 @@ include_once "dashboard.php";
                     <h1 class='pt-3'>Add Item</h1><hr>
                     <div class="col-6 mb-5 mt-4">
                         Item Name
-                        <input type="text" name='item_name' id="item_name" placeholder="Item name" class='form-control '>
+                        <input type="text" name='item_name' id="item_name" placeholder="Item name" class='item_name form-control '>
                     </div>
                     <div class="col-6 mb-5 mt-4">
                         Item Price
@@ -70,9 +70,9 @@ include_once "dashboard.php";
                         <input type="file" accept="image/*" name='itemimage' onchange="itmImg(event)" id="item_image" class='form-control w-75'><button class="btn border border-0 btn-outline-danger" type="button" onclick="resetImage()"><i class="bi bi-x-lg"></i></button></div>
                     </div>
                     <div class="col-6 mb-5 p-2"><img src="" name='image' alt="" height="100px" class="itemImage"></div>
-                    <div class="col-9"></div>
-                    <div class="col-3 text-end ps-5" >
-                        <input type="text" name='submit_item' hidden value='submititem'>
+                    <div class="col-9 updItm">
+                        <input type="text" name='submit_item' hidden value='submititem'></div>
+                    <div class="col-3 text-end ps-5 itemSaver" >
                         <div class="valid_item text-danger mb-3"></div>
                         <button type="button" onclick="insertItem()" id="itemSubmit" name='itemSubmit' class="btn btn-outline-primary">Save Item</button>
                         <input type="reset" class='btn btn-outline-danger' onclick="resetImage()" value='Reset'>
@@ -85,27 +85,5 @@ include_once "dashboard.php";
 
 
 </div>
-</div>
-
-<div class="modal " id="myModal" data-bs-backdrop="false">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header bg-skyblue">
-                <h4 class="modal-title">Update Item Data</h4>
-                <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="" name="update_Item_Form" class="update_item_form p-3">
-
-
-                </form>
-            </div>
-
-        </div>
-    </div>
 </div>
 

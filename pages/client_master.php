@@ -10,10 +10,10 @@ include_once "dashboard.php";
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold active text-dark" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Clients</button>
+            <button class="nav-link fw-bold active text-dark" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" onclick="clientData()" aria-selected="true">All Clients</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold text-dark" id="profile-tab " onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Add New Clients</button>
+            <button class="nav-link fw-bold text-dark" id="profile-tab" onclick='loadStates(),resetClientForm()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Add New Clients</button>
         </li>
     </ul>
 
@@ -64,6 +64,7 @@ include_once "dashboard.php";
                         <h1 class="mt-4">Add Client</h1><hr>
 
                         <div class="col-6 p-3 pt-5">
+                            <input type="text" hidden id="updId">
                             Client Name:
                             <input type="text" class="form-control mb-3" placeholder="Client Name" id="client_name_c">
                             <div class="name_valid text-danger mb-3 "></div>
@@ -99,8 +100,8 @@ include_once "dashboard.php";
                             <div class="pincode_valid text-danger mb-3 "></div>
                         </div>
 
-                        <div class="col-8 p-3 pt-5"></div>
-                        <div class="col-4 ps-5 text-end">
+                        <div class="col-8" id="clientUpStatus"></div>
+                        <div class="col-4 ps-5 text-end updateclint">
                             <input type="button"  id="insert_client" onclick='insertClient()' class="btn btn-outline-primary " value='Submit'>
                             <button type="reset" class="btn btn-outline-danger ">Reset</button>
                         
@@ -127,27 +128,5 @@ include_once "dashboard.php";
 
     <!-- /////end div// -->
 </div>
-</div>
-
-<div class="modal " id="myModal" data-bs-backdrop="false">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header bg-skyblue">
-                <h4 class="modal-title">Update Client Data</h4>
-                <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form class="update_client_form p-3">
-
-
-                </form>
-            </div>
-
-        </div>
-    </div>
 </div>
 

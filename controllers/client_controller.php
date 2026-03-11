@@ -34,13 +34,14 @@ order by $field $order "
 
 
 else if(isset($_POST['states'])){
-$client->loadState();
+$crud->fetchData('states',100,'select id,name from states ','');
 }
 
 
 else if(isset($_POST['city'])){
 $state=$_POST['state'] ;
-$client->loadCity($state);
+$crud->fetchData('cities',100,"select cities.id, cities.city from cities inner join states on cities.state_id =states.id where states.id = '$state'"
+," ");
 }
 
 else if(isset($_POST['insert_client'])=='submit'){
@@ -53,12 +54,12 @@ else if(isset($_POST['insert_client'])=='submit'){
     $c_pincode=$_POST['client_pincode'];
     
 
-$client->insert("client",['client_name'=>$c_name,'phone'=>$c_number,'client_email'=>$c_email,'address'=>$c_address,'city_id'=>$c_city,'state_id'=>$c_state,'pincode'=>$c_pincode]);
+$crud->insertData("client",['client_name'=>$c_name,'phone'=>$c_number,'client_email'=>$c_email,'address'=>$c_address,'city_id'=>$c_city,'state_id'=>$c_state,'pincode'=>$c_pincode]);
 }
 
 else if(isset($_POST['update_c'])){
     $id=$_POST['id'];
-    $client->loadUpadteform('client','states','cities',$id);
+    $crud->fetchData("",100,"select * from client inner join states on client.state_id = states.id inner join cities on client.city_id =cities.id where client_id=$id","");
 }
 
 

@@ -1,5 +1,5 @@
 <?php
-include 'database/userlogics.php';
+// include 'database/userlogics.php';
 
 include 'database/db_logics.php';
 
@@ -51,7 +51,8 @@ else if (isset($_POST['save_user'])) {
 else if (isset($_POST['update'])) {
     $id = $_POST['id'];
 
-    $upd->loadintoForm($id);
+    $crud->fetchData("users",200,"select * from users where id=$id ",' limit 200');
+    // $upd->loadintoForm($id);
 } 
 
 

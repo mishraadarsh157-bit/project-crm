@@ -14,12 +14,12 @@ include_once "dashboard.php";
 
 
         <li class="nav-item " role="presentation">
-            <button class="nav-link fw-bold active text-dark" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All Users</button>
+            <button class="nav-link fw-bold active text-dark" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" onclick="userData()">All Users</button>
         </li>
 
 
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Add New Users</button>
+            <button class="nav-link fw-bold text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" onclick="resetUserForm()" aria-controls="pills-profile" aria-selected="false">Add New Users</button>
         </li>
 
     </ul>
@@ -36,11 +36,12 @@ include_once "dashboard.php";
                         <h1>ADD USER</h1>
                         <hr>
                         <div class="col-12 my-4">
+                            <input type="text" hidden class='userId'>
                             User Name <sup class="text-danger">*</sup>:
                             <input type="text" title="NAME" id="user_name" placeholder="User Name" autocomplete="off" name="user_name" minlength="2" maxlength="15" class="form-control    border ">
                             <div class="name_valid text-danger mb-3 "></div>
                         </div>
-                        <div class="col-6 mb-4">
+                        <div class="col-6 mb-4 password">
                             User Password :
                             <input type="password" title="PASSWORD" autocomplete="off" id="user_pass" placeholder="User Password" name="user_pass" class="form-control  border ">
                             <div class="pass_valid" class="text-danger mb-3 "></div>
@@ -55,7 +56,7 @@ include_once "dashboard.php";
                             <div class="email_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-8"></div>
-                        <div class="col-4 text-end">
+                        <div class="col-4 text-end updBtn">
                             <input type="button" value="SAVE" id="save_user" class="save btn-outline-primary   btn my-3" onclick="insertUser()">
                             <input type="reset" value="RESET" class="reset_insert  btn btn-outline-danger">
                         </div>
@@ -94,6 +95,7 @@ include_once "dashboard.php";
                     <option value="15">15</option>
                     <option value="20">20</option>
                 </select>    
+                
                 </td>
                 </tr>
             </table>
@@ -115,18 +117,18 @@ include_once "dashboard.php";
 </div>
 </div>
 
-<div class="modal " id="myModal" data-bs-backdrop="false">
+<!-- <div class="modal " id="myModal" data-bs-backdrop="false">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content"> -->
 
             <!-- Modal Header -->
-            <div class="modal-header  bg-skyblue">
+            <!-- <div class="modal-header  bg-skyblue">
                 <h4 class="modal-title">Update User Data</h4>
                 <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal"></button>
-            </div>
+            </div> -->
 
             <!-- Modal body -->
-            <div class="modal-body">
+            <!-- <div class="modal-body">
                 <form action="" class="update_user_form p-3">
 
 
@@ -135,5 +137,5 @@ include_once "dashboard.php";
 
         </div>
     </div>
-</div>
+</div> -->
 
