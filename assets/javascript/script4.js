@@ -12,7 +12,9 @@ function fetchClientData() {
         $(".client-phone-invoice").val("no data").css("color", "red");
       } else {
         data = JSON.parse(data);
+        console.log(data)
         data.data.forEach(function (value) {
+          $(".cli_Id").val(value['client_id'])
           $(".client-email-invoice")
             .val(`${value["client_email"]}`)
             .css("color", "black");
@@ -25,13 +27,16 @@ function fetchClientData() {
   });
 }
 
-function fetchItemData() {
-  var name = $(".item-name-invoice").val();
+function fetchItemData(inde) {
+  // debugger
+    let name=$("input[name='itemName[]']").map(function(){
+      return this.value;
+    }).get();
   $.ajax({
     url: "/project/invoiceController/",
     type: "POST",
     data: {
-      item_name: name.trim(),
+      item_name: name, 
     },
     success: function (data) {
       if (data.trim() == "empty") {
@@ -39,14 +44,15 @@ function fetchItemData() {
         $(".total-amount-invoice").val("no data").css("color", "red");
       } else {
         data = JSON.parse(data);
-        data.data.forEach(function (value) {
-          $(".item-price-invoice")
-            .val(`${value["price"]}`)
-            .css("color", "black");
-          $(".total-amount-invoice")
-            .val(`${value["price"]}`)
-            .css("color", "black");
-        });
+        data.forEach(function (value,index) {
+          if(value==null){
+
+          }
+          else{
+        
+        $('.item-price-invoice').eq(index).val(value['price'])
+        $('.itm_Id').eq(index).val(value['item_id'])
+      }});
       }
     },
   });
@@ -74,12 +80,12 @@ function subQty() {
 
 function addMore(){
   var row ='<table class="table"><tr>'
-row +='<td>Item Name <sup class="text-danger">*</sup><input type="text" onchange="fetchItemData()" class="item-name-invoice form-control mb-3" placeholder="Item Name"></td>\
-<td>Item Price<input disabled type="text" class="item-price-invoice form-control mb-3 bg-white" placeholder="Item Price"></td>\
+row +='<td>Item Name <sup class="text-danger">*</sup><input type="text" name="itemName[]" onchange="fetchItemData(this)" class="item-name-invoice form-control mb-3" placeholder="Item Name"></td>\
+<td><input type="text" disabled name="itm_id[]" class="itm_Id">  Item Price<input disabled type="text" name="price[]" class="item-price-invoice form-control mb-3 bg-white" placeholder="Item Price"></td>\
 <div class="col-4 d-flex align-item-center">\
   <td class="d-flex"><button class="btn btn-sm" type="button" onclick="subQty()">\
     <i class="bi bi-dash-lg"></i></button>\
-    <input disabled type="number" class="item-quantity-invoice  bg-white  border border-0" value="1">\
+    <input disabled type="number" class="item-quantity-invoice name="quantity[]" bg-white  border border-0" value="1">\
     <button class="btn  btn-sm" type="button" onclick="addQty()"><i class="bi bi-plus-lg"></i></button></td>\
     <td><button type="button" class="removeForm btn btn-outline-danger">X</button></div></td></tr></table>\
 '
@@ -91,10 +97,6 @@ $(document).on('click','.removeForm',function(){
   console.log('remove')
   $(this).closest('tr').remove()
 })
-
-
-
-function insertInvoice() {} /////////////////////////////////////////////////
 
 
 $(document).on("click", ".sort_iv", function () {
@@ -120,7 +122,7 @@ function invoiceData(page) {
   var limit = $("#limit_iv").val() ?? 5;
 
   $.ajax({
-    url: "/project/invoiceController/",
+    // url: "/project/invoiceController/",
     type: "POST",
     data: {
       page: page,
@@ -310,4 +312,49 @@ function resetinvoice(){
 
 if (window.location.href.trim() == "http://localhost/project/invoice/") {
   invoiceData();
+}
+
+function loadInvoiceNO(){
+  $.ajax({
+  url: "/project/invoiceController/",
+    type:"POST",
+    data:{
+      invoice_No:"invoice_no"
+    },
+    success: function(data){
+      console.log(data)
+      if(data.trim()=='empty'){
+        $('.invoice_id').val(1);
+      }
+      else{
+
+      }
+    }
+  })
+}
+
+
+
+function addInvoic(){
+  let invoiceNo=$('.invoice_id').val()
+  let client=$('.cli_Id').val()
+  let item=$("input[name='itm_id[]']").map(function(){
+      return this.value;
+    }).get();
+  
+
+  $.ajax({
+    url: "/project/invoiceController/",
+    type:'POST',
+    data:{
+      invoiceNo:invoiceNo,
+      client:client,
+      item:item,
+      addInvoice:"addInvoice"
+    },
+    success: function(data){
+      console.log(data);
+      console.log('working')
+    }
+  })
 }

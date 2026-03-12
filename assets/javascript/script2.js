@@ -204,7 +204,7 @@ function clientData(page) {
             table += `<td class='text-muted text-white text-center  d-flex '>
             <ul class="nav text-white" id="myTab" role="tablist">
             <li class="nav-item text-white " role="presentation">
-            <button class="update_c nav-link btn btn-sm rounded-pill  btn-outline-primary border border-0" type='button' id="profile-tab " name='update onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" data-uid='${value["client_id"]}'   value='update_c'><i class='bi bi-pencil-square'></button>
+            <button class="update_c nav-link btn btn-sm rounded-pill  btn-outline-primary border border-0" type='button' id="profile-tab " name='update onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" data-uid='${value["client_id"]}'   value='update_c'><i class='bi bi-pencil-square'></i></button>
         </li>
         </ul>
                 

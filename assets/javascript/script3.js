@@ -237,8 +237,8 @@ $(document).on("click", ".update_i", function () {
         $('#item_price').val(value[3])
         $('.itemImage').attr('src',`/project/${value[4]}`)
         $('.updItm').html(`
-          <input type='number' name='item_id' value='${value[0]}'>
-          <input type="text" name='updateItem' value="updateItm">
+          <input type='number' name='item_id' value='${value[0]}' hidden>
+          <input type="text" name='updateItem' value="updateItm" hidden>
           
           `)
           $('.itemSaver').html("<div class='invalid_item text-danger mb-3'> </div>\
