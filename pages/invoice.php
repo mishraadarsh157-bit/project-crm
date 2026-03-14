@@ -10,7 +10,7 @@ include_once "dashboard.php";
 <div class="content-body col-10 p-2 pe-4 ps-3">
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active text-dark fw-bold" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Invoice</button>
+    <button class="nav-link active text-dark fw-bold" onclick='invoiceData()' id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Invoice</button>
   </li>
   <li class="nav-item" role="presentation">
     <button class="nav-link text-dark fw-bold" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" onclick='loadInvoiceNO(),cutBtn()' aria-selected="false">Add New Invoice</button>
@@ -73,40 +73,11 @@ include_once "dashboard.php";
     <div class="col-4 mt-4">Client Phone
     <input type="text" hidden name='cli_id' class='cli_Id'>  
     <input disabled type="text" class="client-phone-invoice bg-white form-control  " placeholder="Client Phone"></div>
-    <!-- item part  -->
-     <!-- <table class="ItemDta w-100">
-      <tr>
-        <td>
-
-            
-            Item Name <sup class="text-danger">*</sup><input type="text" onchange="fetchItemData(this)" onkeyup="changeAmt()" name='itemName[]' class="item-name-invoice form-control" placeholder="Item Name">
-            <div class="itemselect"></div>
-          </td>
-          <td>
-            Item Price
-              <input type="text" disabled hidden name='itm_id[]' class='itm_Id'>  
-              <input disabled type="text" name="price[]" class="item-price-invoice form-control bg-white" placeholder="Item Price">
-          </td>
-              <td>
-                  Quantity
-                  <input type="number" onkeyup="changeAmt()" name='quantity[]' class="item-quantity-invoice form-control" value='1'>
-              </td>
-                <td>
-Amount<input type="number" name="rowTotal[]" placeholder="Amount" disabled class="rowTotal form-control bg-white"></td><td><button type="button" class="btn btn-outline-danger border border-0">     </button></td></tr>
-  <input type="text" name="addInvoice" hidden value="addInvoice">
-  </table> -->
+ 
   <table class="w-100 itemTable">
-     <div class="loadmoreForm">
-<tr>
-    <td>Item Name <sup class="text-danger">*</sup><input type="text" name="itemName[]" onchange="fetchItemData(this)" class="item-name-invoice form-control" placeholder="Item Name"><div class="itemselect"></div></td>
-<td><input type="text" disabled hidden name="itm_id[]" class="itm_Id">  Item Price<input disabled type="text" name="price[]" class="item-price-invoice form-control bg-white" placeholder="Item Price"></td>
-<td>
-    Quantity<input  type="number" onkeyup="changeAmt()" class="item-quantity-invoice form-control" name="quantity[]" bg-white  border border-0" value="1">
-   </td>
-    <td>Amount<input type="number" disabled placeholder="Amount" name="rowTotal[]" class="rowTotal bg-white form-control"></td>
-    <td><button type="button" class="removeForm btn btn-outline-danger border border-0">X</button></td></tr>
-     </div>
+
      </table>
+     <div class="loadmoreForm"></div>
      <div class="insertall text-danger mb-3 col-12"></div>
     <div class="col-8"></div>
     <div class="loadButtons col-4 mt-4" align="right">Total Amount<input type="text" class="total-amount-invoice form-control mb-4" placeholder="Total Amount">

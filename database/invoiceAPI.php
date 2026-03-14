@@ -38,10 +38,10 @@ class inv
             $stmt->bind_param('iis',$invoiceNo,$client,$time);
             $time=date('Y-m-d H:i:s');
             $stmt->execute();
-        foreach ($item as $name) {
+        foreach ($item as $no =>$name) {
             $name = mysqli_real_escape_string($this->conn, $name);
             $stmt2=$this->conn->prepare("insert into invoiceitem(InvoiceNo,ItemNo,Quantity) values (?,?,?)");
-            $stmt2->bind_param('iii',$invoiceNo,$name,$quantity);
+            $stmt2->bind_param('iii',$invoiceNo,$name,$quantity[$no]);
             $stmt2->execute();
         }
         $this->conn->commit();
@@ -67,6 +67,7 @@ echo 2;
             $stmt2->execute();
         }
         $this->conn->commit();
+        echo 1;
         }
  catch(Exception $e){
 $this->conn->rollback();

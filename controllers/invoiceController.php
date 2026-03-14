@@ -69,7 +69,7 @@ switch (true) {
         $invoiceNo = $_POST['invoiceNo'];
         $client = $_POST['client'];
         $item = $_POST['item'];
-        $quantity = $_POST['quantity'] ?? 1;
+        $quantity = $_POST['quantity'];
         $invoice->insertData($invoiceNo, $client, $item, $quantity);
         break;
 
@@ -81,7 +81,7 @@ switch (true) {
 
     case isset($_POST['update_iv']):
         $invId = $_POST['invId'];
-        $crud->fetchData("invoice", 1, "select * from client inner join invoice on client_id=ClientABN inner join invoiceitem on invoice.InvoiceNo=invoiceitem.InvoiceNo inner join items on ItemNo=item_id where invoice.InvoiceNo=$invId", "");
+        $crud->fetchData("invoice", 1, "select * from client right join invoice on client_id=ClientABN right join invoiceitem on invoice.InvoiceNo=invoiceitem.InvoiceNo right join items on ItemNo=item_id where invoice.InvoiceNo=$invId", "");
         break;
     case isset($_POST['UpdateInvoice']):
         $invId = $_POST['invoiceNo'];
