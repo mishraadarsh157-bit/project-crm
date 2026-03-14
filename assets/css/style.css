@@ -359,7 +359,7 @@ table tr td {
   white-space: nowrap;
   overflow-x: auto;
 }
-.item-quantity-invoice{
+/* .item-quantity-invoice{
 height: 30px;
 width: 60px;
 margin-left: 10px;
@@ -367,4 +367,4 @@ padding-left:5px;
 padding-top:20px;
 margin-top: 12px;
 
-}
+} */

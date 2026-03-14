@@ -13,7 +13,7 @@ include_once "dashboard.php";
     <button class="nav-link active text-dark fw-bold" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Invoice</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link text-dark fw-bold" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" onclick='loadInvoiceNO()' aria-selected="false">Add New Invoice</button>
+    <button class="nav-link text-dark fw-bold" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" onclick='loadInvoiceNO(),cutBtn()' aria-selected="false">Add New Invoice</button>
   </li>
  
 </ul>
@@ -30,7 +30,7 @@ include_once "dashboard.php";
       </div><div>
       <button class="reset_btn " type="reset" onclick="invoiceData(),resetinvoice  ()"><i class="bi bi-arrow-repeat"></i></button></div>
       <input type="text" hidden  id="invis_iv" value="1">
-    <input type="text" hidden onchange='invoiceData()' class="field_iv" value="invoiceID">
+    <input type="text" hidden onchange='invoiceData()' class="field_iv" value="InvoiceNo">
     <input type="text" hidden onchange='invoiceData()' class="order_iv" value="asc">
     <input type="text" hidden onchange='invoiceData()' id="icon_hold_iv" value="bi-arrow-down-up">
 
@@ -53,7 +53,7 @@ include_once "dashboard.php";
   </div>
   </div>
   <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-     <form name="addInvoice">
+     <form class="addInvoice">
 
     <div class="invoice_form w-100 ms-1 row bg-white border mt-3 px-3">
         <div class="col-9"><h1 class='pt-3'>Add Invoice</h1></div>
@@ -66,27 +66,51 @@ include_once "dashboard.php";
       <!-- invoice date  -->
     <!-- client part -->
     
-        <div class="col-4 mt-4">Client Name <sup class="text-danger">*</sup><input type="text" onchange="fetchClientData()" class="client-name-invoice form-control mb-5 " placeholder="Client Name"></div>
-    <div class="col-4 mt-4">Client Email<input type="text" disabled class="client-email-invoice bg-white form-control mb-5 " placeholder="Client Email"></div>
+        <div class="col-4 mt-4">Client Name <sup class="text-danger">*</sup><input type="text" onchange="fetchClientData()" class="client-name-invoice form-control  " placeholder="Client Name">
+      <div class="invalidclint text-danger"></div>
+      </div>
+    <div class="col-4 mt-4">Client Email<input type="text" disabled class="client-email-invoice bg-white form-control  " placeholder="Client Email"></div>
     <div class="col-4 mt-4">Client Phone
-    <input type="text" name='cli_id' class='cli_Id'>  
-    <input disabled type="text" class="client-phone-invoice bg-white form-control mb-5 " placeholder="Client Phone"></div>
+    <input type="text" hidden name='cli_id' class='cli_Id'>  
+    <input disabled type="text" class="client-phone-invoice bg-white form-control  " placeholder="Client Phone"></div>
     <!-- item part  -->
-    <div class="col-4">Item Name <sup class="text-danger">*</sup><input type="text" onchange="fetchItemData(this)" name='itemName[]' class="item-name-invoice form-control mb-3" placeholder="Item Name"></div>
-    <div class="col-4">Item Price
-      <input type="text" disabled name='itm_id[]' class='itm_Id'>  
-      <input disabled type="text" name="price[]" class="item-price-invoice form-control mb-3 bg-white" placeholder="Item Price"></div>
-    
-    <div class="col-4 d-flex align-item-center">
-  <button class="btn btn-sm" type="button" onclick="subQty()">
-    <i class="bi bi-dash-lg"></i></button>
-    <input disabled type="number" name='quantity[]' class="item-quantity-invoice bg-white  border border-0" value='1'>
-    <button class="btn  btn-sm" type="button" onclick="addQty()"><i class="bi bi-plus-lg"></i></button></div>
-    <input type="text" name="addInvoice" hidden value="addInvoice">
-    <!-- total -->
-     <div class="loadmoreForm w-100 row"></div>
+     <!-- <table class="ItemDta w-100">
+      <tr>
+        <td>
+
+            
+            Item Name <sup class="text-danger">*</sup><input type="text" onchange="fetchItemData(this)" onkeyup="changeAmt()" name='itemName[]' class="item-name-invoice form-control" placeholder="Item Name">
+            <div class="itemselect"></div>
+          </td>
+          <td>
+            Item Price
+              <input type="text" disabled hidden name='itm_id[]' class='itm_Id'>  
+              <input disabled type="text" name="price[]" class="item-price-invoice form-control bg-white" placeholder="Item Price">
+          </td>
+              <td>
+                  Quantity
+                  <input type="number" onkeyup="changeAmt()" name='quantity[]' class="item-quantity-invoice form-control" value='1'>
+              </td>
+                <td>
+Amount<input type="number" name="rowTotal[]" placeholder="Amount" disabled class="rowTotal form-control bg-white"></td><td><button type="button" class="btn btn-outline-danger border border-0">     </button></td></tr>
+  <input type="text" name="addInvoice" hidden value="addInvoice">
+  </table> -->
+  <table class="w-100 itemTable">
+     <div class="loadmoreForm">
+<tr>
+    <td>Item Name <sup class="text-danger">*</sup><input type="text" name="itemName[]" onchange="fetchItemData(this)" class="item-name-invoice form-control" placeholder="Item Name"><div class="itemselect"></div></td>
+<td><input type="text" disabled hidden name="itm_id[]" class="itm_Id">  Item Price<input disabled type="text" name="price[]" class="item-price-invoice form-control bg-white" placeholder="Item Price"></td>
+<td>
+    Quantity<input  type="number" onkeyup="changeAmt()" class="item-quantity-invoice form-control" name="quantity[]" bg-white  border border-0" value="1">
+   </td>
+    <td>Amount<input type="number" disabled placeholder="Amount" name="rowTotal[]" class="rowTotal bg-white form-control"></td>
+    <td><button type="button" class="removeForm btn btn-outline-danger border border-0">X</button></td></tr>
+     </div>
+     </table>
+     <div class="insertall text-danger mb-3 col-12"></div>
     <div class="col-8"></div>
-    <div class="col-4 mt-4" align="right">Total Amount<input type="text" class="total-amount-invoice form-control mb-4" placeholder="Total Amount"><button onclick="addInvoic()" class="btn btn-outline-primary mb-4" type="button">Save Invoice</button><button type="reset" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button></div>
+    <div class="loadButtons col-4 mt-4" align="right">Total Amount<input type="text" class="total-amount-invoice form-control mb-4" placeholder="Total Amount">
+    <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button></div>
     
     
   </div>

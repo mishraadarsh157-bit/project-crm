@@ -1,5 +1,7 @@
 <?php
 
+use LDAP\Result;
+
 class db
 {
     public $servername = "localhost";
@@ -82,11 +84,13 @@ class db
 
     public function modifyData($query)
     {
+        
         $sql = $query;
        $result = mysqli_query($this->conn, $sql);
         if ($result == true) {
             echo 1;
-        } else {
+        }        
+        else {
             echo 0;
         }
     }
@@ -95,26 +99,27 @@ class db
         $result=mysqli_query($this->conn,$sql);
         if($result==false){
             echo 0;
-        }
-        else{
-    if(mysqli_num_rows($result)>0){
-        while($row=$result->fetch_array()){
-            $data[]=$row;
-        }
-        $dbdata['data']=$data;
-        $jsondata=json_encode($dbdata);
-        echo $jsondata;
-    }
-    else {
-        echo 0;
-    }
-        }
-        
-
-        }    
-
-
-
+            }
+            else{
+                if(mysqli_num_rows($result)>0){
+                    while($row=$result->fetch_array()){
+                        $data[]=$row;
+                        }
+                        $dbdata['data']=$data;
+                        $jsondata=json_encode($dbdata);
+                        echo $jsondata;
+                        }
+                        else {
+                            echo 0;
+                            }
+                            }
+                            
+                            
+                            }    
+                            
+                            
+                          
+    
 
 
     }
