@@ -60,10 +60,10 @@ echo 2;
             ");
             $stmt->bind_param('i',$invoiceNo);
             $stmt->execute();
-        foreach ($item as $name) {
+        foreach ($item as $name => $no) {
             $name = mysqli_real_escape_string($this->conn, $name);
             $stmt2=$this->conn->prepare("insert into invoiceitem(InvoiceNo,ItemNo,Quantity) values (?,?,?)");
-            $stmt2->bind_param('iii',$invoiceNo,$name,$quantity);
+            $stmt2->bind_param('iii',$invoiceNo,$no,$quantity[$name]);
             $stmt2->execute();
         }
         $this->conn->commit();

@@ -129,3 +129,39 @@ function validDescription(des){
     return true
   }
 }
+
+function validState(state){
+  if(state==""){
+    $(".state_valid").show()
+    $(".state_valid").text("plese select state").css('color','red')
+    return false
+  }
+  else if(state=="----Select State----"){
+    $(".state_valid").show()
+    $(".state_valid").text("plese select state").css('color','red')
+    return false
+  }
+  else{
+    $(".state_valid").hide()
+    return true
+    
+  }
+}
+
+function validCity(city){
+  if(city==""){
+    $(".city_valid").show()
+    $(".city_valid").text("plese select city").css('color','red')
+    return false
+  }
+  else if(state=="----Select City----"){
+    $(".city_valid").show()
+    $(".city_valid").text("plese select city").css('color','red')
+    return false
+  }
+  else{
+    $(".city_valid").hide()
+    return true
+
+      }
+}

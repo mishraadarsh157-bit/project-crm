@@ -47,6 +47,23 @@ function totalItems(){
 }
 totalItems()
 
+function totalInvoice(){
+    $.ajax({
+        url:'/project/homecontroller/',
+        type:"POST",
+        data:{
+            id:"InvoiceNo",
+            table:"invoice"
+        },
+        success: function(data){
+            $("#total_invoice").html(data);
+        }
+    })
+}
+totalInvoice()
+
+
+
 function totalinActiveUsers(){
     $.ajax({
         url:'/project/homecontroller/',

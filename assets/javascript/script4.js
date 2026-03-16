@@ -152,7 +152,7 @@ function addMore() {
     '<td class="">Item Name <sup class="text-danger">*</sup><input type="text" name="itemName[]" onchange="fetchItemData(this)" class="item-name-invoice form-control" placeholder="Item Name"><div class="itemselect position-absolute "></div></td>\
 <td><input type="text" disabled hidden name="itm_id[]" class="itm_Id">  Item Price<input disabled type="text" name="price[]" class="item-price-invoice form-control bg-white" placeholder="Item Price"></td>\
 <td>\
-Quantity<input  type="number" onchange="changeAmt()" class="item-quantity-invoice form-control" name="quantity[]" bg-white  border border-0" value="1">\
+Quantity<input min="1" type="number" onchange="changeAmt()" class="item-quantity-invoice form-control" name="quantity[]" bg-white  border border-0" value="1">\
    </td>\
     <td>Amount<input type="number" disabled placeholder="Amount" name="rowTotal[]" class="rowTotal bg-white form-control"></td>\
     <td><button type="button" onclick="changeAmt()" class="removeForm btn btn-outline-danger border border-0">X</button></td></tr>\
@@ -204,18 +204,36 @@ function invoiceData(page) {
     },
     success: function (data) {
       if (data.trim() == "empty") {
+        
+        let icon = $("#icon_hold_iv").val();
+        var table =
+        "<div class='holding-table'><table class='table table-bordered'>";
+        table += "<tr class='bg-blue'>";
+        table += "<td> Sr.No</td>";
+        table += "<td> Action</td>";
+        table += `<td class='sort_iv' id='InvoiceNo'> Invoice Id <i class='bi ${icon}'></i></td>`;
+        table += `<td class='sort_iv' id='InvoiceNo'> Invoice No <i class='bi ${icon}'></i></td>`;
+        table += `<td class='sort_iv' id='InvDate'> Date <i class='bi ${icon}'></i></td>`;
+        table += `<td class='sort_iv' id='ClientABN'> Client Name <i class='bi ${icon}'></i></td>`;
+        table += `<td class='sort_iv' id='client_email'> Email <i class='bi ${icon}'></i></td>`;
+        table += `<td class='sort_iv' id='phone'> Phone <i class='bi ${icon}'></i></td>`;
+        table +="</tr>"
+        table +="<tr>"
+        table +="<td class='text-center' colspan='8'>"
+        table +="<h1>NO INVOICE FOUND</h1>"
+        table +="</td>"
+        table += "</tr></table></div>";
         $(".loadInvoice").html(table);
       } else {
         data = JSON.parse(data);
         var limit = $("#limit_iv").val();
         var page = $("#invis_iv").val();
-
         let icon = $("#icon_hold_iv").val();
         var table =
           "<div class='holding-table'><table class='table table-bordered'>";
         table += "<tr class='bg-blue'>";
         table += "<td> Sr.No</td>";
-        table += "<td> Action</td>";
+        table += "<td class='text-center'> Action</td>";
         table += `<td class='sort_iv' id='InvoiceNo'> Invoice Id <i class='bi ${icon}'></i></td>`;
         table += `<td class='sort_iv' id='InvoiceNo'> Invoice No <i class='bi ${icon}'></i></td>`;
         table += `<td class='sort_iv' id='InvDate'> Date <i class='bi ${icon}'></i></td>`;
@@ -231,13 +249,18 @@ function invoiceData(page) {
           index = (page - 1) * limit + ind;
           table += "<tr>";
           table += `<td>${index}</td>`;
-          table += `<td class='d-flex'> <ul class="nav me-2" id="myTab" role="tablist">
+          table += `<td class='d-flex justify-content-center'> <ul class="nav me-2" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button onclick="changeAmt()" class="update_iv nav-link btn btn-sm rounded-pill btn-outline-primary border border-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["InvoiceNo"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false"><i class='bi bi-pencil-square'>
                 </i></button>
         </li>
     </ul>
-    /M/P</td>`;
+    <button type="button" class="mailBtn btn btn-outline-danger border border-0 rounded-pill" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id='${value['InvoiceNo']}'>
+  <i class="bi bi-envelope-paper" ></i>
+</button>
+    
+    <button class='pdf btn ms-2 btn-outline-success border border-0 rounded-pill' id='${value['InvoiceNo']}'><i class="bi bi-filetype-pdf"></i></button>
+    </td>`;
 
           table += `<td>${value["InvoiceNo"]}</td>`;
           table += `<td>INV0${value["InvoiceNo"]}</td>`;
@@ -359,6 +382,10 @@ function loadInvoiceNO() {
         data.data.forEach(function (value) {
           $(".invoice_id").val(Number(value["InvoiceNo"]) + 1);
         });
+         $(".loadButtons").html(
+        'Total Amount<input type="text" class="total-amount-invoice form-control mb-4" placeholder="Total Amount">\
+    <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>',
+  );
         addMore();
       }
     },
@@ -370,12 +397,12 @@ function addInvoic() {
   let invoiceNo = $(".invoice_id").val();
   if ($(".client-email-invoice").val() == "no data") {
     $(".invalidclint").text("enter valid clint name");
-    return;
+    return false;
   }
   let client = $(".cli_Id").val();
   if (client == "") {
     $(".invalidclint").text("enter clint name");
-    return;
+    return false;
   } else {
     $(".invalidclint").hide();
   }
@@ -387,13 +414,16 @@ function addInvoic() {
   console.log(item);
   if (item.some((element) => element == "")) {
     $(".insertall").text("insert proper items");
-    return;
+    return false;
   }
   let quantity = $("input[name='quantity[]']").map(function(){
     return this.value;
   }).get();
   console.log(quantity);
-
+ if (quantity.some((element) => element == "" || quantity.some((element) => element <1 ))) {
+    $(".quantityall").text("insert proper quantity");
+    return false;
+  }
   $.ajax({
     url: "/project/invoiceController/",
     type: "POST",
@@ -438,7 +468,7 @@ $(document).on("click", ".update_iv", function () {
         input += `<td class=''><input type="text" class="item-name-invoice form-control"  onchange="fetchItemData(this)" onkeyup="changeAmt()" name='itemName[]'  value="${value["item_name"]}"><div class="itemselect position-absolute"></div>
         <input type="text" disabled hidden name='itm_id[]' class='itm_Id' value="${value["item_id"]}">  </td>`;
         input += `<td><input type="text" disabled class="item-price-invoice bg-white form-control"  name="price[]"  value="${value["price"]}"></td>`;
-        input += `<td><input type="number" class="item-quantity-invoice form-control"  onchange="changeAmt()" name='quantity[]'  value="${value["Quantity"]}"></td>`;
+        input += `<td><input min='1' type="number" class="item-quantity-invoice form-control"  onchange="changeAmt()" name='quantity[]'  value="${value["Quantity"]}"></td>`;
         let amount = Number(value["Quantity"]) * Number(value["price"]);
         input += `<td><input type="text" disabled class="rowTotal bg-white form-control"  name="rowTotal[]" value="${amount}"></td>`;
         input +=
@@ -452,7 +482,7 @@ $(document).on("click", ".update_iv", function () {
       buttons +=
         "<button type='button' class='btn btn-outline-primary mt-2' onclick='updateInvoice()'>";
       buttons += "Update";
-      buttons += "</button>";
+      buttons += "</button><input type='reset' class='btn btn-outline-danger ms-2 mt-2' value='Reset'>";
       $(".loadButtons").html(buttons);
       // $(".total-amount-invoice").val(total);
       changeAmt();
@@ -472,6 +502,14 @@ function updateInvoice() {
     $(".insertall").text("insert proper items");
     return;
   }
+   let quantity = $("input[name='quantity[]']").map(function(){
+    return this.value;
+  }).get();
+  console.log(quantity);
+ if (quantity.some((element) => element == "" || quantity.some((element) => element <1 ))) {
+    $(".quantityall").text("insert proper quantity");
+    return;
+  }
   // let quantity = $();
 
   $.ajax({
@@ -480,6 +518,7 @@ function updateInvoice() {
     data: {
       invoiceNo: invoiceNo,
       item: item,
+      quantity:quantity,
       UpdateInvoice: "UpadteInvoice",
     },
     success: function (data) {
@@ -488,13 +527,110 @@ function updateInvoice() {
       $("#home-tab").tab("show");
       $(".addInvoice").trigger("reset");
       $(".itemTable").html("");
-      invoiceData();
+          var page = $("#invis_iv").val();
+
+      invoiceData(page);
       $(".loadButtons").html(
         'Total Amount<input type="text" class="total-amount-invoice form-control mb-4" placeholder="Total Amount">\
     <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>',
-      );
-      addMore();
-      loadItems();
-    },
+  );
+  addMore();
+  loadItems();
+},
   });
+}
+
+$(document).on('click','.mailBtn',function(){
+  $('#spinner').hide()
+  let InvNo=$(this).attr('id')
+  $.ajax({
+     url: "/project/invoiceController/",
+       type: "POST",
+       data:{
+        InvNo:InvNo,
+        fetchMail:'fetchMail'
+       },
+       success: function(data){
+        console.log(data)
+        data=JSON.parse(data);
+        let table="";
+        data.data.forEach(function(value){
+          table +=`Invoice No:<input type='text' id='mail_invoiceNo' class='form-control mb-3 bg-white' disabled value='${value['InvoiceNo']}'>`;
+          table +=`Client Name:<input type='text' id='mail_client_name' disabled class='form-control mb-3 bg-white' value='${value['client_name']}'>`;
+          table +=`Email:<input type='text' id='mail_id' disabled class='form-control mb-3 bg-white' value='${value['client_email']}'>`;
+          table +=`Subject:<input type='text' id='subject' placeholder='Enter Subject' class='form-control mb-3 bg-white' value='Invoice FOR #INV0${value['InvoiceNo']} for App Stack'>`;
+          table +=`Messsage:<textarea type='text' id='message' class='form-control mb-3 bg-white' placeholder='Enter Message'>Hi ${value['client_name']}, I hope you're doing well. Please find attached our invoice #INV0${value['InvoiceNo']} for your purchase, which is due on ${value['InvDate']}. Let me know if you have any questions. Best, Adarsh.</textarea>`;
+        })
+        $('.modal-body').html(table)
+       }
+  })
+})
+function sendMail(){
+  let invoiceNo=$('#mail_invoiceNo').val();
+  // let pdf=makePdf(invoiceNo)
+  let name=$('#mail_client_name').val();
+  let mailId=$('#mail_id').val();
+  let subject=$('#subject').val();
+  let message=$('#message').val();
+  $.ajax({
+    url: "/project/invoiceController/",
+    type: "POST",
+    data:{
+      invoiceNo:invoiceNo,
+      // pdf:pdf,
+      name:name,
+      mailId:mailId,
+      subject:subject,
+      message:message,
+      sendMail:'sendMail'
+    },
+    beforeSend: function(){
+      
+      $('#spinner').show()
+    }
+    ,
+    success:function(data){
+      // window.location.href='http://localhost/project/invoice/';
+      $('#staticBackdrop').hide()
+      $('#spinner').hide()
+      alert('Mail has been sent')
+      // console.log(data)
+
+     }
+  })
+
+
+
+}
+
+$(document).on('click','.pdf',function(){
+
+  let invId=$(this).attr('id')
+  console.log(invId);
+  makePdf(invId)  
+})
+
+
+function makePdf(value){
+let invId=value;
+$.ajax({
+      url: "/project/invoiceController/",
+      type:'POST',
+      data:{
+        invId:invId,
+        makePDF:'makePDF'
+      },
+      xhrFields: {
+        responseType: "blob"
+    },
+      success:function(data){
+        console.log(data)
+         let blob = new Blob([data], { type: "application/pdf" });
+        let url = window.URL.createObjectURL(blob);
+
+        window.open(url, "_blank");
+
+
+      }
+})
 }

@@ -22,38 +22,46 @@ include_once "dashboard.php";
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
             <table class="table mt-3 border bg-white">
                 <tr>
-                    <td><table class=" w-100">
-                        <tr>
-                            <form>
-                        <td class='w-25 search-box p-2'>
-                            <div class="search_holder">
-                            <input type="text" placeholder="search" class='searc_c'><button onclick='clientData(),searc_c()' type="button" class='search_button'><i class='bi bi-search'></i></button></div></td><td>
-                            <select name="" class='searc_sel rounded ps-2' onchange='clientData()' id="status_c">
-                                <option value="">STATUS</option>
-                                <option value="1">ACTIVE</option>
-                                <option value="0">INACTIVE</option>
-                            </select>
-                            <input type="text" hidden id='invis_c' value='1' >
-                            <input type="text" hidden class='field_c' value='client_id' >
-                            <input type="text" hidden class='order_c' value='asc' >
-                            <input type="text" hidden value='bi-arrow-down-up' id="icon_hold_c">
-                        <button class="reset_btn " type="reset" onclick="clientData(),resetClient()"><i class="bi bi-arrow-repeat"></i></button>
-                        </td></form>
-                        <td class='w-25' align='right'>
-                            <select class='form-select w-25' onchange='clientData(),limitData_c()'  name="" id="limit_c">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                        </select></td>
-                    </tr>
-                    </table></td>
+                    <td>
+                        <table class=" w-100">
+                            <tr>
+                                <form>
+                                    <td class='w-25 search-box p-2'>
+                                        <div class="search_holder">
+                                            <input type="text" placeholder="search" class='searc_c'><button onclick='clientData(),searc_c()' type="button" class='search_button'><i class='bi bi-search'></i></button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <select name="" class='searc_sel rounded ps-2' onchange='clientData()' id="status_c">
+                                            <option value="">STATUS</option>
+                                            <option value="1">ACTIVE</option>
+                                            <option value="0">INACTIVE</option>
+                                        </select>
+                                        <input type="text" hidden id='invis_c' value='1'>
+                                        <input type="text" hidden class='field_c' value='client_id'>
+                                        <input type="text" hidden class='order_c' value='asc'>
+                                        <input type="text" hidden value='bi-arrow-down-up' id="icon_hold_c">
+                                        <button class="reset_btn " type="reset" onclick="clientData(),resetClient()"><i class="bi bi-arrow-repeat"></i></button>
+                                    </td>
+                                </form>
+                                <td class='w-25' align='right'>
+                                    <select class='form-select w-25' onchange='clientData(),limitData_c()' name="" id="limit_c">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
-                <tr><td colspan="5">
-            <div id="load_clients" class='p-0'>
+                <tr>
+                    <td colspan="5">
+                        <div id="load_clients" class='p-0'>
 
-            </div>
-            </td>
+                        </div>
+                    </td>
             </table>
         </div>
 
@@ -61,7 +69,8 @@ include_once "dashboard.php";
             <div class="row m-0 mt-3 client_form w-100 bg-white border p-4">
                 <form id="add_client">
                     <div class="row">
-                        <h1 class="mt-4">Add Client</h1><hr>
+                        <h1 class="mt-4">Add Client</h1>
+                        <hr>
 
                         <div class="col-6 p-3 pt-5">
                             <input type="text" hidden id="updId">
@@ -70,8 +79,8 @@ include_once "dashboard.php";
                             <div class="name_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
-                           Client Phone:
-                            <input type="Number" placeholder="Client phone number" class="form-control mb-3" minlength="2" maxlength="15"  id="client_number">
+                            Client Phone:
+                            <input type="Number" placeholder="Client phone number" class="form-control mb-3" minlength="2" maxlength="15" id="client_number">
                             <div class="number_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
@@ -80,7 +89,7 @@ include_once "dashboard.php";
                             <div class="address_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
-                           Client Email:
+                            Client Email:
                             <input type="email" placeholder="Client email" class="form-control mb-3" id="client_email_c">
                             <div class="email_valid text-danger mb-3 "></div>
                         </div>
@@ -88,6 +97,7 @@ include_once "dashboard.php";
                             <div id="loadState">
 
                             </div>
+                            <div class="state_valid"></div>
                         </div>
                         <div class="col-4  p-3 pt-5">City:
                             <div id="loadCity">
@@ -95,6 +105,7 @@ include_once "dashboard.php";
                                     <option value="">----Select City----</option>
                                 </select>
                             </div>
+                            <div class="city_valid"></div>
                         </div>
                         <div class="col-4  p-3 pt-5">Pincode:<input type="Number" placeholder="Pincode" id="client_pincode" class="form-control mb-3">
                             <div class="pincode_valid text-danger mb-3 "></div>
@@ -102,11 +113,11 @@ include_once "dashboard.php";
 
                         <div class="col-8" id="clientUpStatus"></div>
                         <div class="col-4 ps-5 text-end updateclint">
-                            <input type="button"  id="insert_client" onclick='insertClient()' class="btn btn-outline-primary " value='Submit'>
+                            <input type="button" id="insert_client" onclick='insertClient()' class="btn btn-outline-primary " value='Submit'>
                             <button type="reset" class="btn btn-outline-danger ">Reset</button>
-                        
+
                         </div>
-                        
+
 
 
                     </div>
@@ -129,4 +140,3 @@ include_once "dashboard.php";
     <!-- /////end div// -->
 </div>
 </div>
-

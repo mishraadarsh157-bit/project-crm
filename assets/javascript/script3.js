@@ -17,7 +17,25 @@ function insertItem() {
         window.location.href = "/project/itemmaster/";
         loadItems();
       } else {
-        $(".valid_item").text(data);
+          if(data.trim()=='enter name'){
+              $('.item_valid').text('enter name').css('color','red')
+              return false;
+          }
+          
+          else if(data.trim()=='enter price'){
+              $('.price_valid').text('enter price').css('color','red')
+              return false;
+          }
+          
+          else if(data.trim()=='enter description'){
+              $('.des_valid').text('enter description').css('color','red')
+              return false;
+          }
+          
+          else if(data.trim()=='enter image'){
+              $('.image_valid').text('enter image').css('color','red')
+              return false;
+          }
       }
     },
   });
@@ -265,11 +283,28 @@ function updateItm() {
 
 
         $("#itemInsertForm").trigger("reset");
-        // window.location.href='http://localhost/project/itemmaster/'
         var page = $("#invis_i").val();
         loadItems(Number(page));
       } else {
-        $(".invalid_item").text(data);
+         if(data.trim()=='enter name'){
+              $('.item_valid').text('enter name').css('color','red')
+              return false;
+          }
+          
+          else if(data.trim()=='enter price'){
+              $('.price_valid').text('enter price').css('color','red')
+              return false;
+          }
+          
+          else if(data.trim()=='enter description'){
+              $('.des_valid').text('enter description').css('color','red')
+              return false;
+          }
+          
+          else if(data.trim()=='enter image'){
+              $('.image_valid').text('enter image').css('color','red')
+              return false;
+          }
       }
     },
   });

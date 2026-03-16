@@ -66,12 +66,12 @@ include_once "dashboard.php";
         </div>
         <!-- part -->
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-            
+
             <table class='w-100'>
-                <tr class='w-100 bg-white border'>  
+                <tr class='w-100 bg-white border'>
                     <form>
                         <td class='search-box p-3 pe-0 w-25' colspan="">
-                           <div class="search_holder"> <input class='' id='search_user' placeholder='search ' type='text'><button type="button" onclick="userData(),searc()" class="search_button" name="search" value="search"><i class="bi bi-search"></i></button></div>
+                            <div class="search_holder"> <input class='' id='search_user' placeholder='search ' type='text'><button type="button" onclick="userData(),searc()" class="search_button" name="search" value="search"><i class="bi bi-search"></i></button></div>
                         </td>
                         <td class='search-box p-3 pe-0'>
                             <select name='' onchange='userData()' id="search_status" class=' form-select searc_sel'>
@@ -79,29 +79,31 @@ include_once "dashboard.php";
                                 <option value='1'>ACTIVE</option>
                                 <option value='0'>INACTIVE</option>
                             </select>
-                            </td>
+                        </td>
                         <td class='w-50'>
-                            <button class="reset_btn " type="reset" onclick="userData(),resetUsers()"><i class="bi bi-arrow-repeat"></i></button></td>
+                            <button class="reset_btn " type="reset" onclick="userData(),resetUsers()"><i class="bi bi-arrow-repeat"></i></button>
+                        </td>
                     </form>
                     <td colspan="" class="" align="">
-                    <input id="invis" hidden type="text" value='1'>
-                    <input type="text"  class='field' onchange='userData()' hidden value='id'>
-                    <input type="text" class='order' onchange='userData()' hidden value='asc'>
-                    <input type="text" hidden id="icon_hold" value='bi-arrow-down-up'>
-                </td><td align='right' class="w-50">
-                <select class='form-select w-25 mb-2 me-3' onchange='limitData()' name="" value='' id="limit">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                </select>    
-                
-                </td>
+                        <input id="invis" hidden type="text" value='1'>
+                        <input type="text" class='field' onchange='userData()' hidden value='id'>
+                        <input type="text" class='order' onchange='userData()' hidden value='asc'>
+                        <input type="text" hidden id="icon_hold" value='bi-arrow-down-up'>
+                    </td>
+                    <td align='right' class="w-50">
+                        <select class='form-select w-25 mb-2 me-3' onchange='limitData()' name="" value='' id="limit">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+
+                    </td>
                 </tr>
             </table>
             <div id="load_users" class="table_area bg-white rounded border">
 
-            
+
 
             </div>
 
@@ -121,14 +123,14 @@ include_once "dashboard.php";
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content"> -->
 
-            <!-- Modal Header -->
-            <!-- <div class="modal-header  bg-skyblue">
+<!-- Modal Header -->
+<!-- <div class="modal-header  bg-skyblue">
                 <h4 class="modal-title">Update User Data</h4>
                 <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal"></button>
             </div> -->
 
-            <!-- Modal body -->
-            <!-- <div class="modal-body">
+<!-- Modal body -->
+<!-- <div class="modal-body">
                 <form action="" class="update_user_form p-3">
 
 
@@ -138,4 +140,3 @@ include_once "dashboard.php";
         </div>
     </div>
 </div> -->
-

@@ -79,9 +79,13 @@ function insertClient() {
   }
 
   let client_state = $("#select_state").val();
-
+if(!validState(client_state)){
+  return
+}
   let client_city = $("#select_city").val();
-
+if(!validCity(client_city)){
+  return
+}
   let client_pincode = $("#client_pincode").val();
   if (!validPincode(client_pincode)) {
     return;
@@ -423,7 +427,13 @@ function updateClient() {
     return;
   }
   let client_state = $("#select_state").val();
+ if(!validState(client_state)){
+  return
+} 
   let client_city = $("#select_city").val();
+  if(!validCity(client_city)){
+  return
+}
   console.log("not");
   console.log(client_city);
   let client_pincode = $("#client_pincode").val();

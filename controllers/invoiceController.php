@@ -2,14 +2,8 @@
 
 include '../project/database/db_logics.php';
 include '../project/database/invoiceAPI.php';
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "usermaster";
-$port = "3309";
-
-$conn = new mysqli($servername, $username, $password, $database, $port) or die("not connected to data base");
+include '../project/controllers/mail.php';
+include '../project/controllers/pdf.php';
 
 
 switch (true) {
@@ -86,8 +80,25 @@ switch (true) {
     case isset($_POST['UpdateInvoice']):
         $invId = $_POST['invoiceNo'];
         $item = $_POST['item'];
-        $quantity=1;
-        $invoice->UpdateData($invId,$item,$quantity);
+        $quantity = $_POST['quantity'];
+        $invoice->UpdateData($invId, $item, $quantity);
+        break;
+    case isset($_POST['fetchMail']):
+        $invId = $_POST['InvNo'];
+        $crud->fetchData('invoice', 100, "select * from invoice left join client on ClientABN=client_id where InvoiceNo=$invId", "");
+        break;
+    case isset($_POST['sendMail']):
+        $invoiceNo = $_POST['invoiceNo'];
+        $name = $_POST['name'];
+        $mailId = $_POST['mailId'];
+        $subject = $_POST['subject'];
+        $message = $_POST['message'];
+        $mailer->mailer($invoiceNo,$mailId, $name, $subject, $message);
+        break;
+
+    case isset($_POST['makePDF']):
+        $invID = $_POST['invId'];
+        $pdf->makePdf($invID);
         break;
 
     default:
