@@ -1,130 +1,29 @@
-
-function totalUsers(){
+function dashboardData(){
     $.ajax({
-        url:'/project/homecontroller/',
+         url:'/project/homecontroller/',
         type:"POST",
         data:{
-            id:"id",
-            table:"users"
+            dashboard:'dashboard'
         },
-        success: function(data){
-            $("#total_users").html(data);
-        }
+success:function(data){
+    data=JSON.parse(data)
+    console.log(data.data)
+    data.data.forEach(function(value){
+        $('#total_users').html(value['id'])
+        $('#total_clients').html(value['client_id'])
+        $('#total_items').html(value['item_id'])
+        $('#total_invoice').html(value['InvoiceNo'])
+        $('#total_active_users').append(value['Uactive'])
+        $('#total_inactive_users').append(value['Uinactive'])
+        $('#total_active_client').append(value['Cactive'])
+        $('#total_inactive_client').append(value['Cinactive'])
+        
     })
 }
-totalUsers()
-
-
-function totalClients(){
-    $.ajax({
-        url:'/project/homecontroller/',
-        type:"POST",
-        data:{
-            id:"client_id",
-            table:"client"
-        },
-        success: function(data){
-            $("#total_clients").html(data);
-        }
     })
 }
-totalClients()
 
+$('#logo').on('click',function(){
+    dashboardData()
+})
 
-
-function totalItems(){
-    $.ajax({
-        url:'/project/homecontroller/',
-        type:"POST",
-        data:{
-            id:"item_id",
-            table:"items"
-        },
-        success: function(data){
-            $("#total_items").html(data);
-        }
-    })
-}
-totalItems()
-
-function totalInvoice(){
-    $.ajax({
-        url:'/project/homecontroller/',
-        type:"POST",
-        data:{
-            id:"InvoiceNo",
-            table:"invoice"
-        },
-        success: function(data){
-            $("#total_invoice").html(data);
-        }
-    })
-}
-totalInvoice()
-
-
-
-function totalinActiveUsers(){
-    $.ajax({
-        url:'/project/homecontroller/',
-        type:"POST",
-        data:{
-            id:"id",
-            status:'STATUS!',
-            value:1,
-            tabl:"users"
-        },
-        success: function(data){
-            $("#total_inactive_users").html("Inactive " + data);
-        }
-    })
-}
-totalinActiveUsers()
-function totalActiveUsers(){
-    $.ajax({
-        url:'/project/homecontroller/',
-        type:"POST",
-        data:{
-            id:"id",
-            status:'STATUS',
-            value:1,
-            tabl:"users"
-        },
-        success: function(data){
-            $("#total_active_users").html("Active " + data);
-        }
-    })
-}
-totalActiveUsers()
-function totalinActiveClients(){
-    $.ajax({
-        url:'/project/homecontroller/',
-        type:"POST",
-        data:{
-            id:"client_id",
-            status:'client_status!',
-            value:1,
-            tabl:"client"
-        },
-        success: function(data){
-            $("#total_inactive_client").html("Inactive " + data);
-        }
-    })
-}
-totalinActiveClients()
-function totalinActiveClinets(){
-    $.ajax({
-        url:'/project/homecontroller/',
-        type:"POST",
-        data:{
-            id:"client_id",
-            status:'client_status',
-            value:1,
-            tabl:"client"
-        },
-        success: function(data){
-            $("#total_active_client").html("Active " + data);
-        }
-    })
-}
-totalinActiveClinets()

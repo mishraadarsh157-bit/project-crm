@@ -4,6 +4,7 @@ var baseurl = "http://localhost/project/";
 
 if(window.location.href=='http://localhost/project/usermaster/'){
   $('.side1').css('background','orangered').css({'color':'white','margin-left':'25px','border-right':'10px solid yellow'});
+  userData()
 }else if(window.location.href=='http://localhost/project/clientmaster/'){
   $('.side2').css('background','orangered').css({'color':'white','margin-left':'25px','border-right':'10px solid yellow'});
 }
@@ -14,24 +15,16 @@ else if(window.location.href=='http://localhost/project/invoice/'){
   $('.side4').css('background','orangered').css({'color':'white','margin-left':'25px','border-right':'10px solid yellow'});
 }
 
-$("#user_login").click(function (e) {
-  e.preventDefault();
+function login() {
   var email = $("#email").val();
-  if(email==""){
-    $('.email_valid').show()
-    $('.email_valid').text('enter email')
-  }
-  else{
-    $('.email_valid').hide()
+  if(!validEmail(email)){
+    return 
   }
   var password = $("#password").val();
-  if(password==""){
-    $('.pass_valid').show()
-    $('.pass_valid').text('enter password')
+  if(!validPass(password)){
+    return
   }
-  else{
-    
-    $('.pass_valid').hide()
+ 
   var save = $("#user_login").val();
 
   $.ajax({
@@ -43,23 +36,29 @@ $("#user_login").click(function (e) {
       submit: save,
     },
     success: function (response) {
-      console.log(response)
-      console.log(typeof response);
+
 
       if (response.trim() == "/project/home/") {
         window.location.href = response.trim();
       } else if(response.trim()=='0') {
-        console.log(response)
-        $('.pass_valid').show()
-        $('.pass_valid').text("user not found").css('color','red');
+Swal.fire({
+  title: "404",
+  text: "NO USER FOUND",
+  icon: "question"
+});
+Swal.fire({
+  icon: "error",
+  title: "404",
+  text: "No User Found!",
+  footer: '<a href="#">Please Try Again</a>'
+});
+      
       }
     },
   });}
-});
 
 $(".logout").click(function (e) {
   e.preventDefault();
-  console.log("logout");
   var logout = $(".logout").val();
   $.ajax({
     url: "/project/loginAPI/",
@@ -70,9 +69,12 @@ $(".logout").click(function (e) {
     success: function (response) {
       if (response.trim() == "logged_out") {
         window.location.href = "/project/";
-        console.log("logouted");
       } else {
-        console.log("error");
+        Swal.fire({
+  title: "Error",
+  text: "Unable To Logout",
+  icon: "question"
+});
       }
     },
   });
@@ -85,7 +87,6 @@ $("#logo").click(function () {
 });
 
 $("#hide_sidebar").click(function () {
-  // console.log("good");
   $("#left_sidebar").css("width", "8%");
   $(".logo").css("width", "8%");
   $(".content-body").css("width", "92%");
@@ -101,7 +102,6 @@ $("#hide_sidebar").click(function () {
   $("#show_sidebar").show();
 });
 $("#show_sidebar").click(function () {
-  // console.log("good");
   $("#left_sidebar").css("width", "16.5%");
   $(".logo").css("width", "16.5%");
   $(".content-body").css("width", "83.5%");
@@ -198,7 +198,7 @@ function userData(page, limit) {
           table += '<tr class="data" style="height:40px;whitespace:nowrap;">';
         
           table += `<td class='text-muted text-center' >${index}</td>`;
-        table += `<td class='text-muted text-center d-flex '>
+        table += `<td class='text-muted text-center d-flex ps-5'>
         
          <ul class="nav me-2" id="nav-tab" role="tablist">
 
@@ -278,7 +278,6 @@ $(document).on("click", "#pagination a", function (e) {
   var page = $(this).attr("id");
   userData(page, limit);
   $("#invis").val(page);
-  console.log("this page is :" + $("#invis").val());
 });
 
 ////////////back button<<<<<<<<<<
@@ -325,6 +324,7 @@ window.addEventListener("load", () => {
 });
 
 function resetUserForm(){
+  $('.add_usr').html('ADD USER')
   $('.password').html('User Password :\
                             <input type="password" title="PASSWORD" autocomplete="off" id="user_pass" placeholder="User Password" name="user_pass" class="form-control  border ">\
                             <div class="pass_valid" class="text-danger mb-3 "></div>')
@@ -335,6 +335,7 @@ function resetUserForm(){
 
 
 function insertUser() {
+  console.log(1)
   let user_name = $("#user_name").val();
   if (!validName(user_name)) {
     return;
@@ -366,7 +367,8 @@ function insertUser() {
         $("#add_user").trigger("reset");
         userData();
       } else {
-        console.log("error");
+
+
         $('.email_valid').show()
         $('.email_valid').text('email already exist').css('color','blue')
       }
@@ -376,6 +378,7 @@ function insertUser() {
 //////////////////////update
 $(document).on("click", ".update", function () {
   $('#pills-profile-tab').tab('show')
+  $('.add_usr').html('EDIT USER')
   let id = $(this).data("uid");
   let update = $(".update").val();
   $.ajax({
@@ -431,7 +434,6 @@ $(document).on("click", ".update", function () {
     }
     let status = $("#user_status").val();
     let update_user = $("#edit").val();
-    console.log(update_user);
     $.ajax({
       url: "/project/usercontroller/",
       type: "POST",
@@ -453,7 +455,6 @@ $(document).on("click", ".update", function () {
           userData(page);
         } 
         else {
-          console.log("error");
           $('.email_valid').show()
           $('.email_valid').text('email already exist').css('color','blue')
       
@@ -461,40 +462,46 @@ $(document).on("click", ".update", function () {
       },
     });
   });
-userData();
 
 ////////////////delete user //////
 
 $(document).on("click", "#delete", function (e) {
   var id = $(this).data("did");
   var delet = $("#delete").val();
-  const isConfirm=confirm('do you really want to delete data for client id ' + id)
-  if(isConfirm){
-  var element = this;
-  $.ajax({
-    url: "/project/usercontroller/",
-    type: "POST",
-    data: {
-      id: id,
-      delete: delet,
+  Swal.fire({
+  title: "Do you want to Delete this User?",
+  showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonText: "Delete",
+  denyButtonText: `Don't Delete`
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire("Saved!", "", "success");
+    
+      var element = this;
+      $.ajax({
+        url: "/project/usercontroller/",
+        type: "POST",
+        data: {
+          id: id,
+          delete: delet,
     },
     success: function (data) {
-      console.log(data);
-       var page=$("#invis").val();
+      var page=$("#invis").val();
       userData(page);
       if (data.trim() == 1) {
         $(element).closest("tr").fadeOut();
       } else {
-        console.log(data);
-        console.log("not deleted in js");
+        alert("unable to delete this data");
       }
     },
   });
-}
-
-else{
-  console.log(data)
-}
+} 
+else if (result.isDenied) {
+    Swal.fire("User Not Deleted", "", "info");
+      userData()
+  }
+});
 
 }
 
@@ -514,3 +521,7 @@ function resetUsers(){
    var page = $("#invis").val();
           userData(Number(page))
 }
+
+$(document).on('keyup','#user_pass',function(){
+  insertUser()
+})

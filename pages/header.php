@@ -16,6 +16,7 @@
 
     <div class="col-4"><img src="../assets/images/profile (1).png" height='50px' alt=""></div>
     <div class="col-4"></div>
+    <div class="col-12 mt-5">You Have Logged In with </div>
     <div class="col-12 mt-4" id="profileInfo"></div>
     
     <div class="exit">

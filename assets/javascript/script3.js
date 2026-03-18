@@ -2,7 +2,6 @@
 ///////insert
 
 function insertItem() {
-  // const form=$('#itemInsertForm')
   var fd = new FormData(itemInsertForm);
   console.log(fd);
   $.ajax({
@@ -132,7 +131,7 @@ function loadItems(page) {
           table += `<tr>`;
 
           table += `<td>${indx}</td>`;
-          table += `<td class='text-center d-flex'>
+          table += `<td class='text-center ps-4 d-flex'>
  <ul class="nav me-2" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="update_i nav-link btn btn-sm rounded-pill btn-outline-primary border border-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["item_id"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false"><i class='bi bi-pencil-square'>
@@ -235,6 +234,8 @@ if (window.location.href == "http://localhost/project/itemmaster/") {
 ///////////update
 $(document).on("click", ".update_i", function () {
   $('#profile-tab').tab('show')
+  $('.add_itm').html('EDIT ITEM')
+  
   let id = $(this).data("uid");
   let update = $(".update_i").val();
   $.ajax({
@@ -263,7 +264,7 @@ $(document).on("click", ".update_i", function () {
             <input type='button' onclick='updateItm()' class='btn btn-outline-primary w-25 me-2' value='Save'> \
             <input type='reset' class='btn btn-outline-danger w-25'>\
             ")
-            
+            loadItems()
           });    
         },
       });
@@ -312,9 +313,18 @@ function updateItm() {
 //////delete
 $(document).on("click", "#delete_i", function () {
   var id = $(this).data("did");
-  const isConfirm = confirm("do you really want to delete this item ");
-  if (isConfirm) {
-    var element = this;
+   Swal.fire({
+  title: "Do you want to Delete this CLient?",
+  showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonText: "Delete",
+  denyButtonText: `Don't Delete`
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire("Saved!", "", "success");
+  
+  var element = this;
+
     $.ajax({
       url: "/project/itemcontroller/",
       type: "POST",
@@ -328,12 +338,22 @@ $(document).on("click", "#delete_i", function () {
           var page = $("#invis_i").val();
           loadItems(Number(page));
         }
+        else{
+                  Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Can't Delete This Item!",
+  footer: '<a href="#">This Item is Ordered By Someone ?</a>'
+});
+        }
       },
     });
   } else {
+     Swal.fire("Item Not Deleted", "", "info");
     loadItems();
   }
 });
+})
 
 function searc_i() {
   var val = 1;
@@ -356,4 +376,14 @@ function resetItems() {
 function resetImage() {
   $("#item_image").val("");
   $(".itemImage").attr("src", "");
+}
+
+function resetItmForm(){
+  $('.add_itm').html('Add Item')
+$('.itemSaver').html(' <div class="valid_item text-danger mb-3"></div>\
+                        <button type="button" onclick="insertItem()" id="itemSubmit" \
+                        name="itemSubmit" class="btn btn-outline-primary">Save Item</button>\
+                        <input type="reset" class="btn btn-outline-danger" onclick="resetImage()" value="Reset">\
+                    </div>')
+            $('#itemInsertForm').trigger('reset')
 }

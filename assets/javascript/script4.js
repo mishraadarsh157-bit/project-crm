@@ -59,7 +59,6 @@ $(document).on("keyup", ".item-name-invoice", function () {
 
 $(document).on("click", ".itemvalue", function () {
   let itm = $(this).text();
-  console.log(itm);
   let row = $(this).closest("tr");
   row.find(".item-name-invoice").val(itm);
   $(".item-selected").hide();
@@ -366,6 +365,8 @@ if (window.location.href.trim() == "http://localhost/project/invoice/") {
 }
 
 function loadInvoiceNO() {
+  $('.add_inv').html('Add Invoice')
+   $(".client-name-invoice").prop('disabled',false);
   $(".addInvoice").trigger("reset");
   $(".itemTable").html("");
   $.ajax({
@@ -383,8 +384,8 @@ function loadInvoiceNO() {
           $(".invoice_id").val(Number(value["InvoiceNo"]) + 1);
         });
          $(".loadButtons").html(
-        'Total Amount<input type="text" class="total-amount-invoice form-control mb-4" placeholder="Total Amount">\
-    <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>',
+        'Total Amount<input type="text" disabled class="total-amount-invoice form-control mb-4 bg-white" placeholder="Total Amount">\
+    <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4 bg-white" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>',
   );
         addMore();
       }
@@ -419,7 +420,6 @@ function addInvoic() {
   let quantity = $("input[name='quantity[]']").map(function(){
     return this.value;
   }).get();
-  console.log(quantity);
  if (quantity.some((element) => element == "" || quantity.some((element) => element <1 ))) {
     $(".quantityall").text("insert proper quantity");
     return false;
@@ -435,9 +435,18 @@ function addInvoic() {
       addInvoice: "addInvoice",
     },
     success: function (data) {
+      if(data.trim()==1){
       $("#home-tab").tab("show");
       $(".addInvoice").trigger("reset");
-      invoiceData();
+      invoiceData();}
+      else{
+        Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Data Not Inserted!",
+  footer: '<a href="#">Some Values Are incorrect?</a>'
+});
+      }
     },
   });
 }
@@ -445,6 +454,8 @@ function addInvoic() {
 ///////invoice update ///
 $(document).on("click", ".update_iv", function () {
   $("#profile-tab").tab("show");
+  $('.add_inv').html('Edit Invoice')
+
   let invId = $(this).data("uid");
   $(".invoice_id").val(Number(invId));
   $.ajax({
@@ -461,7 +472,7 @@ $(document).on("click", ".update_iv", function () {
 
       data.data.forEach(function (value, index) {
         $(".cli_Id").val(value["client_id"]);
-        $(".client-name-invoice").val(value["client_name"]);
+        $(".client-name-invoice").val(value["client_name"]).prop('disabled',true);
         $(".client-email-invoice").val(value["client_email"]);
         $(".client-phone-invoice").val(value["phone"]);
         input += "<tr>";
@@ -482,7 +493,7 @@ $(document).on("click", ".update_iv", function () {
       buttons +=
         "<button type='button' class='btn btn-outline-primary mt-2' onclick='updateInvoice()'>";
       buttons += "Update";
-      buttons += "</button><input type='reset' class='btn btn-outline-danger ms-2 mt-2' value='Reset'>";
+      buttons += "</button>";
       $(".loadButtons").html(buttons);
       // $(".total-amount-invoice").val(total);
       changeAmt();
@@ -531,8 +542,8 @@ function updateInvoice() {
 
       invoiceData(page);
       $(".loadButtons").html(
-        'Total Amount<input type="text" class="total-amount-invoice form-control mb-4" placeholder="Total Amount">\
-    <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>',
+        'Total Amount<input type="text" disabled class="total-amount-invoice form-control mb-4 bg-white" placeholder="Total Amount">\
+    <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4 bg-white" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>',
   );
   addMore();
   loadItems();
@@ -557,9 +568,11 @@ $(document).on('click','.mailBtn',function(){
         data.data.forEach(function(value){
           table +=`Invoice No:<input type='text' id='mail_invoiceNo' class='form-control mb-3 bg-white' disabled value='${value['InvoiceNo']}'>`;
           table +=`Client Name:<input type='text' id='mail_client_name' disabled class='form-control mb-3 bg-white' value='${value['client_name']}'>`;
+          table +='<div class="name_valid"></div>'
           table +=`Email:<input type='text' id='mail_id' disabled class='form-control mb-3 bg-white' value='${value['client_email']}'>`;
+          table +='<div class="email_valid"></div>'
           table +=`Subject:<input type='text' id='subject' placeholder='Enter Subject' class='form-control mb-3 bg-white' value='Invoice FOR #INV0${value['InvoiceNo']} for App Stack'>`;
-          table +=`Messsage:<textarea type='text' id='message' class='form-control mb-3 bg-white' placeholder='Enter Message'>Hi ${value['client_name']}, I hope you're doing well. Please find attached our invoice #INV0${value['InvoiceNo']} for your purchase, which is due on ${value['InvDate']}. Let me know if you have any questions. Best, Adarsh.</textarea>`;
+          table +=`Messsage:<textarea type='text' rows='10' id='message' class='form-control mb-5 bg-white' placeholder='Enter Message'>Hi ${value['client_name']}, I hope you're doing well. Please find attached our invoice #INV0${value['InvoiceNo']} for your purchase, which is due on ${value['InvDate']}. Let me know if you have any questions. Best, Adarsh.</textarea>`;
         })
         $('.modal-body').html(table)
        }
@@ -567,17 +580,33 @@ $(document).on('click','.mailBtn',function(){
 })
 function sendMail(){
   let invoiceNo=$('#mail_invoiceNo').val();
-  // let pdf=makePdf(invoiceNo)
+  if(invoiceNo.trim()==''){
+    alert('Invoice Number Not found')
+    return false;
+  }
   let name=$('#mail_client_name').val();
+  if(!validName(name)){
+    return
+  }
   let mailId=$('#mail_id').val();
+  if(!validEmail(mailId)){
+    return
+  }
   let subject=$('#subject').val();
+  if(subject.trim()==''){
+    alert('enter subject')
+    return false;
+  }
   let message=$('#message').val();
+  if(message.trim()==''){
+    alert('enter message')
+    return false;
+  }
   $.ajax({
     url: "/project/invoiceController/",
     type: "POST",
     data:{
       invoiceNo:invoiceNo,
-      // pdf:pdf,
       name:name,
       mailId:mailId,
       subject:subject,
@@ -590,12 +619,15 @@ function sendMail(){
     }
     ,
     success:function(data){
-      // window.location.href='http://localhost/project/invoice/';
       $('#staticBackdrop').hide()
       $('#spinner').hide()
-      alert('Mail has been sent')
-      // console.log(data)
-
+Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Mail Sent",
+  showConfirmButton: false,
+  timer: 1500
+});
      }
   })
 

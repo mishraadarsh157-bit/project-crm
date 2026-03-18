@@ -10,7 +10,7 @@ include_once "dashboard.php";
 <div class="content-body col-10 p-2 pe-4 ps-3">
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link active text-dark fw-bold" onclick='invoiceData()' id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Invoice</button>
+      <button class="nav-link active text-dark fw-bold"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Invoice</button>
     </li>
     <li class="nav-item" role="presentation">
       <button class="nav-link text-dark fw-bold" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" onclick='loadInvoiceNO(),cutBtn()' aria-selected="false">Add New Invoice</button>
@@ -53,7 +53,7 @@ include_once "dashboard.php";
         <hr>
 
 
-        <div class="loadInvoice p-2"></div>
+        <div class="loadInvoice px-2"></div>
       </div>
     </div>
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
@@ -61,7 +61,7 @@ include_once "dashboard.php";
 
         <div class="invoice_form w-100 ms-1 row bg-white border mt-3 px-3">
           <div class="col-9">
-            <h1 class='pt-3'>Add Invoice</h1>
+            <h1 class='add_inv pt-3'>Add Invoice</h1>
           </div>
           <div class="col-3 pt-3" align='right'><button type="button" class="btn btn-outline-primary" onclick="addMore()">Add More</button></div>
           <hr>
@@ -72,7 +72,7 @@ include_once "dashboard.php";
           <!-- invoice date  -->
           <!-- client part -->
 
-          <div class="col-4 mt-4">Client Name <sup class="text-danger">*</sup><input type="text" onchange="fetchClientData()" class="client-name-invoice form-control  " placeholder="Client Name">
+          <div class="col-4 mt-4">Client Name <sup class="text-danger">*</sup><input type="text" onchange="fetchClientData()" class="client-name-invoice form-control bg-white " placeholder="Client Name">
             <div class="invalidclint text-danger"></div>
           </div>
           <div class="col-4 mt-4">Client Email<input type="text" disabled class="client-email-invoice bg-white form-control  " placeholder="Client Email"></div>
@@ -88,7 +88,7 @@ include_once "dashboard.php";
           <div class="insertall text-danger mb-3 col-6"></div>
           <div class="quantityall text-danger mb-3 col-6"></div>
           <div class="col-8"></div>
-          <div class="loadButtons col-4 mt-4" align="right">Total Amount<input type="text" class="total-amount-invoice form-control mb-4" placeholder="Total Amount">
+          <div class="loadButtons col-4 mt-4" align="right">Total Amount<input type="text" disabled class="total-amount-invoice form-control bg-white mb-4" placeholder="Total Amount">
             <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>
           </div>
 
@@ -114,8 +114,8 @@ include_once "dashboard.php";
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-blue">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title " id="staticBackdropLabel">Mail Form</h1>
+        <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form class='mailForm'>
 

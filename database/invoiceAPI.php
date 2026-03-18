@@ -45,6 +45,7 @@ class inv
             $stmt2->execute();
         }
         $this->conn->commit();
+        echo 1;
         }
  catch(Exception $e){
 $this->conn->rollback();

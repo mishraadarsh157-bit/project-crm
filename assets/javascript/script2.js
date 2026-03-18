@@ -51,6 +51,7 @@ function loadCity(state) {
 
 
 function resetClientForm(){
+  $('.add_clin').html('Add Client')
   
   $('.updateclint').html('<input type="button"  id="insert_client" onclick="insertClient()" class="btn btn-outline-primary " value="Submit">\
                             <button type="reset" class="btn btn-outline-danger ">Reset</button>')   
@@ -112,8 +113,8 @@ if(!validCity(client_city)){
         window.location.href = "/project/clientmaster/";
         $("#add_client").trigger("reset");
       } else {
-        console.log(data);
-        console.log("error");
+         $(".email_valid").show();
+    $(".email_valid").text("email already exists").css("color", "blue");
       }
     },
   });
@@ -205,7 +206,7 @@ function clientData(page) {
             table += '<tr style="height:40px;whitespace:nowrap;">';
             table += `<td class='text-dark text-center'>${index}</td>`;
 
-            table += `<td class='text-muted text-white text-center  d-flex '>
+            table += `<td class='text-muted text-white text-center ps-4 d-flex '>
             <ul class="nav text-white" id="myTab" role="tablist">
             <li class="nav-item text-white " role="presentation">
             <button class="update_c nav-link btn btn-sm rounded-pill  btn-outline-primary border border-0" type='button' id="profile-tab " name='update onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" data-uid='${value["client_id"]}'   value='update_c'><i class='bi bi-pencil-square'></i></button>
@@ -274,7 +275,7 @@ function clientData(page) {
     console.log(response + "this is a error");
   }
 }
-clientData();
+
 
 /////update form load //////
 
@@ -321,7 +322,7 @@ function limitData_c() {
 
 $(document).on("click", ".update_c", async function () {
    $('#profile-tab').tab('show')
-  
+  $('.add_clin').html('EDIT CLIENT')
   let id = $(this).data("uid");
   let update_c = $(".update_c").val();
   $.ajax({
@@ -466,8 +467,9 @@ function updateClient() {
         var page = $("#invis_c").val();
         clientData(Number(page));
       } else {
-        console.log(data);
-        console.log("error");
+
+    $(".email_valid").show();
+    $(".email_valid").text("email already exists").css("color", "blue");
       }
     },
   });
@@ -477,10 +479,16 @@ function updateClient() {
 
 $(document).on("click", "#delete_c", function () {
   var id = $(this).data("did");
-  const isConfirm = confirm(
-    "do you really want to delete data for client id " + id,
-  );
-  if (isConfirm) {
+   Swal.fire({
+  title: "Do you want to Delete this CLient?",
+  showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonText: "Delete",
+  denyButtonText: `Don't Delete`
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire("Saved!", "", "success");
+    
     var element = this;
     $.ajax({
       url: "/project/clientcontroller/",
@@ -495,14 +503,20 @@ $(document).on("click", "#delete_c", function () {
           var page = $("#invis_c").val();
           clientData(Number(page));
         } else {
-          console.log(data);
+          Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Can't Delete This Client!",
+  footer: '<a href="#">This Client Have Some Invoices Left ?</a>'
+});
         }
       },
     });
-  } else {
+  }else {
+     Swal.fire("Client Not Deleted", "", "info");
     clientData();
   }
-});
+});})
 
 function searc_c() {
   var val = 1;

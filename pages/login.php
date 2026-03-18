@@ -31,9 +31,9 @@ if (isset($_SESSION['admin'])===true) {
                 <input type="email" name="email" id="email" class="form-control from-control-sm rounded mb-3">
                 <div class="email_valid text-danger"></div>
                 Password :
-                <input type="password" name="password" id="password" class="form-control from-control-sm rounded mb-3">
+                <input type="password" name="password" id="password" onchange="login()" class="form-control from-control-sm rounded mb-3">
                 <div class="pass_valid text-danger"></div>
-                <input type="button" name="submit" id="user_login" value="SUBMIT"  class="btn btn-sm text-white bg-danger w-100 rounded my-3">
+                <input type="button" name="submit" id="user_login" onclick="login()" value="SUBMIT"  class="btn btn-sm text-white bg-danger w-100 rounded my-3">
            
 
             </form>
@@ -42,6 +42,7 @@ if (isset($_SESSION['admin'])===true) {
     </div>
 </body>
 <script src="http://localhost/project/assets/javascript/jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="http://localhost/project/assets/javascript/validations.js"></script>
 
 <script src="http://localhost/project/assets/javascript/script.js"></script>

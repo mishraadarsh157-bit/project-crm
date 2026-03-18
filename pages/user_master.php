@@ -19,7 +19,7 @@ include_once "dashboard.php";
 
 
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" onclick="resetUserForm()" aria-controls="pills-profile" aria-selected="false">Add New Users</button>
+            <button class="nav-link fw-bold text-dark" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" onclick="resetUserForm()" aria-controls="pills-profile" aria-selected="false">Add New User</button>
         </li>
 
     </ul>
@@ -33,7 +33,7 @@ include_once "dashboard.php";
 
                 <form id="add_user" autocomplete="off" class="p-5">
                     <div class="row w-100">
-                        <h1>ADD USER</h1>
+                        <h1 class='add_usr'>ADD USER</h1>
                         <hr>
                         <div class="col-12 my-4">
                             <input type="text" hidden class='userId'>
@@ -44,10 +44,12 @@ include_once "dashboard.php";
                         <div class="col-6 mb-4 password">
                             User Password :
                             <input type="password" title="PASSWORD" autocomplete="off" id="user_pass" placeholder="User Password" name="user_pass" class="form-control  border ">
-                            <div class="pass_valid" class="text-danger mb-3 "></div>
+                            <div class="pass_valid" class="text-danger mb-3 ">
+                                
+                            </div>
                         </div>
                         <div class="col-6"> User Number :
-                            <input type="number" placeholder="User Phone Number" title="NUMBER" id="user_number" name="user_number" class="form-control  border " required>
+                            <input type="number" placeholder="User Phone Number" title="NUMBER" id="user_number" name="user_number" class="form-control  border " minlength="5" maxlength="10" required>
                             <div class="number_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-12 mb-4">
@@ -118,6 +120,7 @@ include_once "dashboard.php";
     <!-- /////////////end -->
 </div>
 </div>
+
 
 <!-- <div class="modal " id="myModal" data-bs-backdrop="false">
     <div class="modal-dialog modal-dialog-centered">

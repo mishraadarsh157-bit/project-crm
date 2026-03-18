@@ -20,6 +20,9 @@ switch (true) {
             echo "enter price";
             return;
         }
+        else if($i_price<1){
+        $i_price=1;
+        }
         $i_description = $_POST['item_description'];
         if (empty($i_description)) {
             echo "enter description";
@@ -30,6 +33,7 @@ switch (true) {
             echo "enter image";
             return;
         }
+        
         $i_image_tmp = $_FILES['itemimage']['tmp_name'];
         $i_image_type = $_FILES['itemimage']['type'];
         $i_image_content = file_get_contents($i_image_tmp);

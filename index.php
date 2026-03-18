@@ -20,6 +20,9 @@ $router->get('/project/home/', function () {
 $router->post('/project/homecontroller/', function () {
     require 'controllers/home_controller.php';
 });
+$router->get('/project/homecontroller/', function () {
+    require 'controllers/home_controller.php';
+});
 
 $router->get('/project/usermaster/', function () {
     require 'pages/user_master.php';

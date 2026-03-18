@@ -22,20 +22,20 @@ include_once "dashboard.php";
                 <div class="col-6 image"><img src="../assets/images/user_image.png" height="190px" alt=""></div>
             </div>
 
-            <div class="col-6">
+            <div class="dash-col col-6">
                 <div class=" dash-col p-5 bg-white border">
                     <h3 class='text-danger'>Users Status</h3>
                     <br>
-                    <button class='status-btn-green border-0 me-2'><span id="total_active_users"></span></button>
-                    <button class='status-btn-red border-0'><span id="total_inactive_users"></span></button>
+                    <button class='status-btn-green border-0 me-2'><span id="total_active_users">Active </span></button>
+                    <button class='status-btn-red border-0'><span id="total_inactive_users">Inactive </span></button>
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="dash-col col-6">
                 <div class=" dash-col p-5 bg-white border">
                     <h3 class='text-danger'>Clients Status</h3> <br>
-                    <button class='status-btn-green border-0 me-2'><span id="total_active_client"></span></button>
-                    <button class='status-btn-red border-0'><span id="total_inactive_client"></span></button>
+                    <button class='status-btn-green border-0 me-2'><span id="total_active_client">Active </span></button>
+                    <button class='status-btn-red border-0'><span id="total_inactive_client">Inactive </span></button>
                 </div>
             </div>
         </div>

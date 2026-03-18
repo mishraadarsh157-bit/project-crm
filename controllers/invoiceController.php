@@ -1,6 +1,7 @@
 <?php
 
 include '../project/database/db_logics.php';
+include '../project/database/database.php';
 include '../project/database/invoiceAPI.php';
 include '../project/controllers/mail.php';
 include '../project/controllers/pdf.php';

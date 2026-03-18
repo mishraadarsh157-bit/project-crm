@@ -36,8 +36,9 @@ if (!isset($_SESSION['admin'])) {
 
 </body>
 <script src="../assets/javascript/jquery.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/javascript/validations.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../assets/javascript/home.js"></script>
     <script src="../assets/javascript/script.js"></script>
     <script src="../assets/javascript/script2.js"></script>

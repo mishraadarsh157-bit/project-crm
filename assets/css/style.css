@@ -14,7 +14,7 @@
   width: 5px;
 }
 *::-webkit-scrollbar-thumb {
-  background-color: #32cda2;
+  background-color:orangered;
 }
 ul li {
   list-style: none;
@@ -115,7 +115,7 @@ body {
   box-shadow: 10px 15px 10px grey;
 }
 .exit {
-  margin-top: 130px;
+  margin-top: 80px;
 }
 a {
   text-decoration: none;
@@ -247,6 +247,10 @@ a {
 .dash-col {
   height: 28.5vh;
   border-radius: 10px;
+  transition: all ease-in-out .2s;
+}
+.dash-col :hover{
+  scale: 1.05;
 }
 .home-con-h:nth-child(2) {
   height: 65vh;
@@ -267,6 +271,7 @@ a {
 .holding-table {
   height: calc(80vh - 178px);
   overflow-x: auto;
+  white-space: nowrap;
   margin-bottom: 5px;
 }
 

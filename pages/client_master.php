@@ -13,7 +13,7 @@ include_once "dashboard.php";
             <button class="nav-link fw-bold active text-dark" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" onclick="clientData()" aria-selected="true">All Clients</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link fw-bold text-dark" id="profile-tab" onclick='loadStates(),resetClientForm()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Add New Clients</button>
+            <button class="nav-link fw-bold text-dark" id="profile-tab" onclick='loadStates(),resetClientForm()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Add New Client</button>
         </li>
     </ul>
 
@@ -69,7 +69,7 @@ include_once "dashboard.php";
             <div class="row m-0 mt-3 client_form w-100 bg-white border p-4">
                 <form id="add_client">
                     <div class="row">
-                        <h1 class="mt-4">Add Client</h1>
+                        <h1 class="add_clin mt-4">Add Client</h1>
                         <hr>
 
                         <div class="col-6 p-3 pt-5">

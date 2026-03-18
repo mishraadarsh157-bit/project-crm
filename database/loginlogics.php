@@ -21,7 +21,7 @@ class loginPage
                 $_SESSION['admin'] = $email;
                 echo "/project/home/";
             } else {
-                echo "incorrect password";
+                echo 0;
             }
         } else {
             echo 0;

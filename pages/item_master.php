@@ -12,7 +12,7 @@ include_once "dashboard.php";
             <button class="nav-link active text-dark fw-bold" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Items</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link text-dark fw-bold" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Add New Item</button>
+            <button class="nav-link text-dark fw-bold" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" onclick="resetItmForm()" aria-controls="profile-tab-pane" aria-selected="false">Add New Item</button>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -56,7 +56,7 @@ include_once "dashboard.php";
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
             <form id="itemInsertForm">
                 <div class="row w-100 bg-white mx-0 mt-4 pt-4 px-4 pb-5 border ">
-                    <h1 class='pt-3'>Add Item</h1>
+                    <h1 class='add_itm pt-3'>Add Item</h1>
                     <hr>
                     <div class="col-6 mb-5 mt-4">
                         Item Name
