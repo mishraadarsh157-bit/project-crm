@@ -6,31 +6,72 @@ function fetchClientData() {
     data: {
       client_name: name.trim(),
     },
-    success: function (data) {
+    success: function (data) 
+    {
+      console.log(data)
       if (data.trim() == "empty") {
         $(".client-email-invoice").val("no data").css("color", "red");
         $(".client-phone-invoice").val("no data").css("color", "red");
       } else {
         data = JSON.parse(data);
-        console.log(data);
         data.data.forEach(function (value) {
+          if(value==null){
+
+          }
+          else{
+
           $(".cli_Id").val(value["client_id"]);
           $(".client-email-invoice")
             .val(`${value["client_email"]}`)
             .css("color", "black");
           $(".client-phone-invoice")
             .val(`${value["phone"]}`)
-            .css("color", "black");
+            .css("color", "black");}
         });
       }
     },
   });
 }
+///////client name invoice//////
+
+$(document).on('keyup','.client-name-invoice',function(){
+  let value=$(this).val();
+  $.ajax({
+     url: "/project/invoiceController/",
+    type: "POST",
+    data: {
+      clientSearch: value,
+    },
+    success:function(data){
+      if(data.trim()=='empty'){
+        let table='no client found'
+
+        $('.clientselect').html(table) 
+
+    }
+    else{
+      data=JSON.parse(data)
+        let table =
+      "<ul class='client-selected  list-group  bg-white'>";
+      data.data.forEach(function(value){
+  table += `<li class='clientvalue list-group-item  list-group-item-action'>${value["client_name"]}</li>`;
+})
+table += "</ul>";
+        $('.clientselect').show()
+$('.clientselect').html(table)
+    }
+    }
+  })
+})
+$(document).on('click','.clientvalue',function(){
+  let value=$(this).text();
+  $('.client-name-invoice').val(value)
+  $('.clientselect').hide()
+  fetchClientData()
+})
 
 $(document).on("keyup", ".item-name-invoice", function () {
-  $(".itemselect").show();
-  $(".item-selected").show();
-
+  
   let value = $(this).val();
   let row = $(this).closest("tr");
   $.ajax({
@@ -50,9 +91,12 @@ $(document).on("keyup", ".item-name-invoice", function () {
       "<ul class='item-selected  list-group  bg-white'>";
       data.data.forEach(function (value) {
         table += `<li class='itemvalue list-group-item  list-group-item-action'>${value["item_name"]}</li>`;
-        table += "</ul>";
       });
+      table += "</ul>";
       row.find(".itemselect").html(table);}
+      $(".itemselect").show();
+  $(".item-selected").show();
+
     },
   });
 });
@@ -61,8 +105,8 @@ $(document).on("click", ".itemvalue", function () {
   let itm = $(this).text();
   let row = $(this).closest("tr");
   row.find(".item-name-invoice").val(itm);
-  $(".item-selected").hide();
-  $(".itemselect").hide();
+  $(".item-selected").html('').hide();
+  $(".itemselect").html('').hide();
   fetchItemData();
 });
 
@@ -151,7 +195,7 @@ function addMore() {
     '<td class="">Item Name <sup class="text-danger">*</sup><input type="text" name="itemName[]" onchange="fetchItemData(this)" class="item-name-invoice form-control" placeholder="Item Name"><div class="itemselect position-absolute "></div></td>\
 <td><input type="text" disabled hidden name="itm_id[]" class="itm_Id">  Item Price<input disabled type="text" name="price[]" class="item-price-invoice form-control bg-white" placeholder="Item Price"></td>\
 <td>\
-Quantity<input min="1" type="number" onchange="changeAmt()" class="item-quantity-invoice form-control" name="quantity[]" bg-white  border border-0" value="1">\
+Quantity<input min="1" type="number" onchange="changeAmt()" oninput="this.value = this.value < 1 ? 1 : this.value" class="item-quantity-invoice form-control" name="quantity[]" bg-white  border border-0" value="1">\
    </td>\
     <td>Amount<input type="number" disabled placeholder="Amount" name="rowTotal[]" class="rowTotal bg-white form-control"></td>\
     <td><button type="button" onclick="changeAmt()" class="removeForm btn btn-outline-danger border border-0">X</button></td></tr>\
@@ -395,12 +439,28 @@ function loadInvoiceNO() {
 
 function addInvoic() {
   
-  let invoiceNo = $(".invoice_id").val();
+  let invoiceNo = $(".invoice_id").val()??"";
+  if(invoiceNo.trim()==""){
+     Swal.fire({
+      title: "Error!",
+      text: "Invoice Number Not Found?",
+      icon: "error"
+    });
+    return false;
+  }
   if ($(".client-email-invoice").val() == "no data") {
     $(".invalidclint").text("enter valid clint name");
     return false;
   }
-  let client = $(".cli_Id").val();
+  let client = $(".cli_Id").val()??"";
+  if(client.trim()==""){
+     Swal.fire({
+      title: "Error!",
+      text: "Client Not Found?",
+      icon: "error"
+    });
+    return false;
+  }
   if (client == "") {
     $(".invalidclint").text("enter clint name");
     return false;

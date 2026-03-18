@@ -33,10 +33,18 @@ switch (true) {
 
     case isset($_POST['client_name']):
         $name = $_POST['client_name'];
-        $crud->fetchData('client', 1, "select client_id,client_name,client_email,phone from client 
-    where client_name like '%$name%' ", 'limit 1');
+        $crud->fetchData('client', 100, "select client_id,client_name,client_email,phone from client 
+    where client_name like '%$name%' ", 'limit 100');
 
         break;
+        
+    case isset($_POST['clientSearch']):
+        $name = $_POST['clientSearch'];
+        $crud->fetchData('client', 100, "select client_name from client 
+    where client_name like '%$name%' ", 'limit 100');
+
+        break;
+        
 
 
 

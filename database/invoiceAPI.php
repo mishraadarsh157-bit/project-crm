@@ -27,53 +27,51 @@ class inv
         }
     }
 
-    public function insertData($invoiceNo,$client,$item,$quantity)
+    public function insertData($invoiceNo, $client, $item, $quantity)
     {
 
-        try{
-        $this->conn->begin_transaction();
-            $stmt=$this->conn->prepare("insert into invoice(InvoiceNo,ClientABN,InvDate)
+        try {
+            $this->conn->begin_transaction();
+            $stmt = $this->conn->prepare("insert into invoice(InvoiceNo,ClientABN,InvDate)
             values(?,?,?)
             ");
-            $stmt->bind_param('iis',$invoiceNo,$client,$time);
-            $time=date('Y-m-d H:i:s');
+            $stmt->bind_param('iis', $invoiceNo, $client, $time);
+            $time = date('Y-m-d H:i:s');
             $stmt->execute();
-        foreach ($item as $no =>$name) {
-            $name = mysqli_real_escape_string($this->conn, $name);
-            $stmt2=$this->conn->prepare("insert into invoiceitem(InvoiceNo,ItemNo,Quantity) values (?,?,?)");
-            $stmt2->bind_param('iii',$invoiceNo,$name,$quantity[$no]);
-            $stmt2->execute();
+            foreach ($item as $no => $name) {
+                $name = mysqli_real_escape_string($this->conn, $name);
+                $stmt2 = $this->conn->prepare("insert into invoiceitem(InvoiceNo,ItemNo,Quantity) values (?,?,?)");
+                $stmt2->bind_param('iii', $invoiceNo, $name, $quantity[$no]);
+                $stmt2->execute();
+            }
+            $this->conn->commit();
+            echo 1;
+        } catch (Exception $e) {
+            $this->conn->rollback();
+            echo 2;
         }
-        $this->conn->commit();
-        echo 1;
-        }
- catch(Exception $e){
-$this->conn->rollback();
-echo 2;
- }   
-}
-    public function UpdateData($invoiceNo,$item,$quantity)
+    }
+    public function UpdateData($invoiceNo, $item, $quantity)
     {
 
-        try{
-        $this->conn->begin_transaction();
-            $stmt=$this->conn->prepare("delete from invoiceitem where InvoiceNo=?
+        try {
+            $this->conn->begin_transaction();
+            $stmt = $this->conn->prepare("delete from invoiceitem where InvoiceNo=?
             ");
-            $stmt->bind_param('i',$invoiceNo);
+            $stmt->bind_param('i', $invoiceNo);
             $stmt->execute();
-        foreach ($item as $name => $no) {
-            $name = mysqli_real_escape_string($this->conn, $name);
-            $stmt2=$this->conn->prepare("insert into invoiceitem(InvoiceNo,ItemNo,Quantity) values (?,?,?)");
-            $stmt2->bind_param('iii',$invoiceNo,$no,$quantity[$name]);
-            $stmt2->execute();
+            foreach ($item as $name => $no) {
+                $name = mysqli_real_escape_string($this->conn, $name);
+                $stmt2 = $this->conn->prepare("insert into invoiceitem(InvoiceNo,ItemNo,Quantity) values (?,?,?)");
+                $stmt2->bind_param('iii', $invoiceNo, $no, $quantity[$name]);
+                $stmt2->execute();
+            }
+            $this->conn->commit();
+            echo 1;
+        } catch (Exception $e) {
+            $this->conn->rollback();
+            echo 2;
         }
-        $this->conn->commit();
-        echo 1;
-        }
- catch(Exception $e){
-$this->conn->rollback();
-echo 2;
- }   
-}
+    }
 }
 $invoice = new inv();

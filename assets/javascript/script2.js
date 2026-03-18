@@ -1,7 +1,13 @@
 ////////////////////////////////////client master
 
 // load select states into form////
-
+// if(window.location.href='http://localhost/project/clientmaster/'){
+//   clientData()
+// }// 
+if(window.location.href=='http://localhost/project/clientmaster/'){
+  $('.side2').css('background','orangered').css({'color':'white','margin-left':'25px','border-right':'10px solid yellow'});
+  clientData()
+}
 function loadStates() {
   $.ajax({
     url: "/project/clientcontroller/",
@@ -52,8 +58,14 @@ function loadCity(state) {
 
 function resetClientForm(){
   $('.add_clin').html('Add Client')
-  
-  $('.updateclint').html('<input type="button"  id="insert_client" onclick="insertClient()" class="btn btn-outline-primary " value="Submit">\
+    $('.name_valid').hide()
+    $('.number_valid').hide()
+    $('.email_valid').hide()
+    $('.address_valid').hide()
+    $('.state_valid').hide()
+    $('.city_valid').hide()
+    $('.pincode_valid').hide()
+    $('.updateclint').html('<input type="button"  id="insert_client" onclick="insertClient()" class="btn btn-outline-primary " value="Submit">\
                             <button type="reset" class="btn btn-outline-danger ">Reset</button>')   
   $('#clientUpStatus').html('');                         
   $('#add_client').trigger('reset')
@@ -61,33 +73,33 @@ function resetClientForm(){
 
 
 function insertClient() {
-  let client_name = $("#client_name_c").val();
+  let client_name = $("#client_name_c").val()??"";
   if (!validName(client_name)) {
     return;
   }
 
-  let client_number = $("#client_number").val();
+  let client_number = $("#client_number").val()??"";
   if (!validNumber(String(client_number))) {
     return;
   }
-  let client_email = $("#client_email_c").val();
+  let client_email = $("#client_email_c").val()??"";
   if (!validEmail(client_email)) {
     return;
   }
-  let client_address = $("#client_address").val();
+  let client_address = $("#client_address").val()??"";
   if (!validAddress(client_address)) {
     return;
   }
 
-  let client_state = $("#select_state").val();
+  let client_state = $("#select_state").val()??"";
 if(!validState(client_state)){
   return
 }
-  let client_city = $("#select_city").val();
+  let client_city = $("#select_city").val()??"";
 if(!validCity(client_city)){
   return
 }
-  let client_pincode = $("#client_pincode").val();
+  let client_pincode = $("#client_pincode").val()??"";
   if (!validPincode(client_pincode)) {
     return;
   }
@@ -409,35 +421,41 @@ $(document).on("click", ".update_c", async function () {
 });
 
 function updateClient() {
-  let id = $("#updId").val();
-  let client_name = $("#client_name_c").val();
+  let id = $("#updId").val()??"";
+  if(id==""){
+    Swal.fire({
+      title: "Error!",
+      text: "Client Not Found?",
+      icon: "question"
+    });
+    return false;
+  }
+  let client_name = $("#client_name_c").val()??"";
   if (!validName(client_name)) {
     return;
   }
 
-  let client_number = $("#client_number").val();
+  let client_number = $("#client_number").val()??"";
   if (!validNumber(client_number)) {
     return;
   }
-  let client_email = $("#client_email_c").val();
+  let client_email = $("#client_email_c").val()??"";
   if (!validEmail(client_email)) {
     return;
   }
-  let client_address = $("#client_address").val();
+  let client_address = $("#client_address").val()??"";
   if (!validAddress(client_address)) {
     return;
   }
-  let client_state = $("#select_state").val();
+  let client_state = $("#select_state").val()??"";
  if(!validState(client_state)){
   return
 } 
-  let client_city = $("#select_city").val();
+  let client_city = $("#select_city").val()??"";
   if(!validCity(client_city)){
   return
 }
-  console.log("not");
-  console.log(client_city);
-  let client_pincode = $("#client_pincode").val();
+  let client_pincode = $("#client_pincode").val()??"";
   if (!validPincode(client_pincode)) {
     return;
   }

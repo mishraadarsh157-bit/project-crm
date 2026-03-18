@@ -21,42 +21,41 @@ class db
 
     /////////read data
 
-    public function fetchData($table,$limit,$query,$limquery)
-    {   
-         $page = "";
+    public function fetchData($table, $limit, $query, $limquery)
+    {
+        $page = "";
         if (isset($_POST['page_no'])) {
             $page = $_POST["page_no"];
         } else {
             $page = 1;
         }
-         $limit = (int) $limit;
+
+        $limit = (int) $limit;
         $offset = ($page - 1) * $limit;
 
         $sql = $query . $limquery;
-          $result = mysqli_query($this->conn, $sql);
+        $result = mysqli_query($this->conn, $sql);
         if ($result == false) {
             echo 'no data';
+        } else {
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+                $dbdata['data'] = $data;
+                $pagin = $query;
+                $result = mysqli_query($this->conn, $pagin);
+                $total_records = mysqli_num_rows($result);
+                $total_pages = ceil($total_records / $limit);
+                $dbdata['total_record'] = $total_records;
+                $dbdata['total_page'] = $total_pages;
+
+                $jsondata = json_encode($dbdata);
+                echo $jsondata;
+            } else {
+                echo 'empty';
+            }
         }
-      else{
-        if(mysqli_num_rows($result)>0){
-        while ($row = $result->fetch_assoc()) {
-        $data[]=$row;
-        }
-        $dbdata['data']=$data;
-        $pagin=$query;
-        $result=mysqli_query($this->conn,$pagin);
-        $total_records=mysqli_num_rows($result);
-        $total_pages=ceil($total_records/$limit);
-         $dbdata['total_record']=$total_records;
-        $dbdata['total_page']=$total_pages;
-        
-       $jsondata = json_encode($dbdata);
-        echo $jsondata;
-           }
-           else{
-            echo 'empty';
-           }
-    }
     }
     public function escape_string($value)
     {
@@ -84,46 +83,35 @@ class db
 
     public function modifyData($query)
     {
-        
+
         $sql = $query;
-       $result = mysqli_query($this->conn, $sql);
+        $result = mysqli_query($this->conn, $sql);
         if ($result == true) {
             echo 1;
-        }        
-        else {
+        } else {
             echo 0;
         }
     }
-        public function updateForm($query){
-        $sql=$query;
-        $result=mysqli_query($this->conn,$sql);
-        if($result==false){
+    public function updateForm($query)
+    {
+        $sql = $query;
+        $result = mysqli_query($this->conn, $sql);
+        if ($result == false) {
             echo 0;
+        } else {
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = $result->fetch_array()) {
+                    $data[] = $row;
+                }
+                $dbdata['data'] = $data;
+                $jsondata = json_encode($dbdata);
+                echo $jsondata;
+            } else {
+                echo 0;
             }
-            else{
-                if(mysqli_num_rows($result)>0){
-                    while($row=$result->fetch_array()){
-                        $data[]=$row;
-                        }
-                        $dbdata['data']=$data;
-                        $jsondata=json_encode($dbdata);
-                        echo $jsondata;
-                        }
-                        else {
-                            echo 0;
-                            }
-                            }
-                            
-                            
-                            }    
-                            
-                            
-                          
-    
-
-
+        }
     }
+}
 
 
-$crud=new db();
-
+$crud = new db();

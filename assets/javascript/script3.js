@@ -17,23 +17,39 @@ function insertItem() {
         loadItems();
       } else {
           if(data.trim()=='enter name'){
+              $('.item_valid').show()
               $('.item_valid').text('enter name').css('color','red')
               return false;
-          }
-          
-          else if(data.trim()=='enter price'){
-              $('.price_valid').text('enter price').css('color','red')
-              return false;
-          }
-          
-          else if(data.trim()=='enter description'){
-              $('.des_valid').text('enter description').css('color','red')
-              return false;
-          }
-          
-          else if(data.trim()=='enter image'){
-              $('.image_valid').text('enter image').css('color','red')
-              return false;
+            }
+            else{
+                $('.item_valid').hide()
+              }
+              if(data.trim()=='enter price'){
+                $('.price_valid').show()
+                $('.price_valid').text('enter price').css('color','red')
+                return false;
+              }
+              else{
+                $('.price_valid').hide()
+                
+              }
+              if(data.trim()=='enter description'){
+                $('.des_valid').show()
+                $('.des_valid').text('enter description').css('color','red')
+                return false;
+              }
+              else{
+                $('.des_valid').hide()
+                
+              }
+              if(data.trim()=='enter image'){
+                $('.image_valid').show()
+                $('.image_valid').text('enter image').css('color','red')
+                return false;
+              }
+              else{
+                
+                $('.image_valid').hide()
           }
       }
     },
@@ -151,7 +167,6 @@ function loadItems(page) {
           table += `</tr>`;
         });
         table += "</table></div>";
-        ///////////pagination
         table += '<hr><div class=" w-100    d-flex justify-center">';
         table += '<ul class="pagination_i ms-5 ms-auto d-flex">';
 
@@ -287,22 +302,34 @@ function updateItm() {
         var page = $("#invis_i").val();
         loadItems(Number(page));
       } else {
-         if(data.trim()=='enter name'){
-              $('.item_valid').text('enter name').css('color','red')
-              return false;
-          }
-          
-          else if(data.trim()=='enter price'){
+         if(data.trim()=='Item Not Found'){
+          Swal.fire({
+  title: "Error?",
+  text: "Item Not Found?",
+  icon: "question"
+});
+          return false;
+         }
+         else if(data.trim()=='enter name'){
+             $('.item_valid').show()
+             $('.item_valid').text('enter name').css('color','red')
+             return false;
+            }
+            
+            else if(data.trim()=='enter price'){
+              $('.price_valid').show()
               $('.price_valid').text('enter price').css('color','red')
               return false;
-          }
-          
-          else if(data.trim()=='enter description'){
+            }
+            
+            else if(data.trim()=='enter description'){
+              $('.des_valid').show()
               $('.des_valid').text('enter description').css('color','red')
               return false;
-          }
-          
+            }
+            
           else if(data.trim()=='enter image'){
+            $('.image_valid').show()
               $('.image_valid').text('enter image').css('color','red')
               return false;
           }
@@ -380,6 +407,10 @@ function resetImage() {
 
 function resetItmForm(){
   $('.add_itm').html('Add Item')
+   $('.item_valid').hide()
+   $('.price_valid').hide()
+   $('.des_valid').hide()
+   $('.image_valid').hide()
 $('.itemSaver').html(' <div class="valid_item text-danger mb-3"></div>\
                         <button type="button" onclick="insertItem()" id="itemSubmit" \
                         name="itemSubmit" class="btn btn-outline-primary">Save Item</button>\

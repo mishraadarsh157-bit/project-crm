@@ -21,10 +21,10 @@ include_once "dashboard.php";
             <table class='table bg-white mt-3'>
                 <tr>
                     <td class='w-25'>
-                        <div class="search_holder m-2"><input type="text" placeholder="search" class='searc_i'><button onclick="loadItems(),searc_i()" class='search_button'><i class='bi bi-search'></i></button></div>
+                        <div class="search_holder m-2"><input type="text" placeholder="search" class='searc_i'><button onclick="searc_i()" class='search_button'><i class='bi bi-search'></i></button></div>
                     </td>
                     <td class='pt-3'>
-                        <button class="reset_btn " type="reset" onclick="clientData(),resetItems()"><i class="bi bi-arrow-repeat"></i></button>
+                        <button class="reset_btn " type="reset" onclick="resetItems()"><i class="bi bi-arrow-repeat"></i></button>
                     </td>
                     <td>
 
@@ -35,7 +35,7 @@ include_once "dashboard.php";
 
                     </td>
 
-                    <td align='right'><select name="" onchange="loadItems(),limitItem()" id="limit_i" class='form-select w-25'>
+                    <td align='right'><select name="" onchange="limitItem()" id="limit_i" class='form-select w-25'>
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>
@@ -65,7 +65,7 @@ include_once "dashboard.php";
                     </div>
                     <div class="col-6 mb-5 mt-4">
                         Item Price
-                        <input type="number" name='item_price' id="item_price" placeholder="Item Price" class='form-control '>
+                        <input type="tel"  min='1' name='item_price' id="item_price" placeholder="Item Price" class='form-control ' oninput="this.value = this.value < 1 ? 1 : this.value" value="1">
                         <div class="price_valid"></div>
                     </div>
                     <div class="col-12 mb-5 p-2">

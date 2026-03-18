@@ -1,8 +1,11 @@
 <div class="header  container-fluid m-0 row border-bottom border-dark w-100 p-0">
 
-    <div class="logo p-2 m-0 col-2 px-auto  bg-white" align='center' id='logo'>
+
+    <div class="logo p-2 m-0 col-2 px-auto  bg-white"  align='center' id='logo'>
+        <a href="<?php echo "/project/home/"; ?>"  id="">
 
         <img src="../assets/images/demo.png" class='mx-auto' alt=""><b class='h4 logo_name ms-2'  > AppStack</b>
+    </a>
 
     </div>
     <div class="col-10 naav p-2 d-flex justify-content-between  m-0 bg-white">

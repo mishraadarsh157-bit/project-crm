@@ -10,26 +10,26 @@ switch (true) {
 
     case    isset($_POST['submit_item']):
         $table = 'items';
-        $i_name = $_POST['item_name'];
-        if (empty($i_name)) {
+        $i_name = $_POST['item_name']??"";
+        if (empty(trim($i_name))) {
             echo "enter name";
             return;
         }
-        $i_price = $_POST['item_price'];
-        if (empty($i_price)) {
+        $i_price = $_POST['item_price']??"";
+        if (empty(trim($i_price))) {
             echo "enter price";
             return;
         }
         else if($i_price<1){
         $i_price=1;
         }
-        $i_description = $_POST['item_description'];
-        if (empty($i_description)) {
+        $i_description = $_POST['item_description']??"";
+        if (empty(trim($i_description))) {
             echo "enter description";
             return;
         }
-        $i_image_name = $_FILES['itemimage']['name'];
-        if (empty($i_image_name)) {
+        $i_image_name = $_FILES['itemimage']['name']??"";
+        if (empty(trim($i_image_name))) {
             echo "enter image";
             return;
         }
@@ -73,25 +73,32 @@ switch (true) {
 
     case   isset($_POST['updateItem']):
         $table = 'items';
-        $id = $_POST['item_id'];
+        $id = $_POST['item_id']??"";
+        if(trim($id)==""){
+            echo "Item Not Found";
+            return;
+        }
         $name = $_POST['item_name'];
-        if (empty($name)) {
+        if (empty(trim($name))) {
             echo "enter name";
             return;
         }
         $description = $_POST['item_description'];
-        if (empty($description)) {
+        if (empty(trim($description))) {
             echo "enter description";
             return;
         }
         $price = $_POST['item_price'];
-        if (empty($price)) {
+        if (empty(trim($price))) {
             echo "enter price";
             return;
         }
+        else if(trim($price)<1){
+            $price=1;
+        }
         $image_name = $_FILES['itemimage']['name'];
 
-        if (empty($image_name)) {
+        if (empty(trim($image_name))) {
             $path = "";
         } else {
             $image_tmp = $_FILES['itemimage']['tmp_name'];

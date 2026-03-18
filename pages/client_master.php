@@ -28,7 +28,7 @@ include_once "dashboard.php";
                                 <form>
                                     <td class='w-25 search-box p-2'>
                                         <div class="search_holder">
-                                            <input type="text" placeholder="search" class='searc_c'><button onclick='clientData(),searc_c()' type="button" class='search_button'><i class='bi bi-search'></i></button>
+                                            <input type="text" placeholder="search" class='searc_c'><button onclick='searc_c()' type="button" class='search_button'><i class='bi bi-search'></i></button>
                                         </div>
                                     </td>
                                     <td>
@@ -41,11 +41,11 @@ include_once "dashboard.php";
                                         <input type="text" hidden class='field_c' value='client_id'>
                                         <input type="text" hidden class='order_c' value='asc'>
                                         <input type="text" hidden value='bi-arrow-down-up' id="icon_hold_c">
-                                        <button class="reset_btn " type="reset" onclick="clientData(),resetClient()"><i class="bi bi-arrow-repeat"></i></button>
+                                        <button class="reset_btn " type="reset" onclick="resetClient()"><i class="bi bi-arrow-repeat"></i></button>
                                     </td>
                                 </form>
                                 <td class='w-25' align='right'>
-                                    <select class='form-select w-25' onchange='clientData(),limitData_c()' name="" id="limit_c">
+                                    <select class='form-select w-25' onchange='limitData_c()' name="" id="limit_c">
                                         <option value="5">5</option>
                                         <option value="10">10</option>
                                         <option value="15">15</option>
@@ -75,12 +75,12 @@ include_once "dashboard.php";
                         <div class="col-6 p-3 pt-5">
                             <input type="text" hidden id="updId">
                             Client Name:
-                            <input type="text" class="form-control mb-3" placeholder="Client Name" id="client_name_c">
+                            <input type="text" oninput="value = value.replace(/[^a-zA-Z]/g, '')" min='5' max='15' class="form-control mb-3" placeholder="Client Name" id="client_name_c">
                             <div class="name_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
                             Client Phone:
-                            <input type="Number" placeholder="Client phone number" class="form-control mb-3" minlength="2" maxlength="15" id="client_number">
+                            <input type="tel" min='10' max='10' oninput="this.value = this.value.replace(/[^0-9]/g, '')"  placeholder="Client phone number" class="form-control mb-3" minlength="2" maxlength="15" id="client_number">
                             <div class="number_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
@@ -90,7 +90,7 @@ include_once "dashboard.php";
                         </div>
                         <div class="col-6 p-3 pt-5">
                             Client Email:
-                            <input type="email" placeholder="Client email" class="form-control mb-3" id="client_email_c">
+                            <input type="email" min='5' max='50' placeholder="Client email" class="form-control mb-3" id="client_email_c">
                             <div class="email_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-4  p-3 pt-5">State:
@@ -107,7 +107,7 @@ include_once "dashboard.php";
                             </div>
                             <div class="city_valid"></div>
                         </div>
-                        <div class="col-4  p-3 pt-5">Pincode:<input type="Number" placeholder="Pincode" id="client_pincode" class="form-control mb-3">
+                        <div class="col-4  p-3 pt-5">Pincode:<input type="tel" placeholder="Pincode" min='4' max='8' id="client_pincode" class="form-control mb-3">
                             <div class="pincode_valid text-danger mb-3 "></div>
                         </div>
 

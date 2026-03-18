@@ -27,19 +27,19 @@ include_once "dashboard.php";
           <div class="col-9 d-flex">
             <div class="search_holder w-25 d-flex">
               <input type="text" onchange="invoiceData()" placeholder="search" class="searc_iv border border-0">
-              <button class='searchbtniv' onclick="invoiceData(),searc_iv()"><i class="bi bi-search"></i></button>
+              <button class='searchbtniv' onclick="searc_iv()"><i class="bi bi-search"></i></button>
             </div>
             <div>
-              <button class="reset_btn " type="reset" onclick="invoiceData(),resetinvoice  ()"><i class="bi bi-arrow-repeat"></i></button>
+              <button class="reset_btn " type="reset" onclick="resetinvoice()"><i class="bi bi-arrow-repeat"></i></button>
             </div>
             <input type="text" hidden id="invis_iv" value="1">
-            <input type="text" hidden onchange='invoiceData()' class="field_iv" value="InvoiceNo">
-            <input type="text" hidden onchange='invoiceData()' class="order_iv" value="asc">
-            <input type="text" hidden onchange='invoiceData()' id="icon_hold_iv" value="bi-arrow-down-up">
+            <input type="text" hidden class="field_iv" value="InvoiceNo">
+            <input type="text" hidden class="order_iv" value="asc">
+            <input type="text" hidden id="icon_hold_iv" value="bi-arrow-down-up">
 
           </div>
           <div class="col-3" align='right'>
-            <select name="" id="limit_iv" onchange="invoiceData(),limitData_iv()" class="form-select w-25">
+            <select name="" id="limit_iv" onchange="limitData_iv()" class="form-select w-25">
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
@@ -72,7 +72,8 @@ include_once "dashboard.php";
           <!-- invoice date  -->
           <!-- client part -->
 
-          <div class="col-4 mt-4">Client Name <sup class="text-danger">*</sup><input type="text" onchange="fetchClientData()" class="client-name-invoice form-control bg-white " placeholder="Client Name">
+          <div class="col-4 mt-4">Client Name <sup class="text-danger">*</sup><input type="text" onkeyup="fetchClientData()" class="client-name-invoice form-control bg-white " placeholder="Client Name">
+          <div class="clientselect position-absolute"></div>
             <div class="invalidclint text-danger"></div>
           </div>
           <div class="col-4 mt-4">Client Email<input type="text" disabled class="client-email-invoice bg-white form-control  " placeholder="Client Email"></div>
@@ -89,7 +90,7 @@ include_once "dashboard.php";
           <div class="quantityall text-danger mb-3 col-6"></div>
           <div class="col-8"></div>
           <div class="loadButtons col-4 mt-4" align="right">Total Amount<input type="text" disabled class="total-amount-invoice form-control bg-white mb-4" placeholder="Total Amount">
-            <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>
+            <button onclick="addInvoic()" class="btn btn-outline-primary mb-4" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>
           </div>
 
 

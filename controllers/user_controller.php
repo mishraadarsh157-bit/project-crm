@@ -14,19 +14,34 @@ switch (true) {
         $limit = $_POST['limit'] ?? 5;
         $offset = ($page_no - 1) * $limit;
         $crud->fetchData($table, $limit, "select * from $table 
-    where STATUS like '%$status%' and (
- name like '%$search%' 
-    or phone like '%$search%' 
-    or email like '%$search%' 
-    ) order by $field  $order ", " limit $offset,  $limit");;
+            where STATUS like '%$status%' and (
+        name like '%$search%' 
+            or phone like '%$search%' 
+            or email like '%$search%' 
+            ) order by $field  $order ", " limit $offset,  $limit");
         break;
 
     case isset($_POST['save_user']):
         $table = 'users';
         $user_name = $_POST['user_name'];
+
         $user_password = $_POST['user_pass'];
         $user_phone = $_POST['user_phone'];
         $user_email = $_POST['user_email'];
+        if (empty($user_name)) {
+            echo "values not found";
+            return false;
+        } else if (empty($user_password)) {
+            echo "values not found";
+            return false;
+        } else if (empty($user_phone)) {
+            echo "values not found";
+            return false;
+        } else if (empty($user_email)) {
+            echo "values not found";
+            return false;
+        }
+
         $hashedPassword = password_hash($user_password, PASSWORD_DEFAULT);
 
 

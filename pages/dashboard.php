@@ -18,6 +18,7 @@ if (!isset($_SESSION['admin'])) {
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <script src="../assets/javascript/bootstrap.js"></script>
+    
 </head>
 
 <body class="text-sm " >
@@ -40,6 +41,7 @@ if (!isset($_SESSION['admin'])) {
 <script src="../assets/javascript/validations.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../assets/javascript/home.js"></script>
+    
     <script src="../assets/javascript/script.js"></script>
     <script src="../assets/javascript/script2.js"></script>
     <script src="../assets/javascript/script3.js"></script>
