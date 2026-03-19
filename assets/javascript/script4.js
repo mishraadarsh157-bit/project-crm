@@ -45,7 +45,7 @@ $(document).on('keyup','.client-name-invoice',function(){
       if(data.trim()=='empty'){
         let table='no client found'
         
-        $('.clientselect').html(table) 
+        $('.clientselect').html(table).css('color','red') 
         
       }
       else{
@@ -74,11 +74,11 @@ $(document).on("keyup", ".item-name-invoice", function () {
     success: function (data) {
       if(data.trim()=='empty'){
       let table='no item found'
-    row.find(".itemselect").html(table);  
+    row.find(".itemselect").html(table).css('color','red');  
     }
       else{
       data = JSON.parse(data);
-      console.log(data)
+     row.find(".itemselect").html('');
       $(function() {
             var availableitems  =  data;
             row.find("#item_s").autocomplete({
@@ -94,13 +94,12 @@ $(document).on("keyup", ".item-name-invoice", function () {
 
 
 
+
 function fetchItemData() {
-  console.log(1)
   let name = $("input[name='itemName[]']").map(function () {
       return this.value;
     })
     .get();
-    console.log(name)
   $.ajax({
     url: "/project/invoiceController/",
     type: "POST",
@@ -108,14 +107,11 @@ function fetchItemData() {
       item_name: name,
     },
     success: function (data) {
-      data=JSON.parse(data)
-      if (data.empty == null) {
-        console.log(1.1)
+       if (data.trim() == "empty") {
         $(".item-price-invoice").val("no data").css("color", "red");
         $(".total-amount-invoice").val("no data").css("color", "red");
       } else {
         data = JSON.parse(data);
-        console.log(2)
         data.forEach(function (value, index) {
           if (value == null) {
           } else {
@@ -179,13 +175,13 @@ function cutBtn() {
 function addMore() {
   var row = "<tr>";
   row +=
-    '<td class="">Item Name <sup class="text-danger">*</sup><input type="text" name="itemName[]" id="item_s" onchange="fetchItemData(this)" class="item-name-invoice form-control" placeholder="Item Name"><div class="itemselect position-absolute "></div></td>\
-<td><input type="text" disabled hidden name="itm_id[]" class="itm_Id">  Item Price<input disabled type="text" name="price[]" class="item-price-invoice form-control bg-white" placeholder="Item Price"></td>\
-<td>\
+    '<td class="pb-3">Item Name <sup class="text-danger">*</sup><input type="text" name="itemName[]" id="item_s" onchange="fetchItemData(this)" class="item-name-invoice form-control" placeholder="Item Name"><div class="itemselect position-absolute "></div></td>\
+<td class="pb-3"><input type="text" disabled hidden name="itm_id[]" class="itm_Id">  Item Price<input disabled type="text" name="price[]" class="item-price-invoice form-control bg-white" placeholder="Item Price"></td>\
+<td class="pb-3">\
 Quantity<input min="1" type="number" onchange="changeAmt()" oninput="this.value = this.value < 1 ? 1 : this.value" class="item-quantity-invoice form-control" name="quantity[]" bg-white  border border-0" value="1">\
    </td>\
-    <td>Amount<input type="number" disabled placeholder="Amount" name="rowTotal[]" class="rowTotal bg-white form-control"></td>\
-    <td><button type="button" onclick="changeAmt()" class="removeForm btn btn-outline-danger border border-0">X</button></td></tr>\
+    <td class="pb-3">Amount<input type="number" disabled placeholder="Amount" name="rowTotal[]" class="rowTotal bg-white form-control"></td>\
+    <td class="pb-3"><button type="button" onclick="changeAmt()" class="removeForm btn btn-outline-danger border border-0">X</button></td></tr>\
     ';
   $(".itemTable").append(row);
   cutBtn();
@@ -552,14 +548,22 @@ $(document).on("click", ".update_iv", function () {
   });
 });
 function updateInvoice() {
-  let invoiceNo = $(".invoice_id").val();
+  let invoiceNo = $(".invoice_id").val()??"";
+    if(invoiceNo.trim()==""){
+     Swal.fire({
+      title: "Error!",
+      text: "Invoice Number Not Found?",
+      icon: "error"
+    });
+    return false;
+  }
   let item = $("input[name='itm_id[]']")
     .map(function () {
       return this.value;
     })
     .get();
   if (item.some((element) => element == "")) {
-    $(".insertall").text("insert proper items");
+    $(".insertall").text("insert all items");
     return;
   }
    let quantity = $("input[name='quantity[]']").map(function(){

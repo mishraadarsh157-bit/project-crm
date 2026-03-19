@@ -20,15 +20,11 @@ class inv
         $sql = $query;
         $result = mysqli_query($this->conn, $sql);
         if (mysqli_num_rows($result) > 0) {
-        $dbdata=[];   
-        while ($row = $result->fetch_assoc()) {
-                 $dbdata[] = $row;
+            while ($row = $result->fetch_assoc()) {
+                return $dbdata['data'] = $row;
             }
-            $data[]=$dbdata;
-            
-            echo json_encode($data);
         } else {
-            echo "empty";
+        
         }
     }
 

@@ -43,19 +43,16 @@ switch (true) {
     where client_name like '%$name%' ");
         break;
     case isset($_POST['item_name']):
-        $itemname = $_POST['item_name'] ;
+         $itemname = $_POST['item_name'] ?? "";
         $data = array();
         foreach ($itemname as $name) {
             $name = mysqli_real_escape_string($conn, $name);
-        $sqli=$invoice->fetchitemData("select * from items where item_name like '%$name%' limit 1");
-        // echo $sqli , "sql";
-        // var_dump($sqli);
-            array_push($data,$sqli);
+
+            array_push($data, $invoice->fetchitemData("select * from items where item_name='$name' limit 1"));
         }
-        $dbdata['data']=$data;
-        $json = json_encode($dbdata);
-        
-        return $json;
+
+        $json = json_encode($data);
+        echo $json;
         break;
 
 
