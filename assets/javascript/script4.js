@@ -44,29 +44,21 @@ $(document).on('keyup','.client-name-invoice',function(){
     success:function(data){
       if(data.trim()=='empty'){
         let table='no client found'
-
+        
         $('.clientselect').html(table) 
-
-    }
-    else{
-      data=JSON.parse(data)
-        let table =
-      "<ul class='client-selected  list-group  bg-white'>";
-      data.data.forEach(function(value){
-  table += `<li class='clientvalue list-group-item  list-group-item-action'>${value["client_name"]}</li>`;
+        
+      }
+      else{
+        data=JSON.parse(data)
+       $(function() {
+            var availableclients  =  data;
+            $( "#automplete-1" ).autocomplete({
+               source: availableclients
+            });
 })
-table += "</ul>";
-        $('.clientselect').show()
-$('.clientselect').html(table)
     }
     }
   })
-})
-$(document).on('click','.clientvalue',function(){
-  let value=$(this).text();
-  $('.client-name-invoice').val(value)
-  $('.clientselect').hide()
-  fetchClientData()
 })
 
 $(document).on("keyup", ".item-name-invoice", function () {
@@ -86,35 +78,29 @@ $(document).on("keyup", ".item-name-invoice", function () {
     }
       else{
       data = JSON.parse(data);
-      let table =
-      "<ul class='item-selected  list-group  bg-white'>";
-      data.data.forEach(function (value) {
-        table += `<li class='itemvalue list-group-item  list-group-item-action'>${value["item_name"]}</li>`;
-      });
-      table += "</ul>";
-      row.find(".itemselect").html(table);}
-      $(".itemselect").show();
-  $(".item-selected").show();
+      console.log(data)
+      $(function() {
+            var availableitems  =  data;
+            row.find("#item_s").autocomplete({
+               source: availableitems
+            });
+          })
+    }
+    
 
     },
   });
 });
 
-$(document).on("click", ".itemvalue", function () {
-  let itm = $(this).text();
-  let row = $(this).closest("tr");
-  row.find(".item-name-invoice").val(itm);
-  $(".item-selected").html('').hide();
-  $(".itemselect").html('').hide();
-  fetchItemData();
-});
 
-function fetchItemData(inde) {
-  let name = $("input[name='itemName[]']")
-    .map(function () {
+
+function fetchItemData() {
+  console.log(1)
+  let name = $("input[name='itemName[]']").map(function () {
       return this.value;
     })
     .get();
+    console.log(name)
   $.ajax({
     url: "/project/invoiceController/",
     type: "POST",
@@ -122,11 +108,14 @@ function fetchItemData(inde) {
       item_name: name,
     },
     success: function (data) {
-      if (data.trim() == "empty") {
+      data=JSON.parse(data)
+      if (data.empty == null) {
+        console.log(1.1)
         $(".item-price-invoice").val("no data").css("color", "red");
         $(".total-amount-invoice").val("no data").css("color", "red");
       } else {
         data = JSON.parse(data);
+        console.log(2)
         data.forEach(function (value, index) {
           if (value == null) {
           } else {
@@ -190,7 +179,7 @@ function cutBtn() {
 function addMore() {
   var row = "<tr>";
   row +=
-    '<td class="">Item Name <sup class="text-danger">*</sup><input type="text" name="itemName[]" onchange="fetchItemData(this)" class="item-name-invoice form-control" placeholder="Item Name"><div class="itemselect position-absolute "></div></td>\
+    '<td class="">Item Name <sup class="text-danger">*</sup><input type="text" name="itemName[]" id="item_s" onchange="fetchItemData(this)" class="item-name-invoice form-control" placeholder="Item Name"><div class="itemselect position-absolute "></div></td>\
 <td><input type="text" disabled hidden name="itm_id[]" class="itm_Id">  Item Price<input disabled type="text" name="price[]" class="item-price-invoice form-control bg-white" placeholder="Item Price"></td>\
 <td>\
 Quantity<input min="1" type="number" onchange="changeAmt()" oninput="this.value = this.value < 1 ? 1 : this.value" class="item-quantity-invoice form-control" name="quantity[]" bg-white  border border-0" value="1">\
@@ -315,9 +304,9 @@ function invoiceData(page) {
           table += `<td>${value["phone"]}</td>`;
           table += "</tr>";
         });
-        table += "</table></div>";
+        table += "</table></div><hr>";
 
-        table += "<div class='pagination pt-3 w-100'>";
+        table += "<div class='pagination pt-3 pb-5 w-100'>";
         table += '<ul class="pagination_iv ms-5 ms-auto d-flex">';
         if (page <= 1) {
           table +=

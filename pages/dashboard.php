@@ -18,6 +18,8 @@ if (!isset($_SESSION['admin'])) {
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <script src="../assets/javascript/bootstrap.js"></script>
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+    rel = "stylesheet">
     
 </head>
 
@@ -37,6 +39,9 @@ if (!isset($_SESSION['admin'])) {
 
 </body>
 <script src="../assets/javascript/jquery.js"></script> 
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/javascript/validations.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

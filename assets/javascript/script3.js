@@ -179,7 +179,7 @@ function loadItems(page) {
           table += `</tr>`;
         });
         table += "</table></div>";
-        table += '<hr><div class=" w-100    d-flex justify-center">';
+        table += '<hr><div class=" w-100   pt-4 pb-5 d-flex justify-center">';
         table += '<ul class="pagination_i ms-5 ms-auto d-flex">';
 
         if (page <= 1) {

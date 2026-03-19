@@ -72,7 +72,7 @@ include_once "dashboard.php";
           <!-- invoice date  -->
           <!-- client part -->
 
-          <div class="col-4 mt-4">Client Name <sup class="text-danger">*</sup><input type="text" onkeyup="fetchClientData()" class="client-name-invoice form-control bg-white " placeholder="Client Name">
+          <div class="col-4 mt-4">Client Name <sup class="text-danger">*</sup><input type="text" id='automplete-1' onchange="fetchClientData()" class="client-name-invoice form-control bg-white " placeholder="Client Name">
           <div class="clientselect position-absolute"></div>
             <div class="invalidclint text-danger"></div>
           </div>

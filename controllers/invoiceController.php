@@ -39,20 +39,23 @@ switch (true) {
 
     case isset($_POST['clientSearch']):
         $name = $_POST['clientSearch'];
-        $crud->fetchData('client', 100, "select client_name from client 
-    where client_name like '%$name%' ", 'limit 100');
+        $invoice->fetchclientmData( "select client_name from client 
+    where client_name like '%$name%' ");
         break;
     case isset($_POST['item_name']):
-        $itemname = $_POST['item_name'] ?? "";
+        $itemname = $_POST['item_name'] ;
         $data = array();
         foreach ($itemname as $name) {
             $name = mysqli_real_escape_string($conn, $name);
-
-            array_push($data, $invoice->fetchitemData("select * from items where item_name='$name' limit 1"));
+        $sqli=$invoice->fetchitemData("select * from items where item_name like '%$name%' limit 1");
+        // echo $sqli , "sql";
+        // var_dump($sqli);
+            array_push($data,$sqli);
         }
-
-        $json = json_encode($data);
-        echo $json;
+        $dbdata['data']=$data;
+        $json = json_encode($dbdata);
+        
+        return $json;
         break;
 
 
@@ -72,7 +75,7 @@ switch (true) {
 
     case isset($_POST['itemSearch']):
         $item = $_POST['itemSearch'];
-        $crud->fetchData('items', 100, "select item_name from items where item_name like '%$item%' ", "");
+        $invoice->fetchitmData( "select item_name from items where item_name like '%$item%' ");
         break;
 
 

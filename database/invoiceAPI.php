@@ -20,10 +20,15 @@ class inv
         $sql = $query;
         $result = mysqli_query($this->conn, $sql);
         if (mysqli_num_rows($result) > 0) {
-            while ($row = $result->fetch_assoc()) {
-                return $dbdata['data'] = $row;
+        $dbdata=[];   
+        while ($row = $result->fetch_assoc()) {
+                 $dbdata[] = $row;
             }
+            $data[]=$dbdata;
+            
+            echo json_encode($data);
         } else {
+            echo "empty";
         }
     }
 
@@ -72,6 +77,34 @@ class inv
             $this->conn->rollback();
             echo 2;
         }
+    }
+    public function fetchclientmData($query){
+        $sql = $query;
+        $result = mysqli_query($this->conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+        $dbdata=[];    
+        while ($row = $result->fetch_assoc()) {
+                 $dbdata[] = $row['client_name'];
+            }
+            $data['data']=$dbdata;
+            echo json_encode($dbdata);
+            } else {
+            echo "empty";
+            }
+    }
+    function fetchitmData($query){
+        $sql = $query;
+        $result = mysqli_query($this->conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+        $dbdata=[];    
+        while ($row = $result->fetch_assoc()) {
+                 $dbdata[] = $row['item_name'];
+            }
+            $data['data']=$dbdata;
+            echo json_encode($dbdata);
+            } else {
+            echo "empty";
+            }
     }
 }
 $invoice = new inv();

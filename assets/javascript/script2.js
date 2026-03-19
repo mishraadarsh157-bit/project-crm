@@ -250,7 +250,7 @@ function clientData(page) {
           });
 
           table += "</table></div>";
-          table += '<hr><div class=" w-100    d-flex justify-center">';
+          table += '<hr><div class=" w-100  pt-4  d-flex justify-center">';
           table += '<ul class="pagination_c ms-5 ms-auto d-flex">';
 
           if (page <= 1) {
