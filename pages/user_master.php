@@ -41,19 +41,19 @@ include_once "dashboard.php";
                             <input type="text" title="NAME" id="user_name" oninput="value = value.replace(/[^a-zA-Z]/g, '')" placeholder="User Name" autocomplete="off" name="user_name" minlength="2" maxlength="15" class="form-control    border ">
                             <div class="name_valid text-danger mb-3 "></div>
                         </div>
-                        <div class="col-6 mb-4 password">
+                        <div class="col-6 mb-4 pas <sup class="text-danger">*</sup>sword">
                             User Password :
                             <input type="password" title="PASSWORD" autocomplete="off" id="user_pass" max='20' placeholder="User Password" name="user_pass" class="form-control  border ">
                             <div class="pass_valid" class="text-danger mb-3 ">
 
                             </div>
                         </div>
-                        <div class="col-6"> User Number :
+                        <div class="col-6"> User Number : <sup class="text-danger">*</sup>
                             <input type="tel" placeholder="User Phone Number" title="NUMBER" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="user_number" name="user_number" class="form-control  border " min='5' max='10' minlength="5" maxlength="10" required>
                             <div class="number_valid" class="text-danger mb-3 "></div>
                         </div>
                         <div class="col-12 mb-4">
-                            User E-Mail :
+                            User E-Mail : <sup class="text-danger">*</sup>
                             <input type="email" placeholder="User E-mail" title="Email" id="user_email" required min='5' max='30' name="user_email" class="form-control  border ">
                             <div class="email_valid" class="text-danger mb-3 "></div>
                         </div>

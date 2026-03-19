@@ -59,22 +59,22 @@ include_once "dashboard.php";
                     <h1 class='add_itm pt-3'>Add Item</h1>
                     <hr>
                     <div class="col-6 mb-5 mt-4">
-                        Item Name
+                        Item Name  <sup class="text-danger">*</sup>:
                         <input type="text" name='item_name' id="item_name" placeholder="Item name" class='item_name form-control '>
                         <div class="item_valid"></div>
                     </div>
                     <div class="col-6 mb-5 mt-4">
-                        Item Price
+                        Item Price <sup class="text-danger">*</sup>
                         <input type="tel"  min='1' name='item_price' id="item_price" placeholder="Item Price" class='form-control ' oninput="this.value = this.value < 1 ? 1 : this.value" value="1">
                         <div class="price_valid"></div>
                     </div>
                     <div class="col-12 mb-5 p-2">
-                        Item Description
+                        Item Description <sup class="text-danger">*</sup>
                         <input type="text" name='item_description' id="item_description" placeholder="Item Description" class='form-control '>
                         <div class="des_valid"></div>
                     </div>
                     <div class="col-6 mb-5 p-2">
-                        Item Image
+                        Item Image <sup class="text-danger">*</sup>
                         <div class='image_holder'>
                             <input type="file" accept="image/*" name='itemimage' onchange="itmImg(event)" id="item_image" class='form-control w-75'><button class="btn border border-0 btn-outline-danger" type="button" onclick="resetImage()"><i class="bi bi-x-lg"></i></button>
                         </div>

@@ -1,9 +1,5 @@
 ////////////////////////////////////client master
 
-// load select states into form////
-// if(window.location.href='http://localhost/project/clientmaster/'){
-//   clientData()
-// }// 
 if(window.location.href=='http://localhost/project/clientmaster/'){
   $('.side2').css('background','orangered').css({'color':'white','margin-left':'25px','border-right':'10px solid yellow'});
   clientData()
@@ -34,7 +30,7 @@ function loadedState() {
 }
 
 function loadCity(state) {
-  console.log(state);
+
   $.ajax({
     url: "/project/clientcontroller/",
     type: "POST",
@@ -121,7 +117,6 @@ if(!validCity(client_city)){
     },
     success: function (data) {
       if (data.trim() == 1) {
-        console.log(data);
         window.location.href = "/project/clientmaster/";
         $("#add_client").trigger("reset");
       } else {
@@ -172,7 +167,6 @@ function clientData(page) {
         page_name: "clientPage",
       },
       success: function (data) {
-        // console.log(data);
         if (data.trim() == "empty") {
           let icon = $("#icon_hold_c").val();
           let table =
@@ -230,7 +224,15 @@ function clientData(page) {
                 
                 
                 </td>`;
-            table += `<td class='text-success'>${value["client_name"]}</td>`;
+            table += `<td class='text-success'>
+            <ul class="nav text-white" id="myTab" role="tablist">
+            <li class="nav-item text-white " role="presentation">
+            <a class="update_c nav-link text-success" type='button' id="profile-tab " name='update onclick='loadStates()' data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" data-uid='${value["client_id"]}'   value='update_c'>
+            ${value["client_name"]}
+            </a>
+        </li>
+        </ul>
+            </td>`;
             table += `<td class='text-muted'>${value["phone"]}</td>`;
             table += `<td class=''>${value["client_email"]}</td>`;
             table += `<td class='text-muted'>${value["address"]} , ${value["city"]} (${value["name"]})</td>`;
@@ -346,7 +348,7 @@ $(document).on("click", ".update_c", async function () {
     },
     success: function (data) {
       data = JSON.parse(data);
-      console.log(data)
+   
       data.data.forEach(async function (value) {
         $('#updId').val(`${value['client_id']}`)
         $('#client_name_c').val(`${value['client_name']}`)
@@ -479,7 +481,7 @@ function updateClient() {
     },
     success: function (data) {
       if (data.trim() == 1) {
-        console.log(data);
+       
          $('#home-tab').tab('show')
         $("#add_client").trigger("reset");
         var page = $("#invis_c").val();

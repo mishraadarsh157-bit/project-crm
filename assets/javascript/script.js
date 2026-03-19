@@ -85,10 +85,7 @@ $(".logout").click(function (e) {
   });
 });
 
-// $("#logo").click(function () {
-//   window.location.href = "/project/home/";
-//   dashboardData()
-// });
+
 
 $("#hide_sidebar").click(function () {
   $("#left_sidebar").css("width", "8%");
@@ -223,7 +220,18 @@ function userData(page, limit) {
                 
                 
                 </td>`;
-          table += `<td class='text-success'>${value["name"]}</td>`;
+          table += `<td class='text-success'>
+          <ul class="nav me-2" id="nav-tab" role="tablist">
+
+
+        <li class="nav-item " role="presentation">
+           <a class='update text-success'  id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" name='update' type="button" role="tab" data-uid='${value["id"]}'  aria-controls="pills-profile" aria-selected="true"  value='update'>
+           ${value["name"]}
+                </a>
+        </li></ul>
+          
+          </td>`;
+          
           table += `<td class='text-muted'>${value["phone"]}</td>`;
           table += `<td class=''>${value["email"]}</td>`;
           if (value["STATUS"] == 1) {
@@ -399,7 +407,6 @@ $(document).on("click", ".update", function () {
     },
     success: function (data) {
       data = JSON.parse(data);
-      console.log(data);
       data.data.forEach(function (value) {
         $(".userId").val(`${value["id"]}`);
         $("#user_name").val(`${value["name"]}`);

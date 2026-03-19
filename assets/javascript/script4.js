@@ -8,7 +8,6 @@ function fetchClientData() {
     },
     success: function (data) 
     {
-      console.log(data)
       if (data.trim() == "empty") {
         $(".client-email-invoice").val("no data").css("color", "red");
         $(".client-phone-invoice").val("no data").css("color", "red");
@@ -188,7 +187,6 @@ function cutBtn() {
     $(".removeForm").removeAttr("disabled");
   }
 }
-cutBtn();
 function addMore() {
   var row = "<tr>";
   row +=
@@ -205,7 +203,6 @@ Quantity<input min="1" type="number" onchange="changeAmt()" oninput="this.value 
 }
 
 $(document).on("click", ".removeForm", function () {
-  console.log("remove");
   $(this).closest("tr").remove();
   changeAmt();
   cutBtn();
@@ -291,7 +288,7 @@ function invoiceData(page) {
           ind = index + 1;
           index = (page - 1) * limit + ind;
           table += "<tr>";
-          table += `<td>${index}</td>`;
+          table += `<td class='text-center'>${index}</td>`;
           table += `<td class='d-flex justify-content-center'> <ul class="nav me-2" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button onclick="changeAmt()" class="update_iv nav-link btn btn-sm rounded-pill btn-outline-primary border border-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["InvoiceNo"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false"><i class='bi bi-pencil-square'>
@@ -306,7 +303,12 @@ function invoiceData(page) {
     </td>`;
 
           table += `<td>${value["InvoiceNo"]}</td>`;
-          table += `<td>INV0${value["InvoiceNo"]}</td>`;
+          table += `<td>
+          <ul class="nav" id="myTab" role="tablist"><a onclick="changeAmt()" class="update_iv nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["InvoiceNo"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+          #INV0${value["InvoiceNo"]}
+          </a>
+          </ul>
+          </td>`;
           table += `<td>${value["InvDate"]}</td>`;
           table += `<td>${value["client_name"]}</td>`;
           table += `<td>${value["client_email"]}</td>`;
@@ -472,7 +474,6 @@ function addInvoic() {
       return this.value;
     })
     .get();
-  console.log(item);
   if (item.some((element) => element == "")) {
     $(".insertall").text("insert proper items");
     return false;
@@ -568,7 +569,6 @@ function updateInvoice() {
       return this.value;
     })
     .get();
-  console.log(item);
   if (item.some((element) => element == "")) {
     $(".insertall").text("insert proper items");
     return;
@@ -576,7 +576,6 @@ function updateInvoice() {
    let quantity = $("input[name='quantity[]']").map(function(){
     return this.value;
   }).get();
-  console.log(quantity);
  if (quantity.some((element) => element == "" || quantity.some((element) => element <1 ))) {
     $(".quantityall").text("insert proper quantity");
     return;
@@ -593,7 +592,6 @@ function updateInvoice() {
       UpdateInvoice: "UpadteInvoice",
     },
     success: function (data) {
-      console.log(data);
 
       $("#home-tab").tab("show");
       $(".addInvoice").trigger("reset");
@@ -622,7 +620,6 @@ $(document).on('click','.mailBtn',function(){
         fetchMail:'fetchMail'
        },
        success: function(data){
-        console.log(data)
         data=JSON.parse(data);
         let table="";
         data.data.forEach(function(value){
@@ -632,34 +629,43 @@ $(document).on('click','.mailBtn',function(){
           table +=`Email:<input type='text' id='mail_id' disabled class='form-control mb-3 bg-white' value='${value['client_email']}'>`;
           table +='<div class="email_valid"></div>'
           table +=`Subject:<input type='text' id='subject' placeholder='Enter Subject' class='form-control mb-3 bg-white' value='Invoice FOR #INV0${value['InvoiceNo']} for App Stack'>`;
+          table +="<div class='subject_valid text-danger'></div>"
+
           table +=`Messsage:<textarea type='text' rows='10' id='message' class='form-control mb-5 bg-white' placeholder='Enter Message'>Hi ${value['client_name']}, I hope you're doing well. Please find attached our invoice #INV0${value['InvoiceNo']} for your purchase, which is due on ${value['InvDate']}. Let me know if you have any questions. Best, Adarsh.</textarea>`;
+
+          table +="<div class='message_valid text-danger'></div>"
         })
         $('.modal-body').html(table)
        }
   })
 })
 function sendMail(){
-  let invoiceNo=$('#mail_invoiceNo').val();
+  $('.message_valid').hide()
+  $('.subject_valid').hide()
+  let invoiceNo=$('#mail_invoiceNo').val()??"";
   if(invoiceNo.trim()==''){
     alert('Invoice Number Not found')
     return false;
   }
-  let name=$('#mail_client_name').val();
+  let name=$('#mail_client_name').val()??"";
   if(!validName(name)){
     return
   }
-  let mailId=$('#mail_id').val();
+  let mailId=$('#mail_id').val()??"";
   if(!validEmail(mailId)){
     return
   }
-  let subject=$('#subject').val();
+  let subject=$('#subject').val()??"";
   if(subject.trim()==''){
-    alert('enter subject')
+
+    $('.subject_valid').show()
+    $('.subject_valid').html('enter subject')
     return false;
   }
-  let message=$('#message').val();
+  let message=$('#message').val()??"";
   if(message.trim()==''){
-    alert('enter message')
+    $('.message_valid').show()
+    $('.message_valid').html('enter message')
     return false;
   }
   $.ajax({
@@ -676,19 +682,21 @@ function sendMail(){
     beforeSend: function(){
       
       $('#spinner').show()
+      $('.message_valid').hide()
+      $('.subject_valid').hide()
     }
     ,
     success:function(data){
       $('#staticBackdrop').hide()
       $('#spinner').hide()
-Swal.fire({
-  position: "top-end",
-  icon: "success",
-  title: "Mail Sent",
-  showConfirmButton: false,
-  timer: 1500
-});
-     }
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Mail Sent",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
   })
 
 
@@ -698,7 +706,6 @@ Swal.fire({
 $(document).on('click','.pdf',function(){
 
   let invId=$(this).attr('id')
-  console.log(invId);
   makePdf(invId)  
 })
 
@@ -716,7 +723,6 @@ $.ajax({
         responseType: "blob"
     },
       success:function(data){
-        console.log(data)
          let blob = new Blob([data], { type: "application/pdf" });
         let url = window.URL.createObjectURL(blob);
 

@@ -10,7 +10,7 @@ include_once "dashboard.php";
 <div class="content-body col-10 p-2 pe-4 ps-3">
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <button class="nav-link active text-dark fw-bold"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Invoice</button>
+      <button class="nav-link active text-dark fw-bold"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" onclick='invoiceData()' aria-selected="true">All Invoice</button>
     </li>
     <li class="nav-item" role="presentation">
       <button class="nav-link text-dark fw-bold" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" onclick='loadInvoiceNO(),cutBtn()' aria-selected="false">Add New Invoice</button>

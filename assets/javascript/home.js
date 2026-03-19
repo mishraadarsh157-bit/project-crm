@@ -3,7 +3,6 @@ if (window.location.href == "http://localhost/project/home/") {
 }
 
 function dashboardData() {
-  console.log(1);
   $.ajax({
     url: "/project/homecontroller/",
     type: "POST",
@@ -12,7 +11,6 @@ function dashboardData() {
     },
     success: function (data) {
       data = JSON.parse(data);
-      console.log(data.data);
       data.data.forEach(function (value) {
         $("#total_users").append(value["id"]);
         $("#total_clients").append(value["client_id"]);

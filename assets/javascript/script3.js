@@ -3,7 +3,6 @@
 
 function insertItem() {
   var fd = new FormData(itemInsertForm);
-  console.log(fd);
   $.ajax({
     url: "/project/itemcontroller/",
     type: "POST",
@@ -122,7 +121,6 @@ function loadItems(page) {
         table += "</tr>";
         table +=
           "<tr><th colspan='5' class='text-center'><h1>NO ITEM FOUND</h1></th></tr></table></div>";
-        console.log(data);
         $("#load_Items").html(table);
       } else {
         limit = $("#limit_i").val();
@@ -136,7 +134,8 @@ function loadItems(page) {
         table += "<th class='action_c text-center'>Action</th>";
         table += `<th  onclick="loadItems()" id="item_name" class='sort_i ps-5'>Item <i class="bi ${icon}"></i></th>`;
         table += "<th>Description</th>";
-        table += `<th onclick="loadItems()" id="price" class="sort_i">Price  <i class="bi ${icon}"></i></th>`;
+        table += `<th onclick="loadItems()" id="price" class="sort_i text-end" >Price  <i class="bi ${icon}"></i></th>`;
+        table += `<th class='text-center'>Image</th>`;
         table += "</tr>";
         data = JSON.parse(data);
         total_pages = data.total_page;
@@ -146,23 +145,36 @@ function loadItems(page) {
           indx = (page - 1) * limit + ind;
           table += `<tr>`;
 
-          table += `<td>${indx}</td>`;
+          table += `<td class='text-center'>${indx}</td>`;
           table += `<td class='text-center ps-4 d-flex'>
  <ul class="nav me-2" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="update_i nav-link btn btn-sm rounded-pill btn-outline-primary border border-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["item_id"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false"><i class='bi bi-pencil-square'>
-                </i></button>
+            <button class="update_i nav-link btn btn-sm rounded-pill btn-outline-primary border border-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["item_id"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+            <i class='bi bi-pencil-square'>
+                </i>
+                </button>
         </li>
     </ul>
       
                  <button class='btn btn-sm rounded-pill  btn-outline-danger border border-0' name='delete' data-did='${value["item_id"]}'  id='delete_i' value='delete'>
-        <i class='bi bi-trash3'></i></button>
+        <i class='bi bi-trash3'></i>
+        </button>
         </td>`;
 
-          table += `<td class='text-success'> <img src='/project/${data.data[index]["item_image"]}' height="50px" alt="" class="dynamicImg me-5">   ${value["item_name"]}</td>`;
+          table += `<td class='text-success'>
+          <ul class="nav me-2" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="update_i nav-link text-success" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["item_id"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false"> 
+             ${value["item_name"]}
+            </a>
+            <li>
+            </ul>
+            </td>`;
 
           table += `<td class='text-secondary'>${value["description"]}</td>`;
-          table += `<td class='text-primary'>₹ ${value["price"]}</td>`;
+          table += `<td class='text-primary text-end'>₹ ${value["price"]}</td>`;
+          table += `<td class='text-center'> <img src='/project/${data.data[index]["item_image"]}' height="50px" alt="" class="dynamicImg me-5"> </td>`;
+
 
           table += `</tr>`;
         });
@@ -262,11 +274,9 @@ $(document).on("click", ".update_i", function () {
     },
     success: function (data) {
       data = JSON.parse(data);
-      console.log(data)
       data.data.forEach(function (value) {
         
         $(".item_name").val(value[1]);
-        console.log("name value : " ,  $(".item_name").val() )
         $('#item_description').val(value[2])
         $('#item_price').val(value[3])
         $('.itemImage').attr('src',`/project/${value[4]}`)

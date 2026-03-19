@@ -35,19 +35,13 @@ switch (true) {
         $name = $_POST['client_name'];
         $crud->fetchData('client', 100, "select client_id,client_name,client_email,phone from client 
     where client_name like '%$name%' ", 'limit 100');
-
         break;
-        
+
     case isset($_POST['clientSearch']):
         $name = $_POST['clientSearch'];
         $crud->fetchData('client', 100, "select client_name from client 
     where client_name like '%$name%' ", 'limit 100');
-
         break;
-        
-
-
-
     case isset($_POST['item_name']):
         $itemname = $_POST['item_name'] ?? "";
         $data = array();
@@ -102,7 +96,7 @@ switch (true) {
         $mailId = $_POST['mailId'];
         $subject = $_POST['subject'];
         $message = $_POST['message'];
-        $mailer->mailer($invoiceNo,$mailId, $name, $subject, $message);
+        $mailer->mailer($invoiceNo, $mailId, $name, $subject, $message);
         break;
 
     case isset($_POST['makePDF']):

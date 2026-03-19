@@ -74,32 +74,32 @@ include_once "dashboard.php";
 
                         <div class="col-6 p-3 pt-5">
                             <input type="text" hidden id="updId">
-                            Client Name:
+                            Client Name: <sup class="text-danger">*</sup>
                             <input type="text" oninput="value = value.replace(/[^a-zA-Z]/g, '')" min='5' max='15' class="form-control mb-3" placeholder="Client Name" id="client_name_c">
                             <div class="name_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
-                            Client Phone:
-                            <input type="tel" min='10' max='10' oninput="this.value = this.value.replace(/[^0-9]/g, '')"  placeholder="Client phone number" class="form-control mb-3" minlength="2" maxlength="15" id="client_number">
+                            Client Phone: <sup class="text-danger">*</sup>
+                            <input type="tel" min='9' max='10'  oninput="this.value = this.value.replace(/[^0-9]/g, '')"  placeholder="Client phone number" class="form-control mb-3" minlength="2" maxlength="10" id="client_number">
                             <div class="number_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
-                            Client's Address:
+                            Client's Address: <sup class="text-danger">*</sup>
                             <textarea name="" placeholder="Address" class="form-control mb-3" id="client_address"></textarea>
                             <div class="address_valid text-danger mb-3 "></div>
                         </div>
                         <div class="col-6 p-3 pt-5">
-                            Client Email:
+                            Client Email: <sup class="text-danger">*</sup>
                             <input type="email" min='5' max='50' placeholder="Client email" class="form-control mb-3" id="client_email_c">
                             <div class="email_valid text-danger mb-3 "></div>
                         </div>
-                        <div class="col-4  p-3 pt-5">State:
+                        <div class="col-4  p-3 pt-5">State: <sup class="text-danger">*</sup>
                             <div id="loadState">
 
                             </div>
                             <div class="state_valid"></div>
                         </div>
-                        <div class="col-4  p-3 pt-5">City:
+                        <div class="col-4  p-3 pt-5">City: <sup class="text-danger">*</sup>
                             <div id="loadCity">
                                 <select name="" id="" class='form-select'>
                                     <option value="">----Select City----</option>
@@ -107,7 +107,8 @@ include_once "dashboard.php";
                             </div>
                             <div class="city_valid"></div>
                         </div>
-                        <div class="col-4  p-3 pt-5">Pincode:<input type="tel" placeholder="Pincode" min='4' max='8' id="client_pincode" class="form-control mb-3">
+                        <div class="col-4  p-3 pt-5">Pincode: <sup class="text-danger">*</sup>
+                            <input type="tel" placeholder="Pincode" min='4' max='8' id="client_pincode" class="form-control mb-3">
                             <div class="pincode_valid text-danger mb-3 "></div>
                         </div>
 
