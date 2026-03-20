@@ -72,7 +72,9 @@ class mail
                 $pdf->Cell(100, 10, 'For', 0);
                 $pdf->Ln();
                 $pdf->SetFont('Arial', 'B', 14);
+                $pdf->Cell(100, 10, 'AppStack', 0);
                 
+                $pdf->Ln();
                 while ($row = $result->fetch_assoc()) {
                     $pdf->Cell(100, 10, 'AppStack', 0);
                     $pdf->Cell(100, 10, $row['client_name'], 0);

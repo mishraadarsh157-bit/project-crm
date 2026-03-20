@@ -1,5 +1,8 @@
 function fetchClientData() {
-  var name = $(".client-name-invoice").val();
+  var name = $(".client-name-invoice").val()??"";
+  if(name.trim()==""){
+    return false
+  }
   $.ajax({
     url: "/project/invoiceController/",
     type: "POST",
@@ -46,17 +49,24 @@ $(document).on('keyup','.client-name-invoice',function(){
         let table='no client found'
         
         $('.clientselect').html(table).css('color','red') 
+    $(".invalidclint").text("");
         
       }
       else{
         data=JSON.parse(data)
-       $(function() {
-            var availableclients  =  data;
-            $( "#automplete-1" ).autocomplete({
-               source: availableclients
-            });
-})
-    }
+        $(function() {
+          var availableclients  =  data;
+          $( "#automplete-1" ).autocomplete({
+            source: availableclients,
+            select:  function(event,ui){
+              fetchClientData()
+            }
+          });
+    $(".invalidclint").text("");
+
+          $('.clientselect').html('') 
+        })
+      }
     }
   })
 })
@@ -73,33 +83,60 @@ $(document).on("keyup", ".item-name-invoice", function () {
     },
     success: function (data) {
       if(data.trim()=='empty'){
-      let table='no item found'
-    row.find(".itemselect").html(table).css('color','red');  
-    }
+        let table='no item found'
+        row.find(".itemselect").html(table).css('color','red');  
+      }
       else{
-      data = JSON.parse(data);
-     row.find(".itemselect").html('');
-      $(function() {
-            var availableitems  =  data;
-            row.find("#item_s").autocomplete({
-               source: availableitems
-            });
-          })
-    }
-    
-
-    },
-  });
+        data = JSON.parse(data);
+        row.find(".itemselect").html('');
+        $(function() {
+          var availableitems  =  data;
+          row.find("#item_s").autocomplete({
+        source: availableitems,
+        select:function(event,ui){
+          fetchItemData()
+        }
+        
+      });
+    })
+  }
+  
+  
+},
+});
 });
 
+$(document).on("keyup", ".item-name-invoice", function () {
+  
+  let value = $(this).val()??"";
+  if(value.trim()==""){
+    $('.itm_Id').val('');
+    $('.item-price-invoice').val('');
+    $('.item-quantity-invoice').val(1);
+  }
+
+
+})
+
+$(document).on("keyup", ".client-name-invoice", function () {
+  
+  let value = $(this).val()??"";
+  if(value.trim()==""){
+    $('.cli_Id').val('');
+    $('.client-email-invoice').val('');
+    $('.client-phone-invoice').val('');
+  }
+
+
+})
 
 
 
 function fetchItemData() {
   let name = $("input[name='itemName[]']").map(function () {
-      return this.value;
-    })
-    .get();
+    return this.value;
+  })
+  .get();
   $.ajax({
     url: "/project/invoiceController/",
     type: "POST",
@@ -107,7 +144,7 @@ function fetchItemData() {
       item_name: name,
     },
     success: function (data) {
-       if (data.trim() == "empty") {
+      if (data.trim() == "empty") {
         $(".item-price-invoice").val("no data").css("color", "red");
         $(".total-amount-invoice").val("no data").css("color", "red");
       } else {
@@ -120,33 +157,33 @@ function fetchItemData() {
             $(".invoice-quantity-invoice").eq(index).val(1);
             $(".rowTotal").eq(index).val(value["price"]);
             let amount = $("input[name='rowTotal[]']")
-              .map(function () {
-                return this.value;
+            .map(function () {
+              return this.value;
               })
               .get();
-            let total = 0;
-            amount.forEach(function (value) {
-              total += Number(value);
-            });
-            $(".total-amount-invoice").val(total);
-          }
-        });
-      }
-    },
-  });
-}
-
-function changeAmt() {
-  let price = $("input[name='price[]']")
+              let total = 0;
+              amount.forEach(function (value) {
+                total += Number(value);
+              });
+              $(".total-amount-invoice").val(total);
+            }
+          });
+        }
+      },
+    });
+  }
+  
+  function changeAmt() {
+    let price = $("input[name='price[]']")
     .map(function () {
       return this.value;
     })
     .get();
   let quantity = $("input[name='quantity[]']")
-    .map(function () {
-      return this.value;
-    })
-    .get();
+  .map(function () {
+    return this.value;
+  })
+  .get();
   let amount = [];
   price.forEach(function (value, index) {
     amount.push(value * quantity[index]);
@@ -183,12 +220,12 @@ Quantity<input min="1" type="number" onchange="changeAmt()" oninput="this.value 
     <td class="pb-3">Amount<input type="number" disabled placeholder="Amount" name="rowTotal[]" class="rowTotal bg-white form-control"></td>\
     <td class="pb-3"><button type="button" onclick="changeAmt()" class="removeForm btn btn-outline-danger border border-0">X</button></td></tr>\
     ';
-  $(".itemTable").append(row);
-  cutBtn();
-}
-
-$(document).on("click", ".removeForm", function () {
-  $(this).closest("tr").remove();
+    $(".itemTable").append(row);
+    cutBtn();
+  }
+  
+  $(document).on("click", ".removeForm", function () {
+    $(this).closest("tr").remove();
   changeAmt();
   cutBtn();
 });
@@ -202,11 +239,11 @@ $(document).on("click", ".sort_iv", function () {
 });
 $(document).on("click", ".sort_iv", function () {
   $(".order_iv").val($(".order_iv").val() === "asc" ? "desc" : "asc");
-
+  
   $("#icon_hold_iv").val(
     $("#icon_hold_iv").val() === "bi-arrow-up"
-      ? "bi-arrow-down"
-      : "bi-arrow-up",
+    ? "bi-arrow-down"
+    : "bi-arrow-up",
   );
 });
 
@@ -215,7 +252,7 @@ function invoiceData(page) {
   var order = $(".order_iv").val() ?? "asc";
   var searc = $(".searc_iv").val() ?? "";
   var limit = $("#limit_iv").val() ?? 5;
-
+  
   $.ajax({
     url: "/project/invoiceController/",
     type: "POST",
@@ -265,7 +302,7 @@ function invoiceData(page) {
         table += `<td class='sort_iv' id='ClientABN'> Client Name <i class='bi ${icon}'></i></td>`;
         table += `<td class='sort_iv' id='client_email'> Email <i class='bi ${icon}'></i></td>`;
         table += `<td class='sort_iv' id='phone'> Phone <i class='bi ${icon}'></i></td>`;
-
+        
         table += "</tr>";
         total_pages = data.total_page;
         total_records = data.total_record;
@@ -276,17 +313,17 @@ function invoiceData(page) {
           table += `<td class='text-center'>${index}</td>`;
           table += `<td class='d-flex justify-content-center'> <ul class="nav me-2" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button onclick="changeAmt()" class="update_iv nav-link btn btn-sm rounded-pill btn-outline-primary border border-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["InvoiceNo"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false"><i class='bi bi-pencil-square'>
-                </i></button>
-        </li>
-    </ul>
-    <button type="button" class="mailBtn btn btn-outline-danger border border-0 rounded-pill" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id='${value['InvoiceNo']}'>
-  <i class="bi bi-envelope-paper" ></i>
-</button>
-    
-    <button class='pdf btn ms-2 btn-outline-success border border-0 rounded-pill' id='${value['InvoiceNo']}'><i class="bi bi-filetype-pdf"></i></button>
-    </td>`;
-
+          <button onclick="changeAmt()" class="update_iv nav-link btn btn-sm rounded-pill btn-outline-primary border border-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["InvoiceNo"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false"><i class='bi bi-pencil-square'>
+          </i></button>
+          </li>
+          </ul>
+          <button type="button" class="mailBtn btn btn-outline-danger border border-0 rounded-pill" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id='${value['InvoiceNo']}'>
+          <i class="bi bi-envelope-paper" ></i>
+          </button>
+          
+          <button class='pdf btn ms-2 btn-outline-success border border-0 rounded-pill' id='${value['InvoiceNo']}'><i class="bi bi-filetype-pdf"></i></button>
+          </td>`;
+          
           table += `<td>${value["InvoiceNo"]}</td>`;
           table += `<td>
           <ul class="nav" id="myTab" role="tablist"><a onclick="changeAmt()" class="update_iv nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" data-uid='${value["InvoiceNo"]}' name='update_i' value='update_i' role="tab" aria-controls="profile-tab-pane" aria-selected="false">
@@ -301,15 +338,15 @@ function invoiceData(page) {
           table += "</tr>";
         });
         table += "</table></div><hr>";
-
+        
         table += "<div class='pagination pt-3 pb-5 w-100'>";
         table += '<ul class="pagination_iv ms-5 ms-auto d-flex">';
         if (page <= 1) {
           table +=
-            ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
+          ' <li class="page-item disabled"><a class="page-link">Previous</a></li>';
         } else if (page > 1) {
           table +=
-            "<li class='page-item'><button class='page-link' id='back_iv'>Previous</button></li>";
+          "<li class='page-item'><button class='page-link' id='back_iv'>Previous</button></li>";
         }
         if (total_records >= limit) {
           for (i = 1; i <= total_pages; i++) {
@@ -322,18 +359,18 @@ function invoiceData(page) {
         }
         if (page < total_pages) {
           table +=
-            '<li class="page-item"><button class="page-link" id="forward_iv" href="#">Next</button></li>';
+          '<li class="page-item"><button class="page-link" id="forward_iv" href="#">Next</button></li>';
         } else if ((page = total_pages)) {
           table +=
-            '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
+          '<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>';
         }
         table += "</ul>";
 
         table += `<b class='on_page text-secondary mt-2 ms-auto'> Pages : ${page} / ${total_pages} </b>`;
         table += `<b class='on_page mt-2 mx-auto text-secondary'> Total Records : ${total_records} </b>`;
-
+        
         table += "</div>";
-
+        
         $(".loadInvoice").html(table);
       }
     },
@@ -342,7 +379,7 @@ function invoiceData(page) {
 
 $(document).on("click", "#pagination_iv a", function (e) {
   e.preventDefault();
-
+  
   var limit = $("#limit_iv").val();
   var page = $(this).attr("id");
   invoiceData(page, limit);
@@ -353,11 +390,11 @@ $(document).on("click", "#pagination_iv a", function (e) {
 
 $(document).on("click", "#back_iv", function (e) {
   e.preventDefault();
-
+  
   var page = $("#invis_iv").val();
   var page = Number(page) - 1;
   $("#invis_iv").val(page);
-
+  
   invoiceData(page);
 });
 
@@ -365,7 +402,7 @@ $(document).on("click", "#back_iv", function (e) {
 
 $(document).on("click", "#forward_iv", function (e) {
   e.preventDefault();
-
+  
   var page = $("#invis_iv").val();
   var page = Number(page) + 1;
   $("#invis_iv").val(page);
@@ -397,7 +434,7 @@ if (window.location.href.trim() == "http://localhost/project/invoice/") {
 
 function loadInvoiceNO() {
   $('.add_inv').html('Add Invoice')
-   $(".client-name-invoice").prop('disabled',false);
+  $(".client-name-invoice").prop('disabled',false);
   $(".addInvoice").trigger("reset");
   $(".itemTable").html("");
   $.ajax({
@@ -414,10 +451,10 @@ function loadInvoiceNO() {
         data.data.forEach(function (value) {
           $(".invoice_id").val(Number(value["InvoiceNo"]) + 1);
         });
-         $(".loadButtons").html(
-        'Total Amount<input type="text" disabled class="total-amount-invoice form-control mb-4 bg-white" placeholder="Total Amount">\
-    <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4 bg-white" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>',
-  );
+        $(".loadButtons").html(
+          'Total Amount<input type="text" disabled class="total-amount-invoice form-control mb-4 bg-white" placeholder="Total Amount">\
+          <button onclick="addInvoic(),invoiceData()" class="btn btn-outline-primary mb-4 bg-white" type="button">Save Invoice</button><button type="reset" onclick="loadInvoiceNO()" class="btn btn-outline-danger ms-3 mb-4">Clear Form</button>',
+        );
         addMore();
       }
     },
@@ -428,7 +465,7 @@ function addInvoic() {
   
   let invoiceNo = $(".invoice_id").val()??"";
   if(invoiceNo.trim()==""){
-     Swal.fire({
+    Swal.fire({
       title: "Error!",
       text: "Invoice Number Not Found?",
       icon: "error"
@@ -436,8 +473,12 @@ function addInvoic() {
     return false;
   }
   if ($(".client-email-invoice").val() == "no data") {
+    $('.clientselect').html('') 
     $(".invalidclint").text("enter valid clint name");
     return false;
+  }
+  else{
+    $(".invalidclint").text("");
   }
   let client = $(".cli_Id").val()??"";
   if(client.trim()==""){
@@ -716,12 +757,15 @@ $.ajax({
         responseType: "blob"
     },
       success:function(data){
-         let blob = new Blob([data], { type: "application/pdf" });
+        console.log(data,'string 1')
+        let blob = new Blob([data], { type: "application/pdf" });
         let url = window.URL.createObjectURL(blob);
-
+        
         window.open(url, "_blank");
+        console.log(data,'string 2')
 
 
       }
+      
 })
 }
